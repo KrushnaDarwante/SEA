@@ -1,0 +1,785 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Duty Slip — SEA | Matoshri College of Engineering & RC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+    :root {
+        --primary: #0b3d91;
+        --primary-dark: #082c6b;
+        --accent: #c9a227;
+        --accent-light: #e6c458;
+        --dark: #0f172a;
+        --gray-700: #334155;
+        --gray-500: #64748b;
+        --success: #059669;
+        --danger: #dc2626;
+        --warning: #d97706;
+        --info: #0891b2;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f6fa;
+        color: var(--dark);
+        min-height: 100vh;
+        line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    /* NAVBAR */
+    .navbar-pro {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+    .navbar-pro .container-pro {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1100px;
+        padding: 0 24px;
+        margin: 0 auto;
+        gap: 12px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand-icon {
+        width: 44px; height: 44px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 11px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-brand-icon svg { width: 100%; height: 100%; }
+    .nav-brand-text h5 { margin: 0; font-size: 1rem; font-family: 'Playfair Display', serif; }
+    .nav-brand-text small { color: var(--gray-500); font-size: 0.72rem; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px 6px 6px;
+        background: #f1f5f9;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--gray-700);
+    }
+    .user-avatar {
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .btn-logout {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 9px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-700);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .btn-logout:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+
+    /* MAIN */
+    .page-wrap {
+        padding: 32px 24px 40px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .back-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: white;
+        color: var(--gray-700);
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.25s;
+        font-family: 'Inter', sans-serif;
+    }
+    .btn-back:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* HEADER */
+    .page-header-card {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border-radius: 20px;
+        padding: 28px 32px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+    .page-header-card::before {
+        content: '';
+        position: absolute;
+        top: -80px; right: -80px;
+        width: 280px; height: 280px;
+        background: radial-gradient(circle, rgba(201, 162, 39, 0.2), transparent 70%);
+        border-radius: 50%;
+    }
+    .page-header-text { position: relative; z-index: 2; }
+    .page-header-text h1 { color: white; font-size: 1.5rem; margin-bottom: 4px; line-height: 1.2; }
+    .page-header-text h1 span { color: var(--accent-light); }
+    .page-header-text p { color: rgba(255, 255, 255, 0.8); font-size: 0.85rem; margin: 0; }
+    .page-header-icon {
+        position: relative;
+        z-index: 2;
+        width: 70px; height: 70px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: var(--accent-light);
+        flex-shrink: 0;
+        backdrop-filter: blur(10px);
+    }
+
+    /* ACTION BAR */
+    .action-bar {
+        background: white;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .action-label {
+        font-size: 0.82rem;
+        color: var(--gray-700);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .action-label i { color: var(--primary); }
+    .action-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 10px 18px;
+        border-radius: 10px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+        font-family: 'Inter', sans-serif;
+        border: 1.5px solid transparent;
+    }
+    .btn-print {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+    }
+    .btn-print:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(11, 61, 145, 0.3);
+        color: white;
+    }
+    .btn-pdf {
+        background: white;
+        border-color: #e2e8f0;
+        color: var(--danger);
+    }
+    .btn-pdf:hover {
+        border-color: var(--danger);
+        background: #fef2f2;
+        transform: translateY(-2px);
+    }
+    .btn-copy {
+        background: white;
+        border-color: #e2e8f0;
+        color: var(--info);
+    }
+    .btn-copy:hover {
+        border-color: var(--info);
+        background: #ecfeff;
+        transform: translateY(-2px);
+    }
+
+    /* SLIP PREVIEW */
+    .slip-container {
+        background: white;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        padding: 32px;
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+        position: relative;
+    }
+
+    .slip-paper {
+        max-width: 750px;
+        margin: 0 auto;
+        border: 2px solid var(--primary);
+        border-radius: 12px;
+        padding: 32px;
+        background: white;
+        position: relative;
+    }
+    .slip-paper::before {
+        content: '';
+        position: absolute;
+        top: 8px; left: 8px; right: 8px; bottom: 8px;
+        border: 1px dashed rgba(11, 61, 145, 0.15);
+        border-radius: 8px;
+        pointer-events: none;
+    }
+
+    .slip-header {
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--accent);
+        margin-bottom: 24px;
+        position: relative;
+        z-index: 1;
+    }
+    .slip-header h1 {
+        font-size: 1.6rem;
+        color: var(--primary);
+        margin-bottom: 4px;
+        letter-spacing: -0.5px;
+    }
+    .slip-header h2 {
+        font-size: 0.9rem;
+        color: var(--gray-500);
+        font-weight: 500;
+        font-family: 'Inter', sans-serif;
+    }
+    .slip-header .tag {
+        display: inline-block;
+        background: var(--primary);
+        color: white;
+        padding: 5px 16px;
+        border-radius: 50px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        margin-top: 12px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .slip-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px 28px;
+        margin-bottom: 24px;
+        position: relative;
+        z-index: 1;
+    }
+    .slip-info-item label {
+        display: block;
+        font-size: 0.68rem;
+        color: var(--gray-500);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-weight: 700;
+        margin-bottom: 3px;
+    }
+    .slip-info-item span {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--dark);
+        word-break: break-word;
+    }
+
+    .slip-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 28px;
+        position: relative;
+        z-index: 1;
+    }
+    .slip-table th {
+        background: var(--primary);
+        color: white;
+        padding: 11px 12px;
+        text-align: left;
+        font-size: 0.72rem;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+    .slip-table th:first-child { border-top-left-radius: 6px; }
+    .slip-table th:last-child { border-top-right-radius: 6px; }
+    .slip-table td {
+        padding: 11px 12px;
+        border-bottom: 1px solid #e2e8f0;
+        font-size: 0.82rem;
+        color: var(--gray-700);
+    }
+    .slip-table tr:nth-child(even) td { background: #f8fafc; }
+    .slip-table tr:last-child td { border-bottom: none; }
+
+    .slip-signature {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 24px;
+        margin-top: 8px;
+        position: relative;
+        z-index: 1;
+    }
+    .sig-box {
+        text-align: center;
+        width: 180px;
+    }
+    .sig-line {
+        border-top: 1.5px solid var(--dark);
+        margin-bottom: 6px;
+        height: 40px;
+    }
+    .sig-box small {
+        font-size: 0.66rem;
+        color: var(--gray-500);
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .slip-footer {
+        text-align: center;
+        margin-top: 24px;
+        padding-top: 14px;
+        border-top: 1px dashed #cbd5e1;
+        font-size: 0.68rem;
+        color: #94a3b8;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: white;
+        border-radius: 18px;
+        border: 1px dashed #cbd5e1;
+        color: var(--gray-500);
+    }
+    .empty-state i {
+        font-size: 3.5rem;
+        color: #cbd5e1;
+        display: block;
+        margin-bottom: 14px;
+    }
+    .empty-state h4 {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.05rem;
+        color: var(--gray-700);
+        margin-bottom: 6px;
+    }
+    .empty-state p {
+        font-size: 0.85rem;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    /* TOAST */
+    .toast-pro {
+        position: fixed;
+        top: 90px;
+        right: 24px;
+        background: var(--success);
+        color: white;
+        padding: 14px 22px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        box-shadow: 0 8px 24px rgba(5, 150, 105, 0.3);
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 340px;
+    }
+    .toast-pro.show { opacity: 1; transform: translateY(0); }
+    .toast-pro.error { background: var(--danger); box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3); }
+    .toast-pro.info { background: var(--info); box-shadow: 0 8px 24px rgba(8, 145, 178, 0.3); }
+
+    /* PRINT STYLES */
+    @media print {
+        .navbar-pro,
+        .back-bar,
+        .page-header-card,
+        .action-bar,
+        .toast-pro { display: none !important; }
+
+        body { background: white; padding: 0; }
+        .page-wrap { padding: 0; max-width: 100%; }
+        .slip-container {
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            border-radius: 0;
+        }
+        .slip-paper {
+            border: 2px solid var(--primary);
+            page-break-inside: avoid;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .page-wrap { padding: 20px 16px 32px; }
+        .page-header-card { flex-direction: column; text-align: center; padding: 24px 20px; gap: 14px; }
+        .page-header-text h1 { font-size: 1.3rem; }
+        .page-header-icon { width: 58px; height: 58px; font-size: 1.6rem; }
+        .slip-container { padding: 20px; }
+        .slip-paper { padding: 22px 18px; }
+        .slip-header h1 { font-size: 1.2rem; }
+        .slip-info-grid { grid-template-columns: 1fr; gap: 12px; }
+        .slip-table th, .slip-table td { padding: 9px 8px; font-size: 0.74rem; }
+        .slip-signature { flex-direction: column; gap: 30px; align-items: center; }
+        .action-bar { flex-direction: column; align-items: stretch; }
+        .action-buttons { width: 100%; }
+        .btn-action { flex: 1; justify-content: center; }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-pro .container-pro { padding: 0 14px; }
+        .user-chip span { display: none; }
+        .user-chip { padding: 6px; }
+        .btn-logout span { display: none; }
+        .btn-logout { padding: 8px 12px; }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar-pro">
+    <div class="container-pro">
+        <div class="nav-brand">
+            <div class="nav-brand-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e5bc6"/><stop offset="100%" stop-color="#082c6b"/>
+                        </linearGradient>
+                        <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e6c458"/><stop offset="100%" stop-color="#a8841a"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z" fill="url(#gg)"/>
+                    <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z" fill="url(#ng)"/>
+                    <text x="50" y="55" text-anchor="middle" font-family="Playfair Display, serif" font-size="24" font-weight="800" fill="url(#gg)">SEA</text>
+                </svg>
+            </div>
+            <div class="nav-brand-text">
+                <h5>SEA</h5>
+                <small>Invigilator Portal</small>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <div class="user-chip">
+                <div class="user-avatar" id="userAvatar">I</div>
+                <span id="userName">Invigilator</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="page-wrap">
+
+    <div class="back-bar">
+        <a href="invigilator-dashboard.html" class="btn-back">
+            <i class="bi bi-arrow-left"></i>
+            Back to Dashboard
+        </a>
+    </div>
+
+    <!-- HEADER -->
+    <div class="page-header-card">
+        <div class="page-header-text">
+            <h1>My <span>Duty Slip</span></h1>
+            <p>Your official exam duty slip — printable and downloadable</p>
+        </div>
+        <div class="page-header-icon">
+            <i class="bi bi-receipt"></i>
+        </div>
+    </div>
+
+    <!-- ACTION BAR -->
+    <div class="action-bar" id="actionBar" style="display:none;">
+        <div class="action-label">
+            <i class="bi bi-info-circle-fill"></i>
+            <span id="dutyCountLabel">0 assignments</span>
+        </div>
+        <div class="action-buttons">
+            <button class="btn-action btn-copy" onclick="copyLink()">
+                <i class="bi bi-link-45deg"></i> Copy Link
+            </button>
+            <button class="btn-action btn-pdf" onclick="printSlip()">
+                <i class="bi bi-file-earmark-pdf-fill"></i> Save as PDF
+            </button>
+            <button class="btn-action btn-print" onclick="printSlip()">
+                <i class="bi bi-printer-fill"></i> Print
+            </button>
+        </div>
+    </div>
+
+    <!-- SLIP CONTAINER -->
+    <div class="slip-container" id="slipContainer" style="display:none;">
+        <div class="slip-paper" id="slipPaper">
+            <!-- Filled by JS -->
+        </div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="empty-state" style="display:none;">
+        <i class="bi bi-inbox"></i>
+        <h4>No duties assigned</h4>
+        <p>You don't have any exam duties assigned yet. Please contact the exam administrator.</p>
+    </div>
+
+</div>
+
+<div class="toast-pro" id="toast">
+    <i class="bi bi-check-circle-fill"></i>
+    <span id="toastMsg">Done</span>
+</div>
+
+<script>
+/* ============ AUTH GUARD ============ */
+const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+if (!user.success || user.role !== 'invigilator') {
+    window.location.href = 'index.html';
+}
+document.getElementById('userName').textContent = user.name || 'Invigilator';
+document.getElementById('userAvatar').textContent = (user.name || 'I').charAt(0).toUpperCase();
+
+/* ============ LOAD ASSIGNMENTS ============ */
+function loadAssignments() {
+    const allAssignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+    return allAssignments.filter(a => a.supervisorName === user.name);
+}
+
+/* ============ RENDER SLIP ============ */
+function renderSlip() {
+    const assignments = loadAssignments();
+    const slipContainer = document.getElementById('slipContainer');
+    const emptyState = document.getElementById('emptyState');
+    const actionBar = document.getElementById('actionBar');
+
+    if (assignments.length === 0) {
+        slipContainer.style.display = 'none';
+        actionBar.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+    }
+
+    slipContainer.style.display = 'block';
+    actionBar.style.display = 'flex';
+    emptyState.style.display = 'none';
+
+    document.getElementById('dutyCountLabel').textContent =
+        assignments.length + ' assignment' + (assignments.length !== 1 ? 's' : '');
+
+    const today = new Date().toLocaleDateString('en-IN', {
+        day: '2-digit', month: 'long', year: 'numeric'
+    });
+
+    /* Sort by date */
+    const sorted = [...assignments].sort((a, b) =>
+        (a.date || '').localeCompare(b.date || '')
+    );
+
+    const rows = sorted.map((a, i) => `
+        <tr>
+            <td style="text-align:center; font-weight:700; color:var(--primary);">${i + 1}</td>
+            <td style="font-weight:600;">${a.hallName || '—'}</td>
+            <td>${a.examName || '—'}</td>
+            <td>${formatDate(a.date)}</td>
+        </tr>
+    `).join('');
+
+    const employeeId = user.employeeId || 'EMP101';
+    const dept = user.dept || '—';
+
+    document.getElementById('slipPaper').innerHTML = `
+        <div class="slip-header">
+            <h1>SEA — Exam Duty Slip</h1>
+            <h2>Matoshri College of Engineering & RC | Seat Exam Allotment System</h2>
+            <div class="tag">INVIGILATOR COPY</div>
+        </div>
+
+        <div class="slip-info-grid">
+            <div class="slip-info-item">
+                <label>Invigilator Name</label>
+                <span>${user.name || '—'}</span>
+            </div>
+            <div class="slip-info-item">
+                <label>Employee ID</label>
+                <span>${employeeId}</span>
+            </div>
+            <div class="slip-info-item">
+                <label>Department</label>
+                <span>${dept}</span>
+            </div>
+            <div class="slip-info-item">
+                <label>Role</label>
+                <span>Invigilator</span>
+            </div>
+            <div class="slip-info-item">
+                <label>Generated On</label>
+                <span>${today}</span>
+            </div>
+            <div class="slip-info-item">
+                <label>Total Assignments</label>
+                <span>${assignments.length}</span>
+            </div>
+        </div>
+
+        <table class="slip-table">
+            <thead>
+                <tr>
+                    <th style="width:50px;">#</th>
+                    <th>Hall</th>
+                    <th>Exam</th>
+                    <th style="width:130px;">Date</th>
+                </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+        </table>
+
+        <div class="slip-signature">
+            <div class="sig-box">
+                <div class="sig-line"></div>
+                <small>Invigilator Signature</small>
+            </div>
+            <div class="sig-box">
+                <div class="sig-line"></div>
+                <small>Exam Controller</small>
+            </div>
+        </div>
+
+        <div class="slip-footer">
+            This is a computer-generated slip. © 2026 SEA — Matoshri College of Engineering & RC
+        </div>
+    `;
+}
+
+/* ============ ACTIONS ============ */
+function printSlip() {
+    window.print();
+}
+
+function copyLink() {
+    const link = window.location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(link).then(() => {
+            showToast('Link copied to clipboard', false, 'info');
+        }).catch(() => fallbackCopy(link));
+    } else {
+        fallbackCopy(link);
+    }
+}
+
+function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+        document.execCommand('copy');
+        showToast('Link copied to clipboard', false, 'info');
+    } catch (e) {
+        showToast('Could not copy — copy manually from URL', true);
+    }
+    document.body.removeChild(ta);
+}
+
+/* ============ HELPERS ============ */
+function formatDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+let toastTimer;
+function showToast(msg, isError = false, type = 'success') {
+    const t = document.getElementById('toast');
+    const icon = t.querySelector('i');
+    document.getElementById('toastMsg').textContent = msg;
+    t.className = 'toast-pro';
+    if (isError) t.classList.add('error');
+    else if (type === 'info') t.classList.add('info');
+
+    icon.className = isError ? 'bi bi-exclamation-circle-fill'
+                  : type === 'info' ? 'bi bi-info-circle-fill'
+                  : 'bi bi-check-circle-fill';
+
+    requestAnimationFrame(() => t.classList.add('show'));
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function logout() {
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+}
+
+/* ============ INIT ============ */
+renderSlip();
+</script>
+
+</body>
+</html>
+

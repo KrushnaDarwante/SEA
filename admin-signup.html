@@ -1,0 +1,734 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration — SEA | Matoshri College of Engineering & RC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+    :root {
+        --primary: #0b3d91;
+        --primary-dark: #082c6b;
+        --accent: #c9a227;
+        --accent-light: #e6c458;
+        --dark: #0f172a;
+        --gray-700: #334155;
+        --gray-500: #64748b;
+        --success: #059669;
+        --danger: #dc2626;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f6fa;
+        color: var(--dark);
+        height: 100vh;
+        line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
+
+    .page { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    .page-main { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+
+    .brand-panel {
+        flex: 1.1;
+        background:
+            linear-gradient(135deg, rgba(11, 61, 145, 0.94), rgba(8, 44, 107, 0.98)),
+            url('https://images.unsplash.com/photo-1562774053-701939374585?w=1600') center/cover;
+        background-blend-mode: multiply;
+        color: white;
+        padding: 48px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .brand-panel::before {
+        content: '';
+        position: absolute;
+        top: -100px; right: -100px;
+        width: 400px; height: 400px;
+        background: radial-gradient(circle, rgba(201, 162, 39, 0.18), transparent 70%);
+        border-radius: 50%;
+    }
+
+    .brand-header { display: flex; align-items: center; gap: 16px; position: relative; z-index: 2; }
+
+    .sea-emblem {
+        width: 68px; height: 68px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        padding: 6px;
+        filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25));
+        overflow: hidden;
+    }
+
+    .sea-emblem svg { width: 100%; height: 100%; display: block; }
+
+    .brand-text h1 {
+        color: white;
+        font-size: 1.85rem;
+        margin: 0;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        font-family: 'Playfair Display', serif;
+        line-height: 1;
+    }
+
+    .brand-text .subtitle {
+        color: var(--accent-light);
+        font-size: 0.6rem;
+        margin: 8px 0 0;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+    }
+
+    .brand-text .subtitle::before {
+        content: '';
+        display: inline-block;
+        width: 18px;
+        height: 1px;
+        background: var(--accent-light);
+    }
+
+    .brand-hero { position: relative; z-index: 2; max-width: 500px; margin: auto 0; padding: 24px 0; }
+
+    .brand-hero .badge-line {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(201, 162, 39, 0.15);
+        border: 1px solid rgba(201, 162, 39, 0.45);
+        color: var(--accent-light);
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+    }
+
+    .brand-hero h2 {
+        color: white;
+        font-size: 1.9rem;
+        line-height: 1.25;
+        margin-bottom: 16px;
+        font-weight: 700;
+    }
+
+    .brand-hero h2 span { color: var(--accent-light); font-style: italic; }
+
+    .brand-hero p {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.85rem;
+        line-height: 1.65;
+        margin-bottom: 24px;
+        max-width: 440px;
+    }
+
+    .brand-features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 380px; }
+
+    .feature-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px 12px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 14px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        min-height: 110px;
+        text-align: center;
+    }
+
+    .feature-item:hover {
+        background: rgba(255, 255, 255, 0.12);
+        transform: translateY(-3px);
+        border-color: rgba(201, 162, 39, 0.5);
+    }
+
+    .feature-item i { font-size: 1.6rem; color: var(--accent-light); margin-bottom: 2px; }
+    .feature-item div strong { display: block; font-size: 0.75rem; color: white; font-weight: 700; line-height: 1.25; }
+    .feature-item div small { color: rgba(255, 255, 255, 0.65); font-size: 0.64rem; line-height: 1.25; }
+
+    .form-panel {
+        flex: 0.9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow-y: auto;
+        background:
+            radial-gradient(circle at 50% 0%, rgba(11, 61, 145, 0.05), transparent 50%),
+            linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+    }
+
+    .form-panel::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(11, 61, 145, 0.06) 1px, transparent 1px);
+        background-size: 22px 22px;
+        pointer-events: none;
+        opacity: 0.6;
+        mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 75%);
+        -webkit-mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 75%);
+    }
+
+    .form-wrap {
+        width: 100%;
+        max-width: 380px;
+        position: relative;
+        z-index: 2;
+        animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes slideInRight {
+        from { opacity: 0; transform: translateX(20px); }
+        to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .form-emblem {
+        display: none;
+        width: 56px; height: 56px;
+        margin: 0 auto 12px;
+        background: white;
+        border-radius: 10px;
+        padding: 5px;
+        box-shadow: 0 4px 12px rgba(11, 61, 145, 0.1);
+        overflow: hidden;
+    }
+
+    .form-emblem svg { width: 100%; height: 100%; display: block; }
+
+    .form-head { margin-bottom: 16px; text-align: center; }
+
+    .form-head .welcome-tag {
+        display: inline-block;
+        color: var(--primary);
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+
+    .form-head h3 { font-size: 1.35rem; margin-bottom: 3px; color: var(--dark); }
+    .form-head p { color: var(--gray-500); font-size: 0.76rem; }
+
+    .warning-banner {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        border: 1px solid #fbbf24;
+        border-radius: 9px;
+        padding: 9px 11px;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 0.68rem;
+        color: #78350f;
+        line-height: 1.5;
+    }
+
+    .warning-banner i {
+        color: #d97706;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+
+    .form-group-pro { margin-bottom: 10px; position: relative; }
+
+    .form-group-pro label {
+        display: block;
+        font-size: 0.6rem;
+        font-weight: 600;
+        color: var(--gray-700);
+        margin-bottom: 4px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .input-wrap { position: relative; }
+
+    .input-wrap i.field-icon {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-500);
+        font-size: 0.82rem;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .form-group-pro input {
+        width: 100%;
+        padding: 10px 11px 10px 33px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        color: var(--dark);
+        background: #ffffff;
+        outline: none;
+        transition: all 0.25s;
+    }
+
+    .form-group-pro input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(11, 61, 145, 0.08);
+    }
+
+    .form-group-pro input::placeholder { color: #94a3b8; font-size: 0.76rem; }
+
+    .toggle-password {
+        position: absolute;
+        right: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--gray-500);
+        cursor: pointer;
+        font-size: 0.82rem;
+        padding: 2px;
+        z-index: 2;
+    }
+
+    .strength-bar {
+        height: 3px;
+        background: #e2e8f0;
+        border-radius: 2px;
+        margin-top: 5px;
+        overflow: hidden;
+    }
+
+    .strength-bar-fill {
+        height: 100%;
+        width: 0;
+        transition: all 0.3s;
+        border-radius: 2px;
+    }
+
+    .strength-bar-fill.weak { width: 33%; background: var(--danger); }
+    .strength-bar-fill.medium { width: 66%; background: #f59e0b; }
+    .strength-bar-fill.strong { width: 100%; background: var(--success); }
+
+    .strength-text {
+        font-size: 0.6rem;
+        margin-top: 3px;
+        font-weight: 500;
+        min-height: 12px;
+    }
+
+    .strength-text.weak { color: var(--danger); }
+    .strength-text.medium { color: #f59e0b; }
+    .strength-text.strong { color: var(--success); }
+
+    .btn-pro {
+        width: 100%;
+        padding: 11px 18px;
+        border-radius: 8px;
+        border: none;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        box-shadow: 0 6px 16px rgba(11, 61, 145, 0.22);
+        margin-top: 6px;
+    }
+
+    .btn-pro:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 22px rgba(11, 61, 145, 0.3);
+    }
+
+    .btn-pro:disabled { cursor: not-allowed; opacity: 0.85; }
+
+    .alert-pro {
+        padding: 9px 12px;
+        border-radius: 8px;
+        font-size: 0.72rem;
+        margin-top: 10px;
+        display: none;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .alert-pro.danger { display: flex; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+    .alert-pro.success { display: flex; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+
+    .login-link {
+        text-align: center;
+        margin-top: 14px;
+        font-size: 0.72rem;
+        color: var(--gray-500);
+    }
+
+    .login-link a {
+        color: var(--primary);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    @media (max-width: 992px) {
+        html, body { overflow: auto; }
+        .page { height: auto; min-height: 100vh; }
+        .page-main { flex-direction: column; overflow: visible; }
+        .brand-panel { padding: 32px 24px; }
+        .brand-hero { margin: 20px 0; padding: 0; }
+        .brand-hero h2 { font-size: 1.4rem; }
+        .form-panel { padding: 32px 24px; }
+        .form-emblem { display: block; }
+        .form-wrap { max-width: 420px; }
+    }
+
+    @media (max-width: 576px) {
+        .brand-hero h2 { font-size: 1.2rem; }
+        .form-head h3 { font-size: 1.25rem; }
+        .brand-panel { padding: 24px 18px; }
+        .sea-emblem { width: 56px; height: 56px; }
+        .brand-text h1 { font-size: 1.55rem; }
+        .brand-text .subtitle { font-size: 0.5rem; letter-spacing: 1.6px; }
+        .form-wrap { max-width: 100%; }
+        .brand-features { gap: 8px; }
+        .feature-item { padding: 14px 10px; min-height: 100px; }
+        .feature-item i { font-size: 1.4rem; }
+        .feature-item div strong { font-size: 0.7rem; }
+        .feature-item div small { font-size: 0.58rem; }
+    }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="page-main">
+
+        <!-- LEFT PANEL -->
+        <div class="brand-panel">
+            <div class="brand-header">
+                <div class="sea-emblem">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#e6c458"/>
+                                <stop offset="50%" stop-color="#c9a227"/>
+                                <stop offset="100%" stop-color="#a8841a"/>
+                            </linearGradient>
+                            <linearGradient id="navyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#1e5bc6"/>
+                                <stop offset="100%" stop-color="#082c6b"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z"
+                              fill="url(#goldGrad)" stroke="#8a6a10" stroke-width="1"/>
+                        <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z"
+                              fill="url(#navyGrad)"/>
+                        <path d="M22 68 Q32 62 42 68 Q52 74 62 68 Q72 62 80 68"
+                              fill="none" stroke="url(#goldGrad)" stroke-width="2.5" stroke-linecap="round"/>
+                        <text x="50" y="48" text-anchor="middle" font-family="Playfair Display, serif"
+                              font-size="24" font-weight="800" fill="url(#goldGrad)" letter-spacing="1">SEA</text>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>SEA</h1>
+                    <p class="subtitle">Seat Exam Allotment</p>
+                </div>
+            </div>
+
+            <div class="brand-hero">
+                <div class="badge-line">
+                    <i class="bi bi-shield-lock-fill"></i>
+                    Administrator Registration
+                </div>
+                <h2>Create Your <span>Admin Account</span></h2>
+                <p>
+                    Register as an administrator to manage exam seating, students, teachers, and hall allocations for Matoshri College of Engineering & RC.
+                </p>
+
+                <div class="brand-features">
+                    <div class="feature-item">
+                        <i class="bi bi-shield-check"></i>
+                        <div>
+                            <strong>One-Time Setup</strong>
+                            <small>Initial only</small>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-person-badge"></i>
+                        <div>
+                            <strong>Full Access</strong>
+                            <small>Manage all</small>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-key-fill"></i>
+                        <div>
+                            <strong>Strong Password</strong>
+                            <small>8+ characters</small>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-shield-lock-fill"></i>
+                        <div>
+                            <strong>Secure</strong>
+                            <small>Encrypted</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="form-panel">
+            <div class="form-wrap">
+
+                <div class="form-emblem">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#e6c458"/>
+                                <stop offset="100%" stop-color="#a8841a"/>
+                            </linearGradient>
+                            <linearGradient id="n2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#1e5bc6"/>
+                                <stop offset="100%" stop-color="#082c6b"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z" fill="url(#g2)"/>
+                        <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z" fill="url(#n2)"/>
+                        <text x="50" y="55" text-anchor="middle" font-family="Playfair Display, serif"
+                              font-size="24" font-weight="800" fill="url(#g2)" letter-spacing="1">SEA</text>
+                    </svg>
+                </div>
+
+                <div class="form-head">
+                    <span class="welcome-tag">Get Started</span>
+                    <h3>Admin Signup</h3>
+                    <p>Create your administrator account</p>
+                </div>
+
+                <div class="warning-banner">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <div>
+                        <strong>Important:</strong> Yeh page sirf initial setup ke liye hai.
+                    </div>
+                </div>
+
+                <form id="signupForm" autocomplete="off">
+
+                    <div class="form-group-pro">
+                        <label for="fullName">Full Name</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-person-fill field-icon"></i>
+                            <input type="text" id="fullName" placeholder="e.g. Dr. Rajesh Kumar" required maxlength="60">
+                        </div>
+                    </div>
+
+                    <div class="form-group-pro">
+                        <label for="username">Username</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-person-badge-fill field-icon"></i>
+                            <input type="text" id="username" placeholder="e.g. admin_matoshri" required maxlength="30">
+                        </div>
+                    </div>
+
+                    <div class="form-group-pro">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-envelope-fill field-icon"></i>
+                            <input type="email" id="email" placeholder="admin@matoshriengg.edu.in" required maxlength="80">
+                        </div>
+                    </div>
+
+                    <div class="form-group-pro">
+                        <label for="password">Password</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-shield-lock-fill field-icon"></i>
+                            <input type="password" id="password" placeholder="Enter strong password" required maxlength="50">
+                            <button type="button" class="toggle-password" onclick="togglePwd('password', this)">
+                                <i class="bi bi-eye-fill"></i>
+                            </button>
+                        </div>
+                        <div class="strength-bar">
+                            <div class="strength-bar-fill" id="strengthBar"></div>
+                        </div>
+                        <div class="strength-text" id="strengthText"></div>
+                    </div>
+
+                    <div class="form-group-pro">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-shield-lock-fill field-icon"></i>
+                            <input type="password" id="confirmPassword" placeholder="Re-enter password" required maxlength="50">
+                            <button type="button" class="toggle-password" onclick="togglePwd('confirmPassword', this)">
+                                <i class="bi bi-eye-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-pro" id="signupBtn">
+                        <i class="bi bi-person-plus-fill"></i>
+                        <span id="signupBtnText">Create Admin Account</span>
+                    </button>
+
+                    <div id="signupAlert" class="alert-pro">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span id="signupAlertText">Error</span>
+                    </div>
+
+                </form>
+
+                <p class="login-link">
+                    Already have an account?
+                    <a href="index.html">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function togglePwd(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'bi bi-eye-slash-fill';
+    } else {
+        input.type = 'password';
+        icon.className = 'bi bi-eye-fill';
+    }
+}
+
+document.getElementById('password').addEventListener('input', (e) => {
+    const pwd = e.target.value;
+    const bar = document.getElementById('strengthBar');
+    const text = document.getElementById('strengthText');
+    bar.className = 'strength-bar-fill';
+    text.className = 'strength-text';
+
+    if (pwd.length === 0) { text.textContent = ''; return; }
+
+    let strength = 0;
+    if (pwd.length >= 8) strength++;
+    if (/[A-Z]/.test(pwd)) strength++;
+    if (/[0-9]/.test(pwd)) strength++;
+    if (/[^A-Za-z0-9]/.test(pwd)) strength++;
+
+    if (strength <= 1) {
+        bar.classList.add('weak');
+        text.classList.add('weak');
+        text.textContent = 'Weak password';
+    } else if (strength <= 3) {
+        bar.classList.add('medium');
+        text.classList.add('medium');
+        text.textContent = 'Medium strength';
+    } else {
+        bar.classList.add('strong');
+        text.classList.add('strong');
+        text.textContent = 'Strong password ✓';
+    }
+});
+
+document.getElementById('signupForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    hideAlert();
+
+    const fullName = document.getElementById('fullName').value.trim();
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (!fullName || !username || !email || !password || !confirmPassword) {
+        showAlert('Please fill in all fields', 'danger'); return;
+    }
+    if (fullName.length < 3) { showAlert('Full name must be at least 3 characters', 'danger'); return; }
+    if (username.length < 4) { showAlert('Username must be at least 4 characters', 'danger'); return; }
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) { showAlert('Username: letters, numbers, underscore only', 'danger'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showAlert('Please enter a valid email', 'danger'); return; }
+    if (password.length < 8) { showAlert('Password must be at least 8 characters', 'danger'); return; }
+    if (!/[A-Z]/.test(password)) { showAlert('Password must contain 1 uppercase letter', 'danger'); return; }
+    if (!/[0-9]/.test(password)) { showAlert('Password must contain 1 number', 'danger'); return; }
+    if (password !== confirmPassword) { showAlert('Passwords do not match', 'danger'); return; }
+
+    const btn = document.getElementById('signupBtn');
+    const btnText = document.getElementById('signupBtnText');
+    const originalText = btnText.textContent;
+    btn.disabled = true;
+    btnText.innerHTML = 'Creating account...';
+
+    setTimeout(() => {
+        let admins = JSON.parse(localStorage.getItem('sea_admins') || '[]');
+
+        if (admins.some(a => a.username === username)) {
+            showAlert('Username already taken. Please choose another.', 'danger');
+            btn.disabled = false;
+            btnText.textContent = originalText;
+            return;
+        }
+
+        admins.push({
+            fullName, username, email, password,
+            createdAt: new Date().toISOString()
+        });
+        localStorage.setItem('sea_admins', JSON.stringify(admins));
+
+        showAlert('✅ Admin account created! Redirecting to login...', 'success');
+
+        setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+    }, 1000);
+});
+
+function showAlert(msg, type) {
+    const box = document.getElementById('signupAlert');
+    const text = document.getElementById('signupAlertText');
+    const icon = box.querySelector('i');
+    text.textContent = msg;
+    box.className = 'alert-pro ' + type;
+    icon.className = type === 'success' ? 'bi bi-check-circle-fill' : 'bi bi-exclamation-triangle-fill';
+}
+
+function hideAlert() {
+    document.getElementById('signupAlert').className = 'alert-pro';
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halls — SEA | Matoshri College of Engineering & RC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+    :root {
+        --primary: #0b3d91;
+        --primary-dark: #082c6b;
+        --accent: #c9a227;
+        --accent-light: #e6c458;
+        --dark: #0f172a;
+        --gray-700: #334155;
+        --gray-500: #64748b;
+        --success: #059669;
+        --danger: #dc2626;
+        --warning: #d97706;
+        --info: #0891b2;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f6fa;
+        color: var(--dark);
+        min-height: 100vh;
+        line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    .navbar-pro {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+    .navbar-pro .container-pro {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1300px;
+        padding: 0 24px;
+        margin: 0 auto;
+        gap: 12px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand-icon {
+        width: 44px; height: 44px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 11px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-brand-icon svg { width: 100%; height: 100%; }
+    .nav-brand-text h5 { margin: 0; font-size: 1rem; font-family: 'Playfair Display', serif; }
+    .nav-brand-text small { color: var(--gray-500); font-size: 0.72rem; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px 6px 6px;
+        background: #f1f5f9;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--gray-700);
+    }
+    .user-avatar {
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), #a8841a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .btn-logout {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 9px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-700);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .btn-logout:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+
+    .admin-layout { display: flex; min-height: calc(100vh - 70px); }
+    .sidebar {
+        width: 260px;
+        background: white;
+        border-right: 1px solid #e2e8f0;
+        padding: 24px 0;
+        position: sticky;
+        top: 70px;
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+        flex-shrink: 0;
+    }
+    .sidebar-section { padding: 0 16px; margin-bottom: 24px; }
+    .sidebar-section-title {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--gray-500);
+        font-weight: 700;
+        padding: 0 12px;
+        margin-bottom: 8px;
+    }
+    .sidebar-menu { list-style: none; }
+    .sidebar-menu li { margin-bottom: 2px; }
+    .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 9px;
+        color: var(--gray-700);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.25s;
+    }
+    .sidebar-menu a i { font-size: 1rem; color: var(--gray-500); width: 20px; }
+    .sidebar-menu a:hover { background: #f1f5f9; color: var(--primary); }
+    .sidebar-menu a:hover i { color: var(--primary); }
+    .sidebar-menu a.active {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        box-shadow: 0 4px 12px rgba(11, 61, 145, 0.25);
+    }
+    .sidebar-menu a.active i { color: white; }
+
+    .admin-main { flex: 1; padding: 28px 32px 40px; overflow-x: hidden; }
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .page-header-text h1 { font-size: 1.6rem; margin-bottom: 4px; }
+    .page-header-text p { color: var(--gray-500); font-size: 0.88rem; margin: 0; }
+    .btn-primary-pro {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        padding: 11px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        box-shadow: 0 6px 16px rgba(11, 61, 145, 0.25);
+        font-family: 'Inter', sans-serif;
+    }
+    .btn-primary-pro:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11, 61, 145, 0.35); }
+
+    .halls-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 18px;
+        margin-bottom: 32px;
+    }
+
+    .hall-card {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+        transition: all 0.3s;
+        position: relative;
+    }
+    .hall-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
+        border-color: #cbd5e1;
+    }
+
+    .hall-card-header {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        padding: 20px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .hall-card-header::before {
+        content: '';
+        position: absolute;
+        top: -50px; right: -50px;
+        width: 150px; height: 150px;
+        background: radial-gradient(circle, rgba(201, 162, 39, 0.2), transparent 70%);
+        border-radius: 50%;
+    }
+    .hall-card-header .hall-info { position: relative; z-index: 2; }
+    .hall-card-header .hall-label {
+        font-size: 0.66rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--accent-light);
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+    .hall-card-header h3 {
+        font-size: 1.4rem;
+        color: white;
+        margin: 0;
+        font-family: 'Playfair Display', serif;
+        line-height: 1.1;
+    }
+    .hall-card-header .hall-icon {
+        width: 54px; height: 54px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        color: var(--accent-light);
+        flex-shrink: 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        position: relative;
+        z-index: 2;
+    }
+
+    .hall-card-body { padding: 20px 22px; }
+    .hall-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+    .hall-stat-item {
+        text-align: center;
+        padding: 12px 6px;
+        background: #f8fafc;
+        border-radius: 10px;
+        border: 1px solid #f1f5f9;
+    }
+    .hall-stat-item h4 {
+        font-size: 1.2rem;
+        margin: 0 0 2px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        color: var(--primary);
+    }
+    .hall-stat-item small {
+        font-size: 0.62rem;
+        color: var(--gray-500);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        font-weight: 600;
+    }
+
+    .hall-meta {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 12px;
+        background: #eff6ff;
+        border-radius: 9px;
+        margin-bottom: 16px;
+        font-size: 0.78rem;
+        color: var(--primary);
+        font-weight: 600;
+    }
+    .hall-meta i { font-size: 0.9rem; }
+
+    .hall-actions { display: flex; gap: 8px; }
+    .hall-btn {
+        flex: 1;
+        padding: 9px 12px;
+        border-radius: 9px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-700);
+        font-size: 0.78rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition: all 0.25s;
+        font-family: 'Inter', sans-serif;
+    }
+    .hall-btn:hover { border-color: var(--primary); color: var(--primary); background: #eff6ff; }
+    .hall-btn.delete:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+
+    .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 80px 20px;
+        background: white;
+        border-radius: 16px;
+        border: 1px dashed #cbd5e1;
+        color: var(--gray-500);
+    }
+    .empty-state i { font-size: 3.5rem; color: #cbd5e1; margin-bottom: 14px; display: block; }
+    .empty-state h4 {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.1rem;
+        color: var(--gray-700);
+        margin-bottom: 6px;
+    }
+
+    /* ⭐ NEW: ASSIGN SECTION ⭐ */
+    .section-card {
+        background: white;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        padding: 26px;
+        margin-bottom: 24px;
+    }
+    .section-title {
+        font-size: 1.05rem;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e2e8f0;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+    }
+    .section-title i { color: var(--primary); font-size: 1.15rem; }
+    .section-title small {
+        font-size: 0.72rem;
+        color: var(--gray-500);
+        font-weight: 500;
+        margin-left: auto;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* FORM */
+    .assign-form {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 18px;
+    }
+    .form-group label {
+        display: block;
+        font-size: 0.76rem;
+        color: var(--gray-700);
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+    .form-group label i { color: var(--primary); margin-right: 4px; }
+    .form-group select,
+    .form-group input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-family: 'Inter', sans-serif;
+        color: var(--dark);
+        background: white;
+        transition: all 0.25s;
+    }
+    .form-group select:focus,
+    .form-group input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(11, 61, 145, 0.12);
+    }
+    .form-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .btn-form {
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        border: 1.5px solid transparent;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        transition: all 0.25s;
+    }
+    .btn-form-primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+    }
+    .btn-form-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(11, 61, 145, 0.3);
+    }
+    .btn-form-outline {
+        background: white;
+        border-color: #e2e8f0;
+        color: var(--gray-700);
+    }
+    .btn-form-outline:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    /* ASSIGNMENT TABLE */
+    .assign-table-wrap { overflow-x: auto; }
+    .assign-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+    }
+    .assign-table thead { background: #f8fafc; }
+    .assign-table th {
+        padding: 12px 16px;
+        text-align: left;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--gray-500);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .assign-table td {
+        padding: 14px 16px;
+        font-size: 0.85rem;
+        border-top: 1px solid #f1f5f9;
+        vertical-align: middle;
+    }
+    .assign-table tbody tr:hover { background: #f8fafc; }
+    .assign-table .hall-name {
+        font-weight: 700;
+        color: var(--dark);
+    }
+    .assign-table .sup-name {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .assign-table .sup-avatar {
+        width: 30px; height: 30px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.72rem;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+    .badge-exam {
+        display: inline-block;
+        background: #eff6ff;
+        color: var(--primary);
+        padding: 3px 10px;
+        border-radius: 6px;
+        font-size: 0.72rem;
+        font-weight: 600;
+    }
+    .btn-remove-row {
+        background: none;
+        border: none;
+        color: var(--danger);
+        cursor: pointer;
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 8px;
+        transition: all 0.2s;
+        font-family: 'Inter', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .btn-remove-row:hover { background: #fee2e2; }
+
+    .empty-assign {
+        text-align: center;
+        padding: 50px 20px;
+        color: var(--gray-500);
+        font-size: 0.88rem;
+    }
+    .empty-assign i {
+        font-size: 2.6rem;
+        color: #cbd5e1;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    /* TOAST */
+    .toast-pro {
+        position: fixed;
+        top: 90px;
+        right: 24px;
+        background: var(--success);
+        color: white;
+        padding: 14px 22px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        box-shadow: 0 8px 24px rgba(5, 150, 105, 0.3);
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 340px;
+    }
+    .toast-pro.show { opacity: 1; transform: translateY(0); }
+    .toast-pro.error { background: var(--danger); box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3); }
+
+    .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--gray-700);
+        font-size: 1.4rem;
+        cursor: pointer;
+        padding: 8px;
+    }
+
+    @media (max-width: 992px) {
+        .sidebar { position: fixed; left: -280px; top: 70px; z-index: 999; transition: left 0.3s; }
+        .sidebar.open { left: 0; }
+        .mobile-menu-btn { display: block; }
+        .admin-main { padding: 20px 16px 32px; }
+        .halls-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-pro .container-pro { padding: 0 14px; }
+        .user-chip span { display: none; }
+        .user-chip { padding: 6px; }
+        .btn-logout span { display: none; }
+        .btn-logout { padding: 8px 12px; }
+        .page-header-text h1 { font-size: 1.3rem; }
+        .halls-grid { grid-template-columns: 1fr; }
+        .section-card { padding: 18px; }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar-pro">
+    <div class="container-pro">
+        <div class="nav-brand">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+            <div class="nav-brand-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e5bc6"/><stop offset="100%" stop-color="#082c6b"/>
+                        </linearGradient>
+                        <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e6c458"/><stop offset="100%" stop-color="#a8841a"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z" fill="url(#gg)"/>
+                    <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z" fill="url(#ng)"/>
+                    <text x="50" y="55" text-anchor="middle" font-family="Playfair Display, serif" font-size="24" font-weight="800" fill="url(#gg)">SEA</text>
+                </svg>
+            </div>
+            <div class="nav-brand-text">
+                <h5>SEA</h5>
+                <small>Admin Panel</small>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <div class="user-chip">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <span id="userName">Administrator</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="admin-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Main</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Management</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-students.html"><i class="bi bi-people-fill"></i> Students</a></li>
+                <li><a href="teacher-data.html"><i class="bi bi-person-badge-fill"></i> Teacher Data</a></li>
+                <li><a href="admin-halls.html" class="active"><i class="bi bi-building"></i> Halls</a></li>
+                <li><a href="exam-center.html"><i class="bi bi-journal-text"></i> Exam Center</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Seating</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-seating.html"><i class="bi bi-grid-3x3-gap-fill"></i> Generate Seating</a></li>
+                <li><a href="admin-notices.html"><i class="bi bi-megaphone-fill"></i> Notices</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="admin-main">
+
+        <div class="page-header">
+            <div class="page-header-text">
+                <h1>Exam Halls</h1>
+                <p id="hallsSubtitle">Manage exam hall capacity and layout</p>
+            </div>
+            <button class="btn-primary-pro" onclick="addHall()">
+                <i class="bi bi-building-add"></i>
+                Add New Hall
+            </button>
+        </div>
+
+        <!-- HALLS GRID -->
+        <div class="halls-grid" id="hallsGrid"></div>
+
+        <!-- ⭐ ASSIGN INVIGILATOR SECTION (Req #5) ⭐ -->
+        <div class="section-card">
+            <div class="section-title">
+                <i class="bi bi-person-plus-fill"></i>
+                Assign Invigilator to a Hall
+                <small>Requirement #5</small>
+            </div>
+
+            <form id="assignForm" onsubmit="handleAssign(event)">
+                <div class="assign-form">
+                    <div class="form-group">
+                        <label><i class="bi bi-building"></i> Select Hall</label>
+                        <select id="hallSelect" required>
+                            <option value="">-- Choose Hall --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="bi bi-person-badge-fill"></i> Select Invigilator</label>
+                        <select id="supervisorSelect" required>
+                            <option value="">-- Choose Invigilator --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="bi bi-journal-text"></i> Select Exam</label>
+                        <select id="examSelect" required>
+                            <option value="">-- Choose Exam --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="bi bi-calendar-event"></i> Exam Date</label>
+                        <input type="date" id="examDate" required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-form btn-form-primary">
+                        <i class="bi bi-check2-circle"></i> Assign Invigilator
+                    </button>
+                    <button type="button" class="btn-form btn-form-outline" onclick="resetAssignForm()">
+                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ⭐ CURRENT ASSIGNMENTS ⭐ -->
+        <div class="section-card">
+            <div class="section-title">
+                <i class="bi bi-list-check"></i>
+                Current Hall Assignments
+                <small id="assignCountLabel">0 assignments</small>
+            </div>
+
+            <div class="assign-table-wrap">
+                <table class="assign-table">
+                    <thead>
+                        <tr>
+                            <th>Hall</th>
+                            <th>Invigilator</th>
+                            <th>Exam</th>
+                            <th>Date</th>
+                            <th style="width:110px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="assignTableBody">
+                        <!-- filled by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<div class="toast-pro" id="toast">
+    <i class="bi bi-check-circle-fill"></i>
+    <span id="toastMsg">Saved</span>
+</div>
+
+<script>
+/* ============ AUTH ============ */
+const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+if (!user.success || user.role !== 'admin') {
+    window.location.href = 'index.html';
+}
+document.getElementById('userName').textContent = user.name || 'Admin';
+document.getElementById('userAvatar').textContent = (user.name || 'A').charAt(0).toUpperCase();
+
+/* ============ HALLS DATA (Matoshri Exam Halls) ============ */
+let halls = [
+    { id: 1, hallNumber: 'Hall A', rows: 5, columns: 6, block: 'Academic Block A' },
+    { id: 2, hallNumber: 'Hall B', rows: 5, columns: 6, block: 'Academic Block A' },
+    { id: 3, hallNumber: 'Hall C', rows: 6, columns: 6, block: 'Academic Block B' },
+    { id: 4, hallNumber: 'Hall D', rows: 6, columns: 8, block: 'Academic Block B' }
+];
+
+/* ============ MASTER DATA (for assigns) ============ */
+const SUPERVISORS_KEY = 'master-supervisors';
+const EXAMS_KEY = 'master-exams';
+const ASSIGN_KEY = 'assignments';
+
+function getMaster(key, defaults) {
+    const stored = localStorage.getItem(key);
+    if (stored) {
+        try { return JSON.parse(stored); } catch(e) { return defaults; }
+    }
+    localStorage.setItem(key, JSON.stringify(defaults));
+    return defaults;
+}
+
+const SUPERVISORS = getMaster(SUPERVISORS_KEY, [
+    { id: 'SUP1', name: 'Prof. Rao' },
+    { id: 'SUP2', name: 'Prof. Menon' },
+    { id: 'SUP3', name: 'Prof. Khan' },
+    { id: 'SUP4', name: 'Prof. Sharma' }
+]);
+
+const EXAMS = getMaster(EXAMS_KEY, [
+    { id: 'E1', name: 'DBMS Final' },
+    { id: 'E2', name: 'Operating Systems Final' },
+    { id: 'E3', name: 'Computer Networks Final' }
+]);
+
+let assignments = JSON.parse(localStorage.getItem(ASSIGN_KEY) || '[]');
+
+/* ============ HALLS RENDER (existing — untouched) ============ */
+function renderHalls() {
+    const grid = document.getElementById('hallsGrid');
+
+    if (halls.length === 0) {
+        grid.innerHTML = `
+            <div class="empty-state">
+                <i class="bi bi-building"></i>
+                <h4>No halls found</h4>
+                <p>Add your first exam hall to get started</p>
+            </div>
+        `;
+        document.getElementById('hallsSubtitle').textContent = 'No halls added yet';
+        return;
+    }
+
+    const totalSeats = halls.reduce((sum, h) => sum + (h.rows * h.columns), 0);
+    document.getElementById('hallsSubtitle').textContent =
+        `${halls.length} halls • ${totalSeats} total seats available`;
+
+    grid.innerHTML = halls.map(h => {
+        const capacity = h.rows * h.columns;
+        return `
+            <div class="hall-card">
+                <div class="hall-card-header">
+                    <div class="hall-info">
+                        <div class="hall-label">Block ${h.block}</div>
+                        <h3>${h.hallNumber.replace('Block ' + h.block + ' - ', '')}</h3>
+                    </div>
+                    <div class="hall-icon">
+                        <i class="bi bi-building"></i>
+                    </div>
+                </div>
+                <div class="hall-card-body">
+                    <div class="hall-stats">
+                        <div class="hall-stat-item"><h4>${h.rows}</h4><small>Rows</small></div>
+                        <div class="hall-stat-item"><h4>${h.columns}</h4><small>Cols</small></div>
+                        <div class="hall-stat-item"><h4>${capacity}</h4><small>Seats</small></div>
+                    </div>
+                    <div class="hall-meta">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        ${h.hallNumber}
+                    </div>
+                    <div class="hall-actions">
+                        <button class="hall-btn" onclick="editHall(${h.id})">
+                            <i class="bi bi-pencil-fill"></i> Edit
+                        </button>
+                        <button class="hall-btn delete" onclick="deleteHall(${h.id})">
+                            <i class="bi bi-trash-fill"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    /* Refresh assign dropdown whenever halls change */
+    populateHallSelect();
+}
+
+function addHall() {
+    const hallNumber = prompt('Enter hall name (e.g. Block A - Room 305):');
+    if (!hallNumber) return;
+    const rows = prompt('Enter number of rows:');
+    if (!rows || isNaN(rows) || parseInt(rows) < 1) { alert('Please enter a valid number of rows'); return; }
+    const columns = prompt('Enter number of columns:');
+    if (!columns || isNaN(columns) || parseInt(columns) < 1) { alert('Please enter a valid number of columns'); return; }
+    const block = prompt('Enter block (A/B/C):') || 'A';
+
+    halls.push({
+        id: Date.now(),
+        hallNumber: hallNumber,
+        rows: parseInt(rows),
+        columns: parseInt(columns),
+        block: block.toUpperCase()
+    });
+    renderHalls();
+    alert('✅ Hall added successfully!');
+}
+
+function editHall(id) {
+    const h = halls.find(x => x.id === id);
+    if (!h) return;
+    const newName = prompt('Edit hall name:', h.hallNumber);
+    if (newName && newName.trim()) h.hallNumber = newName.trim();
+    const newRows = prompt('Edit number of rows:', h.rows);
+    if (newRows && !isNaN(newRows) && parseInt(newRows) > 0) h.rows = parseInt(newRows);
+    const newColumns = prompt('Edit number of columns:', h.columns);
+    if (newColumns && !isNaN(newColumns) && parseInt(newColumns) > 0) h.columns = parseInt(newColumns);
+    renderHalls();
+    alert('✅ Hall updated successfully!');
+}
+
+function deleteHall(id) {
+    const h = halls.find(x => x.id === id);
+    if (!h) return;
+    if (confirm(`Delete "${h.hallNumber}"?\n\nCapacity: ${h.rows * h.columns} seats\n\nThis action cannot be undone.`)) {
+        halls = halls.filter(x => x.id !== id);
+        renderHalls();
+        alert('✅ Hall deleted successfully!');
+    }
+}
+
+/* ============ POPULATE SELECTS ============ */
+function populateHallSelect() {
+    const sel = document.getElementById('hallSelect');
+    if (!sel) return;
+    sel.innerHTML = '<option value="">-- Choose Hall --</option>';
+    halls.forEach(h => {
+        const o = document.createElement('option');
+        /* use hallNumber as id — since existing halls have numeric ids but no string key */
+        o.value = 'H' + h.id;
+        o.textContent = h.hallNumber;
+        o.dataset.hallName = h.hallNumber;
+        o.dataset.hallBlock = h.block;
+        sel.appendChild(o);
+    });
+}
+
+function populateSelect(elId, arr, placeholder) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    el.innerHTML = `<option value="">${placeholder}</option>`;
+    arr.forEach(item => {
+        const o = document.createElement('option');
+        o.value = item.id;
+        o.textContent = item.name;
+        el.appendChild(o);
+    });
+}
+
+populateHallSelect();
+populateSelect('supervisorSelect', SUPERVISORS, '-- Choose Invigilator --');
+populateSelect('examSelect', EXAMS, '-- Choose Exam --');
+
+/* Default date = today */
+document.getElementById('examDate').valueAsDate = new Date();
+
+/* ============ HANDLE ASSIGN ============ */
+function handleAssign(e) {
+    e.preventDefault();
+
+    const hallId    = document.getElementById('hallSelect').value;
+    const supId     = document.getElementById('supervisorSelect').value;
+    const examId    = document.getElementById('examSelect').value;
+    const date      = document.getElementById('examDate').value;
+    const hallOpt   = document.getElementById('hallSelect').selectedOptions[0];
+
+    if (!hallId || !supId || !examId || !date) {
+        showToast('Please fill all fields', true);
+        return;
+    }
+
+    const hallName = hallOpt ? hallOpt.dataset.hallName : '';
+    const sup      = SUPERVISORS.find(s => s.id === supId);
+    const exam     = EXAMS.find(x => x.id === examId);
+
+    /* Conflict: same invigilator, same date, different hall */
+    const conflict = assignments.find(a =>
+        a.supervisorId === supId && a.date === date && a.hallId !== hallId
+    );
+    if (conflict) {
+        showToast('Invigilator already assigned to another hall on this date', true);
+        return;
+    }
+
+    /* Duplicate: same hall + exam + date */
+    const dup = assignments.find(a =>
+        a.hallId === hallId && a.examId === examId && a.date === date
+    );
+    if (dup) {
+        showToast('This hall already has an invigilator for this exam', true);
+        return;
+    }
+
+    assignments.push({
+        id: 'A' + Date.now(),
+        hallId,
+        hallName,
+        supervisorId: supId,
+        supervisorName: sup.name,
+        examId,
+        examName: exam.name,
+        date,
+        assignedAt: new Date().toISOString()
+    });
+
+    saveAndRender();
+    resetAssignForm();
+    showToast('Invigilator assigned successfully');
+}
+
+function resetAssignForm() {
+    document.getElementById('assignForm').reset();
+    document.getElementById('examDate').valueAsDate = new Date();
+}
+
+function removeAssignment(id) {
+    if (!confirm('Remove this assignment?')) return;
+    assignments = assignments.filter(a => a.id !== id);
+    saveAndRender();
+    showToast('Assignment removed');
+}
+
+function saveAndRender() {
+    localStorage.setItem(ASSIGN_KEY, JSON.stringify(assignments));
+    renderAssignTable();
+}
+
+function renderAssignTable() {
+    const tbody = document.getElementById('assignTableBody');
+    const countLabel = document.getElementById('assignCountLabel');
+
+    countLabel.textContent = assignments.length + ' assignment' + (assignments.length !== 1 ? 's' : '');
+
+    if (assignments.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    <div class="empty-assign">
+                        <i class="bi bi-inbox"></i>
+                        No assignments yet. Assign an invigilator above.
+                    </div>
+                </td>
+            </tr>`;
+        return;
+    }
+
+    tbody.innerHTML = assignments.map(a => `
+        <tr>
+            <td><span class="hall-name">${a.hallName || '—'}</span></td>
+            <td>
+                <div class="sup-name">
+                    <div class="sup-avatar">${(a.supervisorName || '?').charAt(0)}</div>
+                    <span>${a.supervisorName || '—'}</span>
+                </div>
+            </td>
+            <td><span class="badge-exam">${a.examName || '—'}</span></td>
+            <td>${formatDate(a.date)}</td>
+            <td>
+                <button class="btn-remove-row" onclick="removeAssignment('${a.id}')">
+                    <i class="bi bi-trash"></i> Remove
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+/* ============ HELPERS ============ */
+function formatDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+let toastTimer;
+function showToast(msg, isError = false) {
+    const t = document.getElementById('toast');
+    const icon = t.querySelector('i');
+    document.getElementById('toastMsg').textContent = msg;
+    t.className = 'toast-pro';
+    if (isError) t.classList.add('error');
+    icon.className = isError ? 'bi bi-exclamation-circle-fill' : 'bi bi-check-circle-fill';
+    requestAnimationFrame(() => t.classList.add('show'));
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+function logout() { sessionStorage.clear(); window.location.href = 'index.html'; }
+
+/* ============ INIT ============ */
+renderHalls();
+renderAssignTable();
+</script>
+
+</body>
+</html>
+

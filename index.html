@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEA — Login | Matoshri College of Engineering & RC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+    :root {
+        --primary: #0b3d91;
+        --primary-dark: #082c6b;
+        --accent: #c9a227;
+        --accent-light: #e6c458;
+        --dark: #0f172a;
+        --gray-700: #334155;
+        --gray-500: #64748b;
+        --success: #059669;
+        --danger: #dc2626;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f6fa;
+        color: var(--dark);
+        height: 100vh;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
+
+    .login-page { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    .login-main { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+
+    .login-brand-panel {
+        flex: 1.1;
+        background:
+            linear-gradient(135deg, rgba(11, 61, 145, 0.94), rgba(8, 44, 107, 0.98)),
+            url('https://images.unsplash.com/photo-1562774053-701939374585?w=1600') center/cover;
+        background-blend-mode: multiply;
+        color: white;
+        padding: 48px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-brand-panel::before {
+        content: '';
+        position: absolute;
+        top: -100px; right: -100px;
+        width: 400px; height: 400px;
+        background: radial-gradient(circle, rgba(201, 162, 39, 0.18), transparent 70%);
+        border-radius: 50%;
+    }
+
+    .brand-header { display: flex; align-items: center; gap: 16px; position: relative; z-index: 2; }
+
+    .sea-emblem {
+        width: 68px; height: 68px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        padding: 6px;
+        filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25));
+        overflow: hidden;
+    }
+
+    .sea-emblem svg { width: 100%; height: 100%; display: block; }
+
+    .brand-text h1 {
+        color: white;
+        font-size: 1.85rem;
+        margin: 0;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        font-family: 'Playfair Display', serif;
+        line-height: 1;
+    }
+
+    .brand-text .subtitle {
+        color: var(--accent-light);
+        font-size: 0.6rem;
+        margin: 8px 0 0;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+    }
+
+    .brand-text .subtitle::before {
+        content: '';
+        display: inline-block;
+        width: 18px;
+        height: 1px;
+        background: var(--accent-light);
+    }
+
+    .brand-hero { position: relative; z-index: 2; max-width: 500px; margin: auto 0; padding: 24px 0; }
+
+    .brand-hero .badge-line {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(201, 162, 39, 0.15);
+        border: 1px solid rgba(201, 162, 39, 0.45);
+        color: var(--accent-light);
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+    }
+
+    .brand-hero h2 {
+        color: white;
+        font-size: 1.9rem;
+        line-height: 1.25;
+        margin-bottom: 16px;
+        font-weight: 700;
+    }
+
+    .brand-hero h2 span { color: var(--accent-light); font-style: italic; }
+
+    .brand-hero p {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.85rem;
+        line-height: 1.65;
+        margin-bottom: 24px;
+        max-width: 440px;
+    }
+
+    .brand-features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 380px; }
+
+    .feature-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px 12px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 14px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        min-height: 110px;
+        text-align: center;
+    }
+
+    .feature-item:hover {
+        background: rgba(255, 255, 255, 0.12);
+        transform: translateY(-3px);
+        border-color: rgba(201, 162, 39, 0.5);
+    }
+
+    .feature-item i { font-size: 1.6rem; color: var(--accent-light); margin-bottom: 2px; }
+    .feature-item div strong { display: block; font-size: 0.75rem; color: white; font-weight: 700; line-height: 1.25; }
+    .feature-item div small { color: rgba(255, 255, 255, 0.65); font-size: 0.64rem; line-height: 1.25; }
+
+    .login-form-panel {
+        flex: 0.9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        position: relative;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 50% 0%, rgba(11, 61, 145, 0.05), transparent 50%),
+            radial-gradient(circle at 100% 100%, rgba(201, 162, 39, 0.04), transparent 50%),
+            linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+    }
+
+    .login-form-panel::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(11, 61, 145, 0.06) 1px, transparent 1px);
+        background-size: 22px 22px;
+        pointer-events: none;
+        opacity: 0.6;
+        mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 75%);
+        -webkit-mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 75%);
+    }
+
+    .login-form-wrap {
+        width: 100%;
+        max-width: 340px;
+        position: relative;
+        z-index: 2;
+        animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes slideInRight {
+        from { opacity: 0; transform: translateX(20px); }
+        to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .form-emblem {
+        display: none;
+        width: 56px; height: 56px;
+        margin: 0 auto 12px;
+        background: white;
+        border-radius: 10px;
+        padding: 5px;
+        box-shadow: 0 4px 12px rgba(11, 61, 145, 0.1);
+        overflow: hidden;
+    }
+
+    .form-emblem svg { width: 100%; height: 100%; display: block; }
+
+    .form-head { margin-bottom: 14px; text-align: center; }
+
+    .form-head .welcome-tag {
+        display: inline-block;
+        color: var(--primary);
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+
+    .form-head h3 { font-size: 1.35rem; margin-bottom: 3px; color: var(--dark); }
+    .form-head p { color: var(--gray-500); font-size: 0.76rem; }
+
+    .role-tabs-pro {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+        margin-bottom: 14px;
+        padding: 4px;
+        background: #eef2f8;
+        border-radius: 11px;
+    }
+
+    .role-tab-pro {
+        padding: 8px 4px;
+        border-radius: 8px;
+        border: none;
+        background: transparent;
+        color: var(--gray-500);
+        font-size: 0.62rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .role-tab-pro i { font-size: 0.95rem; }
+    .role-tab-pro:hover { color: var(--primary); }
+    .role-tab-pro.active {
+        background: white;
+        color: var(--primary);
+        box-shadow: 0 3px 10px rgba(11, 61, 145, 0.1);
+    }
+
+    .form-group-pro { margin-bottom: 10px; position: relative; }
+
+    .form-group-pro label {
+        display: block;
+        font-size: 0.6rem;
+        font-weight: 600;
+        color: var(--gray-700);
+        margin-bottom: 4px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .input-wrap { position: relative; }
+
+    .input-wrap i.field-icon {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-500);
+        font-size: 0.82rem;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .form-group-pro input,
+    .form-select-pro {
+        width: 100%;
+        padding: 10px 11px 10px 33px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        color: var(--dark);
+        background: #ffffff;
+        outline: none;
+        transition: all 0.25s;
+    }
+
+    .form-select-pro {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        padding-right: 28px;
+        cursor: pointer;
+    }
+
+    .form-group-pro input:focus,
+    .form-select-pro:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(11, 61, 145, 0.08);
+    }
+
+    .form-group-pro input::placeholder { color: #94a3b8; font-size: 0.76rem; }
+
+    .student-extra {
+        background: linear-gradient(135deg, #f8fafc, #eef4ff);
+        padding: 10px;
+        border-radius: 9px;
+        border: 1px dashed #b8cdf0;
+        margin-bottom: 12px;
+    }
+
+    .student-extra-label {
+        font-size: 0.56rem;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    #passwordGroup { display: none; }
+
+    .btn-login {
+        width: 100%;
+        padding: 11px 18px;
+        border-radius: 8px;
+        border: none;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        box-shadow: 0 6px 16px rgba(11, 61, 145, 0.22);
+        margin-top: 6px;
+    }
+
+    .btn-login:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 22px rgba(11, 61, 145, 0.3);
+    }
+    .btn-login:disabled { cursor: not-allowed; opacity: 0.85; }
+
+    .alert-pro {
+        padding: 8px 11px;
+        border-radius: 8px;
+        font-size: 0.7rem;
+        margin-top: 10px;
+        display: none;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .alert-pro.danger { display: flex; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+    .alert-pro.success { display: flex; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+
+    .login-help {
+        text-align: center;
+        margin-top: 12px;
+        font-size: 0.66rem;
+        color: var(--gray-500);
+    }
+    .login-help a { color: var(--primary); font-weight: 600; text-decoration: none; }
+
+    .brand-footer {
+        background: linear-gradient(135deg, #051d4a 0%, #041533 100%);
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.7rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 48px;
+        border-top: 1px solid rgba(201, 162, 39, 0.25);
+        flex-shrink: 0;
+        position: relative;
+    }
+
+    .brand-footer::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.4), transparent);
+    }
+
+    .brand-footer span { display: flex; align-items: center; gap: 5px; }
+    .brand-footer i { color: var(--accent-light); font-size: 0.8rem; }
+    .brand-footer .footer-links { display: flex; gap: 18px; }
+    .brand-footer .footer-links a {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    .brand-footer .footer-links a:hover { color: var(--accent-light); }
+
+    @media (max-width: 992px) {
+        html, body { overflow: auto; }
+        .login-page { height: auto; min-height: 100vh; }
+        .login-main { flex-direction: column; overflow: visible; }
+        .login-brand-panel { padding: 32px 24px; }
+        .brand-hero { margin: 20px 0; padding: 0; }
+        .brand-hero h2 { font-size: 1.4rem; }
+        .login-form-panel { padding: 24px; }
+        .form-emblem { display: block; }
+        .login-form-wrap { max-width: 380px; }
+        .brand-footer { padding: 12px 24px; flex-direction: column; gap: 6px; text-align: center; }
+    }
+
+    @media (max-width: 576px) {
+        .brand-hero h2 { font-size: 1.2rem; }
+        .form-head h3 { font-size: 1.25rem; }
+        .login-brand-panel { padding: 24px 18px; }
+        .sea-emblem { width: 56px; height: 56px; }
+        .brand-text h1 { font-size: 1.55rem; }
+        .brand-text .subtitle { font-size: 0.5rem; letter-spacing: 1.6px; }
+        .login-form-wrap { max-width: 100%; }
+        .brand-features { gap: 8px; }
+        .feature-item { padding: 14px 10px; min-height: 100px; }
+        .feature-item i { font-size: 1.4rem; }
+        .feature-item div strong { font-size: 0.7rem; }
+        .feature-item div small { font-size: 0.58rem; }
+        .brand-footer { padding: 10px 18px; font-size: 0.62rem; }
+    }
+    </style>
+</head>
+<body>
+
+<div class="login-page">
+    <div class="login-main">
+
+        <!-- LEFT PANEL -->
+        <div class="login-brand-panel">
+            <div class="brand-header">
+                <div class="sea-emblem">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#e6c458"/>
+                                <stop offset="50%" stop-color="#c9a227"/>
+                                <stop offset="100%" stop-color="#a8841a"/>
+                            </linearGradient>
+                            <linearGradient id="navyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#1e5bc6"/>
+                                <stop offset="100%" stop-color="#082c6b"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z"
+                              fill="url(#goldGrad)" stroke="#8a6a10" stroke-width="1"/>
+                        <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z"
+                              fill="url(#navyGrad)"/>
+                        <path d="M22 68 Q32 62 42 68 Q52 74 62 68 Q72 62 80 68"
+                              fill="none" stroke="url(#goldGrad)" stroke-width="2.5" stroke-linecap="round"/>
+                        <text x="50" y="48" text-anchor="middle" font-family="Playfair Display, serif"
+                              font-size="24" font-weight="800" fill="url(#goldGrad)" letter-spacing="1">SEA</text>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>SEA</h1>
+                    <p class="subtitle">Matoshri College of Engineering &amp; RC, Nashik</p>
+                </div>
+            </div>
+
+            <div class="brand-hero">
+                <div class="badge-line">
+                    <i class="bi bi-award-fill"></i>
+                    Official Examination Portal
+                </div>
+                <h2>Seamless Seat <span>Allotment &amp; Verification</span> System</h2>
+                <p>
+                    An integrated platform for automated seat allocation, QR-based entry verification, and real-time attendance tracking — Matoshri College of Engineering and Research Centre, Eklahare, Nashik.
+                </p>
+                <div class="brand-features">
+                    <div class="feature-item">
+                        <i class="bi bi-grid-3x3-gap-fill"></i>
+                        <div>
+                            <strong>Auto Seat Allocation</strong>
+                            <small>Anti-malpractice</small>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-qr-code-scan"></i>
+                        <div>
+                            <strong>QR Entry Pass</strong>
+                            <small>Contactless</small>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-person-check-fill"></i>
+                        <div>
+                            <strong>Instant Attendance</strong>
+                            <small>Real-time log</small>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-file-earmark-pdf-fill"></i>
+                        <div>
+                            <strong>Digital Seat Slip</strong>
+                            <small>PDF download</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="login-form-panel">
+            <div class="login-form-wrap">
+
+                <div class="form-emblem">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#e6c458"/>
+                                <stop offset="100%" stop-color="#a8841a"/>
+                            </linearGradient>
+                            <linearGradient id="n2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#1e5bc6"/>
+                                <stop offset="100%" stop-color="#082c6b"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z" fill="url(#g2)"/>
+                        <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z" fill="url(#n2)"/>
+                        <text x="50" y="55" text-anchor="middle" font-family="Playfair Display, serif"
+                              font-size="24" font-weight="800" fill="url(#g2)" letter-spacing="1">SEA</text>
+                    </svg>
+                </div>
+
+                <div class="form-head">
+                    <span class="welcome-tag">Welcome Back</span>
+                    <h3>Sign in to continue</h3>
+                    <p>Select your role and enter credentials</p>
+                </div>
+
+                <div class="role-tabs-pro">
+                    <button type="button" class="role-tab-pro active" data-role="student">
+                        <i class="bi bi-person-badge"></i>
+                        <span>Student</span>
+                    </button>
+                    <button type="button" class="role-tab-pro" data-role="invigilator">
+                        <i class="bi bi-shield-check"></i>
+                        <span>Invigilator</span>
+                    </button>
+                    <button type="button" class="role-tab-pro" data-role="admin">
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Admin</span>
+                    </button>
+                </div>
+
+                <form id="loginForm" autocomplete="off">
+
+                    <div id="studentExtraFields" class="student-extra">
+                        <div class="student-extra-label">
+                            <i class="bi bi-info-circle-fill"></i>
+                            Identify yourself (required for students)
+                        </div>
+
+                        <div class="form-group-pro">
+                            <label for="departmentSelect">Department</label>
+                            <div class="input-wrap">
+                                <i class="bi bi-building field-icon"></i>
+                                <select id="departmentSelect" class="form-select-pro">
+                                    <option value="">Select Department</option>
+                                    <option value="Computer Engineering">Computer Engineering</option>
+                                    <option value="Artificial Intelligence & Data Science">Artificial Intelligence & Data Science</option>
+                                    <option value="Mechanical">Mechanical</option>
+                                    <option value="Civil">Civil</option>
+                                    <option value="Electrical">Electrical</option>
+                                    <option value="IT">IT</option>
+                                    <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group-pro">
+                            <label for="yearSelect">Year of Study</label>
+                            <div class="input-wrap">
+                                <i class="bi bi-calendar3 field-icon"></i>
+                                <select id="yearSelect" class="form-select-pro">
+                                    <option value="">Select Year</option>
+                                    <option value="1">1st Year</option>
+                                    <option value="2">2nd Year</option>
+                                    <option value="3">3rd Year</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-pro">
+                        <label id="userIdLabel" for="userId">Enrollment Number</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-person-badge-fill field-icon" id="userIdIcon"></i>
+                            <input type="text" id="userId" placeholder="e.g. 2026CS001" required maxlength="30">
+                        </div>
+                    </div>
+
+                    <div class="form-group-pro" id="passwordGroup">
+                        <label for="password">Password</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-shield-lock-fill field-icon"></i>
+                            <input type="password" id="password" placeholder="Enter your password" maxlength="50">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-login" id="loginBtn">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        <span id="loginBtnText">Sign In as Student</span>
+                    </button>
+
+                    <div id="loginError" class="alert-pro">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span id="loginErrorText">Invalid credentials</span>
+                    </div>
+
+                </form>
+
+                <p class="login-help">
+                    <a href="forgot-password.html">Forgot Password?</a>
+                </p>
+
+                <p class="login-help">
+                    Don't have an admin account?
+                    <a href="admin-signup.html">Create Account</a>
+                </p>
+
+                <p class="login-help" style="margin-top: 6px;">
+                    Contact: <a href="mailto:examcell@matoshriengg.edu.in">examcell@matoshriengg.edu.in</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="brand-footer">
+        <span>
+            <i class="bi bi-c-circle"></i>
+            2026 SEA — Seat Exam Allotment
+        </span>
+        <div class="footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="mailto:examcell@matoshriengg.edu.in">Support</a>
+        </div>
+        <span>
+            <i class="bi bi-mortarboard-fill"></i>
+            Matoshri College of Engineering & RC • Academic Year 2026-27
+        </span>
+    </footer>
+</div>
+
+<script>
+let currentRole = 'student';
+
+const roleConfig = {
+    student: {
+        idLabel: 'Enrollment Number',
+        idPlaceholder: 'e.g. 2026CS001',
+        idIcon: 'bi-person-badge-fill',
+        btnText: 'Sign In as Student',
+        redirect: 'student-dashboard.html',
+        showExtra: true,
+        showPassword: false
+    },
+    invigilator: {
+        idLabel: 'Employee ID',
+        idPlaceholder: 'e.g. EMP101',
+        idIcon: 'bi-person-vcard-fill',
+        btnText: 'Sign In as Invigilator',
+        redirect: 'invigilator-dashboard.html',
+        showExtra: false,
+        showPassword: true
+    },
+    admin: {
+        idLabel: 'Username',
+        idPlaceholder: 'Enter admin username',
+        idIcon: 'bi-person-gear',
+        btnText: 'Sign In as Admin',
+        redirect: 'admin-dashboard.html',
+        showExtra: false,
+        showPassword: true
+    }
+};
+
+document.querySelectorAll('.role-tab-pro').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.role-tab-pro').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentRole = tab.dataset.role;
+        const cfg = roleConfig[currentRole];
+
+        document.getElementById('userIdLabel').textContent = cfg.idLabel;
+
+        const userIdInput = document.getElementById('userId');
+        const passwordInput = document.getElementById('password');
+        userIdInput.placeholder = cfg.idPlaceholder;
+        document.getElementById('userIdIcon').className = `bi ${cfg.idIcon} field-icon`;
+        document.getElementById('loginBtnText').textContent = cfg.btnText;
+
+        document.getElementById('studentExtraFields').style.display = cfg.showExtra ? 'block' : 'none';
+        document.getElementById('passwordGroup').style.display = cfg.showPassword ? 'block' : 'none';
+
+        userIdInput.value = '';
+        passwordInput.value = '';
+        hideError();
+
+        if (cfg.showExtra) {
+            document.getElementById('departmentSelect').value = '';
+            document.getElementById('yearSelect').value = '';
+        }
+        userIdInput.focus();
+    });
+});
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideError();
+
+    const userId = document.getElementById('userId').value.trim();
+    const cfg = roleConfig[currentRole];
+
+    if (!userId) { showError('Please fill in all fields'); return; }
+
+    if (currentRole === 'student') {
+        const department = document.getElementById('departmentSelect').value;
+        const year = document.getElementById('yearSelect').value;
+
+        if (!department) { showError('Please select your Department'); return; }
+        if (!year) { showError('Please select your Year'); return; }
+        if (!/^[0-9]{4}[A-Z]{2,4}[0-9]{3}$/i.test(userId)) {
+            showError('Enrollment Number format: YYYYBBBNNN (e.g. 2026CS001)');
+            return;
+        }
+    }
+
+    if (cfg.showPassword) {
+        const password = document.getElementById('password').value.trim();
+        if (!password) { showError('Please enter your password'); return; }
+        if (password.length < 4) { showError('Password must be at least 4 characters'); return; }
+    }
+
+    const btn = document.getElementById('loginBtn');
+    const btnText = document.getElementById('loginBtnText');
+    const originalText = btnText.textContent;
+    btn.disabled = true;
+    btnText.innerHTML = 'Signing in...';
+
+    setTimeout(() => {
+        let valid = false;
+        let demoName = '';
+        let employeeId = '';
+
+        if (currentRole === 'student') {
+            valid = true;
+            demoName = 'Rahul Sharma';
+        } else if (currentRole === 'invigilator') {
+            const password = document.getElementById('password').value.trim();
+            if (password === 'invigilator123') {
+                valid = true;
+                demoName = 'Prof. A. Deshmukh';
+                employeeId = userId;
+            }
+        } else if (currentRole === 'admin') {
+            const password = document.getElementById('password').value.trim();
+            if (password === 'admin123') {
+                valid = true;
+                demoName = 'Administrator';
+            }
+        }
+
+        if (!valid) {
+            showError('Invalid credentials. Please try again.');
+            btn.disabled = false;
+            btnText.textContent = originalText;
+            return;
+        }
+
+        sessionStorage.setItem('user', JSON.stringify({
+            success: true,
+            role: currentRole,
+            userId: 1,
+            enrollmentNo: userId,
+            employeeId: employeeId,
+            name: demoName,
+            department: document.getElementById('departmentSelect')?.value,
+            year: document.getElementById('yearSelect')?.value
+        }));
+
+        btnText.innerHTML = 'Success! Redirecting...';
+        btn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+
+        setTimeout(() => {
+            window.location.href = roleConfig[currentRole].redirect;
+        }, 600);
+    }, 600);
+});
+
+function showError(msg) {
+    const box = document.getElementById('loginError');
+    document.getElementById('loginErrorText').textContent = msg;
+    box.className = 'alert-pro danger';
+}
+function hideError() {
+    document.getElementById('loginError').className = 'alert-pro';
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('userId').focus();
+});
+
+document.getElementById('userId').addEventListener('input', (e) => {
+    if (currentRole === 'student') e.target.value = e.target.value.toUpperCase();
+});
+
+document.getElementById('userId').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const cfg = roleConfig[currentRole];
+        if (cfg.showPassword) {
+            document.getElementById('password').focus();
+        } else {
+            document.getElementById('loginBtn').click();
+        }
+    }
+});
+</script>
+
+</body>
+</html>
+

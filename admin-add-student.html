@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student — SEA | Matoshri College of Engineering & RC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+    :root {
+        --primary: #0b3d91;
+        --primary-dark: #082c6b;
+        --accent: #c9a227;
+        --accent-light: #e6c458;
+        --dark: #0f172a;
+        --gray-700: #334155;
+        --gray-500: #64748b;
+        --success: #059669;
+        --danger: #dc2626;
+        --warning: #d97706;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f6fa;
+        color: var(--dark);
+        min-height: 100vh;
+        line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    .navbar-pro {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+    .navbar-pro .container-pro {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1300px;
+        padding: 0 24px;
+        margin: 0 auto;
+        gap: 12px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand-icon {
+        width: 44px; height: 44px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 11px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-brand-icon svg { width: 100%; height: 100%; }
+    .nav-brand-text h5 { margin: 0; font-size: 1rem; font-family: 'Playfair Display', serif; }
+    .nav-brand-text small { color: var(--gray-500); font-size: 0.72rem; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px 6px 6px;
+        background: #f1f5f9;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--gray-700);
+    }
+    .user-avatar {
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), #a8841a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .btn-logout {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 9px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-700);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .btn-logout:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+
+    .admin-layout { display: flex; min-height: calc(100vh - 70px); }
+    .sidebar {
+        width: 260px;
+        background: white;
+        border-right: 1px solid #e2e8f0;
+        padding: 24px 0;
+        position: sticky;
+        top: 70px;
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+        flex-shrink: 0;
+    }
+    .sidebar-section { padding: 0 16px; margin-bottom: 24px; }
+    .sidebar-section-title {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--gray-500);
+        font-weight: 700;
+        padding: 0 12px;
+        margin-bottom: 8px;
+    }
+    .sidebar-menu { list-style: none; }
+    .sidebar-menu li { margin-bottom: 2px; }
+    .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 9px;
+        color: var(--gray-700);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.25s;
+    }
+    .sidebar-menu a i { font-size: 1rem; color: var(--gray-500); width: 20px; }
+    .sidebar-menu a:hover { background: #f1f5f9; color: var(--primary); }
+    .sidebar-menu a:hover i { color: var(--primary); }
+    .sidebar-menu a.active {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        box-shadow: 0 4px 12px rgba(11, 61, 145, 0.25);
+    }
+    .sidebar-menu a.active i { color: white; }
+
+    .admin-main { flex: 1; padding: 28px 32px 40px; overflow-x: hidden; }
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .page-header-text h1 { font-size: 1.6rem; margin-bottom: 4px; }
+    .page-header-text p { color: var(--gray-500); font-size: 0.88rem; margin: 0; }
+    .btn-back {
+        background: white;
+        color: var(--gray-700);
+        border: 1.5px solid #e2e8f0;
+        padding: 11px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+    .btn-back:hover { border-color: var(--primary); color: var(--primary); }
+
+    .form-card {
+        background: white;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        padding: 32px;
+        max-width: 900px;
+    }
+    .form-section {
+        margin-bottom: 28px;
+        padding-bottom: 28px;
+        border-bottom: 1px solid #f1f5f9;
+    }
+    .form-section:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+    .form-section-title {
+        font-size: 0.95rem;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        color: var(--dark);
+    }
+    .form-section-title i { color: var(--primary); font-size: 1.1rem; }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+    .form-group { position: relative; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--gray-700);
+        margin-bottom: 6px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+    .form-group label .required { color: var(--danger); margin-left: 2px; }
+
+    .input-wrap { position: relative; }
+    .input-wrap i.field-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-500);
+        font-size: 0.9rem;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 14px 12px 42px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 0.88rem;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        color: var(--dark);
+        background: #ffffff;
+        outline: none;
+        transition: all 0.25s;
+    }
+    .form-group select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 40px;
+        cursor: pointer;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(11, 61, 145, 0.08);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #94a3b8; font-size: 0.82rem; }
+
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        padding-top: 24px;
+        border-top: 1px solid #f1f5f9;
+        flex-wrap: wrap;
+    }
+    .btn-submit {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        padding: 13px 32px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.88rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        box-shadow: 0 6px 16px rgba(11, 61, 145, 0.25);
+        font-family: 'Inter', sans-serif;
+    }
+    .btn-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11, 61, 145, 0.35); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-cancel {
+        background: white;
+        color: var(--gray-700);
+        border: 1.5px solid #e2e8f0;
+        padding: 13px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.88rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: all 0.3s;
+        font-family: 'Inter', sans-serif;
+    }
+    .btn-cancel:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+
+    .alert-pro {
+        padding: 14px 18px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+        display: none;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+    }
+    .alert-pro.success { display: flex; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+    .alert-pro.danger { display: flex; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+
+    .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--gray-700);
+        font-size: 1.4rem;
+        cursor: pointer;
+        padding: 8px;
+    }
+
+    @media (max-width: 992px) {
+        .sidebar { position: fixed; left: -280px; top: 70px; z-index: 999; transition: left 0.3s; }
+        .sidebar.open { left: 0; }
+        .mobile-menu-btn { display: block; }
+        .admin-main { padding: 20px 16px 32px; }
+        .form-card { padding: 24px 20px; }
+        .form-grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-pro .container-pro { padding: 0 14px; }
+        .user-chip span { display: none; }
+        .user-chip { padding: 6px; }
+        .btn-logout span { display: none; }
+        .btn-logout { padding: 8px 12px; }
+        .page-header-text h1 { font-size: 1.3rem; }
+        .form-card { padding: 20px 16px; }
+        .form-actions { flex-direction: column; }
+        .btn-submit, .btn-cancel { width: 100%; justify-content: center; }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar-pro">
+    <div class="container-pro">
+        <div class="nav-brand">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+            <div class="nav-brand-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e5bc6"/><stop offset="100%" stop-color="#082c6b"/>
+                        </linearGradient>
+                        <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e6c458"/><stop offset="100%" stop-color="#a8841a"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z" fill="url(#gg)"/>
+                    <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z" fill="url(#ng)"/>
+                    <text x="50" y="55" text-anchor="middle" font-family="Playfair Display, serif" font-size="24" font-weight="800" fill="url(#gg)">SEA</text>
+                </svg>
+            </div>
+            <div class="nav-brand-text">
+                <h5>SEA</h5>
+                <small>Admin Panel</small>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <div class="user-chip">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <span id="userName">Administrator</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="admin-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Main</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Management</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-students.html" class="active"><i class="bi bi-people-fill"></i> Students</a></li>
+                <li><a href="teacher-data.html"><i class="bi bi-person-badge-fill"></i> Teacher Data</a></li>
+                <li><a href="admin-halls.html"><i class="bi bi-building"></i> Halls</a></li>
+                <li><a href="exam-center.html"><i class="bi bi-journal-text"></i> Exam Center</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Seating</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-seating.html"><i class="bi bi-grid-3x3-gap-fill"></i> Generate Seating</a></li>
+                <li><a href="admin-notices.html"><i class="bi bi-megaphone-fill"></i> Notices</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="admin-main">
+
+        <div class="page-header">
+            <div class="page-header-text">
+                <h1 id="pageTitle">Add New Student</h1>
+                <p id="pageSubtitle">Enter student details to add them to the system</p>
+            </div>
+            <a href="admin-students.html" class="btn-back">
+                <i class="bi bi-arrow-left"></i>
+                Back to Students
+            </a>
+        </div>
+
+        <div id="formAlert" class="alert-pro">
+            <i class="bi bi-check-circle-fill"></i>
+            <span id="formAlertText">Success</span>
+        </div>
+
+        <form class="form-card" id="studentForm" autocomplete="off">
+
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i class="bi bi-person-fill"></i>
+                    Personal Information
+                </div>
+                <div class="form-grid">
+
+                    <div class="form-group full">
+                        <label for="fullName">Full Name <span class="required">*</span></label>
+                        <div class="input-wrap">
+                            <i class="bi bi-person-fill field-icon"></i>
+                            <input type="text" id="fullName" placeholder="e.g. Rahul Sharma" required maxlength="60">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="enrollmentNo">Enrollment Number <span class="required">*</span></label>
+                        <div class="input-wrap">
+                            <i class="bi bi-person-badge-fill field-icon"></i>
+                            <input type="text" id="enrollmentNo" placeholder="e.g. 2026CS001" required maxlength="20">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <div class="input-wrap">
+                            <i class="bi bi-envelope-fill field-icon"></i>
+                            <input type="email" id="email" placeholder="student@matoshriengg.edu.in" required maxlength="80">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-telephone-fill field-icon"></i>
+                            <input type="tel" id="phone" placeholder="+91 9876543210" maxlength="15">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i class="bi bi-mortarboard-fill"></i>
+                    Academic Information
+                </div>
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="department">Department <span class="required">*</span></label>
+                        <div class="input-wrap">
+                            <i class="bi bi-building field-icon"></i>
+                            <select id="department" required>
+                                <option value="">Select Department</option>
+                                <option value="Computer Engineering">Computer Engineering</option>
+                                <option value="Artificial Intelligence & Data Science">Artificial Intelligence & Data Science</option>
+                                <option value="Mechanical">Mechanical</option>
+                                <option value="Civil">Civil</option>
+                                <option value="Electrical">Electrical</option>
+                                <option value="IT">IT</option>
+                                <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="year">Year of Study <span class="required">*</span></label>
+                        <div class="input-wrap">
+                            <i class="bi bi-calendar3 field-icon"></i>
+                            <select id="year" required>
+                                <option value="">Select Year</option>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span id="submitBtnText">Save Student</span>
+                </button>
+                <a href="admin-students.html" class="btn-cancel">
+                    <i class="bi bi-x-circle"></i>
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </main>
+</div>
+
+<script>
+const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+if (!user.success || user.role !== 'admin') {
+    window.location.href = 'index.html';
+}
+document.getElementById('userName').textContent = user.name || 'Admin';
+document.getElementById('userAvatar').textContent = (user.name || 'A').charAt(0).toUpperCase();
+
+const urlParams = new URLSearchParams(window.location.search);
+const editId = urlParams.get('id');
+let isEditMode = false;
+
+if (editId) {
+    isEditMode = true;
+    document.getElementById('pageTitle').textContent = 'Edit Student';
+    document.getElementById('pageSubtitle').textContent = 'Update student details';
+    document.getElementById('submitBtnText').textContent = 'Update Student';
+
+    const demoStudents = {
+        1: { name: 'Rahul Sharma', enrollmentNo: '2026CS001', email: 'rahul.sharma@matoshriengg.edu.in', phone: '+91 9876543210', dept: 'Computer Engineering', year: 1 },
+        2: { name: 'Priya Patel', enrollmentNo: '2026CS002', email: 'priya.patel@matoshriengg.edu.in', phone: '+91 9876543211', dept: 'Computer Engineering', year: 1 },
+        3: { name: 'Amit Kumar', enrollmentNo: '2026IT001', email: 'amit.kumar@matoshriengg.edu.in', phone: '+91 9876543212', dept: 'IT', year: 1 },
+        4: { name: 'Sneha Joshi', enrollmentNo: '2026CS003', email: 'sneha.joshi@matoshriengg.edu.in', phone: '+91 9876543213', dept: 'Computer Engineering', year: 2 },
+        5: { name: 'Vikas Rao', enrollmentNo: '2026ME001', email: 'vikas.rao@matoshriengg.edu.in', phone: '+91 9876543214', dept: 'Mechanical', year: 3 }
+    };
+
+    const student = demoStudents[editId];
+    if (student) {
+        document.getElementById('fullName').value = student.name;
+        document.getElementById('enrollmentNo').value = student.enrollmentNo;
+        document.getElementById('email').value = student.email;
+        document.getElementById('phone').value = student.phone;
+        document.getElementById('department').value = student.dept;
+        document.getElementById('year').value = student.year;
+    }
+}
+
+document.getElementById('enrollmentNo').addEventListener('input', (e) => {
+    e.target.value = e.target.value.toUpperCase();
+});
+
+document.getElementById('studentForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    hideAlert();
+
+    const fullName = document.getElementById('fullName').value.trim();
+    const enrollmentNo = document.getElementById('enrollmentNo').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const department = document.getElementById('department').value;
+    const year = document.getElementById('year').value;
+
+    if (!fullName || !enrollmentNo || !email || !department || !year) {
+        showAlert('Please fill in all required fields', 'danger'); return;
+    }
+    if (fullName.length < 3) { showAlert('Full name must be at least 3 characters', 'danger'); return; }
+    if (!/^[0-9]{4}[A-Z]{2,4}[0-9]{3}$/i.test(enrollmentNo)) {
+        showAlert('Enrollment Number format: YYYYBBBNNN (e.g. 2026CS001)', 'danger'); return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showAlert('Please enter a valid email', 'danger'); return; }
+
+    const btn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('submitBtnText');
+    const originalText = btnText.textContent;
+    btn.disabled = true;
+    btnText.innerHTML = isEditMode ? 'Updating...' : 'Saving...';
+
+    setTimeout(() => {
+        let students = JSON.parse(localStorage.getItem('sea_students') || '[]');
+
+        if (isEditMode) {
+            const idx = students.findIndex(s => s.id == editId);
+            if (idx !== -1) {
+                students[idx] = { ...students[idx], name: fullName, enrollmentNo, email, phone, dept: department, year };
+            }
+            localStorage.setItem('sea_students', JSON.stringify(students));
+            showAlert('✅ Student updated successfully! Redirecting...', 'success');
+        } else {
+            students.push({
+                id: Date.now(), name: fullName, enrollmentNo, email, phone, dept: department, year,
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('sea_students', JSON.stringify(students));
+            showAlert('✅ Student added successfully! Redirecting...', 'success');
+        }
+
+        setTimeout(() => { window.location.href = 'admin-students.html'; }, 1500);
+    }, 1000);
+});
+
+function showAlert(msg, type) {
+    const box = document.getElementById('formAlert');
+    const text = document.getElementById('formAlertText');
+    const icon = box.querySelector('i');
+    text.textContent = msg;
+    box.className = 'alert-pro ' + type;
+    icon.className = type === 'success' ? 'bi bi-check-circle-fill' : 'bi bi-exclamation-triangle-fill';
+}
+function hideAlert() { document.getElementById('formAlert').className = 'alert-pro'; }
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+function logout() { sessionStorage.clear(); window.location.href = 'index.html'; }
+</script>
+
+</body>
+</html>
+

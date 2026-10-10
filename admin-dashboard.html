@@ -1,0 +1,475 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard — SEA | Matoshri College of Engineering & RC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+    :root {
+        --primary: #0b3d91;
+        --primary-dark: #082c6b;
+        --accent: #c9a227;
+        --accent-light: #e6c458;
+        --dark: #0f172a;
+        --gray-700: #334155;
+        --gray-500: #64748b;
+        --success: #059669;
+        --danger: #dc2626;
+        --warning: #d97706;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f6fa;
+        color: var(--dark);
+        min-height: 100vh;
+        line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    /* NAVBAR */
+    .navbar-pro {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+    .navbar-pro .container-pro {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1300px;
+        padding: 0 24px;
+        margin: 0 auto;
+        gap: 12px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand-icon {
+        width: 44px; height: 44px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 11px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-brand-icon svg { width: 100%; height: 100%; }
+    .nav-brand-text h5 {
+        margin: 0;
+        font-size: 1rem;
+        font-family: 'Playfair Display', serif;
+    }
+    .nav-brand-text small { color: var(--gray-500); font-size: 0.72rem; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px 6px 6px;
+        background: #f1f5f9;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--gray-700);
+    }
+    .user-avatar {
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), #a8841a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .btn-logout {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 9px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-700);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .btn-logout:hover {
+        border-color: var(--danger);
+        color: var(--danger);
+        background: #fef2f2;
+    }
+
+    /* LAYOUT */
+    .admin-layout { display: flex; min-height: calc(100vh - 70px); }
+    .sidebar {
+        width: 260px;
+        background: white;
+        border-right: 1px solid #e2e8f0;
+        padding: 24px 0;
+        position: sticky;
+        top: 70px;
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+        flex-shrink: 0;
+    }
+    .sidebar-section { padding: 0 16px; margin-bottom: 24px; }
+    .sidebar-section-title {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--gray-500);
+        font-weight: 700;
+        padding: 0 12px;
+        margin-bottom: 8px;
+    }
+    .sidebar-menu { list-style: none; }
+    .sidebar-menu li { margin-bottom: 2px; }
+    .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 9px;
+        color: var(--gray-700);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.25s;
+    }
+    .sidebar-menu a i { font-size: 1rem; color: var(--gray-500); width: 20px; }
+    .sidebar-menu a:hover { background: #f1f5f9; color: var(--primary); }
+    .sidebar-menu a:hover i { color: var(--primary); }
+    .sidebar-menu a.active {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        box-shadow: 0 4px 12px rgba(11, 61, 145, 0.25);
+    }
+    .sidebar-menu a.active i { color: white; }
+
+    /* MAIN */
+    .admin-main { flex: 1; padding: 28px 32px 40px; overflow-x: hidden; }
+    .page-header { margin-bottom: 24px; }
+    .page-header h1 { font-size: 1.6rem; margin-bottom: 4px; }
+    .page-header h1 span { color: var(--primary); }
+    .page-header p { color: var(--gray-500); font-size: 0.88rem; margin: 0; }
+
+    /* STATS */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+    .stat-card {
+        background: white;
+        border-radius: 16px;
+        padding: 22px;
+        border: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        transition: all 0.3s;
+    }
+    .stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    }
+    .stat-icon {
+        width: 54px; height: 54px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        flex-shrink: 0;
+    }
+    .stat-icon.blue { background: linear-gradient(135deg, #0b3d91, #1e5bc6); }
+    .stat-icon.green { background: linear-gradient(135deg, #059669, #10b981); }
+    .stat-icon.gold { background: linear-gradient(135deg, #d97706, #f59e0b); }
+    .stat-icon.cyan { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+    .stat-info h3 { font-size: 1.8rem; margin: 0; font-family: 'Inter', sans-serif; font-weight: 700; }
+    .stat-info small {
+        color: var(--gray-500);
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+
+    .section-card {
+        background: white;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        padding: 24px;
+        margin-bottom: 20px;
+    }
+    .section-title {
+        font-size: 1rem;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e2e8f0;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+    }
+    .section-title i { color: var(--primary); font-size: 1.1rem; }
+
+    .action-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+    }
+    .action-tile {
+        background: white;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 20px 16px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        color: var(--dark);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .action-tile:hover {
+        border-color: var(--primary);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(11, 61, 145, 0.12);
+        color: var(--primary);
+    }
+    .action-tile i { font-size: 1.6rem; color: var(--primary); }
+    .action-tile span { font-weight: 600; font-size: 0.82rem; }
+
+    .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--gray-700);
+        font-size: 1.4rem;
+        cursor: pointer;
+        padding: 8px;
+    }
+
+    @media (max-width: 992px) {
+        .sidebar { position: fixed; left: -280px; top: 70px; z-index: 999; transition: left 0.3s; }
+        .sidebar.open { left: 0; }
+        .mobile-menu-btn { display: block; }
+        .admin-main { padding: 20px 16px 32px; }
+        .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .stat-card { padding: 14px; gap: 12px; }
+        .stat-icon { width: 44px; height: 44px; font-size: 1.2rem; }
+        .stat-info h3 { font-size: 1.4rem; }
+    }
+
+    @media (max-width: 576px) {
+        .action-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .user-chip span { display: none; }
+        .user-chip { padding: 6px; }
+        .btn-logout span { display: none; }
+        .btn-logout { padding: 8px 12px; }
+        .navbar-pro .container-pro { padding: 0 14px; }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar-pro">
+    <div class="container-pro">
+        <div class="nav-brand">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <i class="bi bi-list"></i>
+            </button>
+            <div class="nav-brand-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e5bc6"/>
+                            <stop offset="100%" stop-color="#082c6b"/>
+                        </linearGradient>
+                        <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e6c458"/>
+                            <stop offset="100%" stop-color="#a8841a"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z" fill="url(#gg)"/>
+                    <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z" fill="url(#ng)"/>
+                    <text x="50" y="55" text-anchor="middle" font-family="Playfair Display, serif"
+                          font-size="24" font-weight="800" fill="url(#gg)">SEA</text>
+                </svg>
+            </div>
+            <div class="nav-brand-text">
+                <h5>SEA</h5>
+                <small>Admin Panel</small>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <div class="user-chip">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <span id="userName">Administrator</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="admin-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Main</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-dashboard.html" class="active"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Management</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-students.html"><i class="bi bi-people-fill"></i> Students</a></li>
+                <li><a href="teacher-data.html"><i class="bi bi-person-badge-fill"></i> Teacher Data</a></li>
+                <li><a href="admin-halls.html"><i class="bi bi-building"></i> Halls</a></li>
+                <li><a href="exam-center.html"><i class="bi bi-journal-text"></i> Exam Center</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Seating</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-seating.html"><i class="bi bi-grid-3x3-gap-fill"></i> Generate Seating</a></li>
+                <li><a href="admin-notices.html"><i class="bi bi-megaphone-fill"></i> Notices</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="admin-main">
+
+        <div class="page-header">
+            <h1>Welcome back, <span id="welcomeName">Admin</span></h1>
+            <p>Here's what's happening with your exam system today.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="bi bi-people-fill"></i></div>
+                <div class="stat-info">
+                    <h3 id="statStudents">450</h3>
+                    <small>Students</small>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="bi bi-person-badge-fill"></i></div>
+                <div class="stat-info">
+                    <h3 id="statTeachers">25</h3>
+                    <small>Teachers</small>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon gold"><i class="bi bi-building"></i></div>
+                <div class="stat-info">
+                    <h3 id="statHalls">12</h3>
+                    <small>Halls</small>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon cyan"><i class="bi bi-journal-text"></i></div>
+                <div class="stat-info">
+                    <h3 id="statExams">5</h3>
+                    <small>Exams</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title">
+                <i class="bi bi-lightning-charge-fill"></i>
+                Quick Actions
+            </div>
+            <div class="action-grid">
+                <a href="admin-add-student.html" class="action-tile">
+                    <i class="bi bi-person-plus-fill"></i>
+                    <span>Add Student</span>
+                </a>
+                <a href="admin-students.html" class="action-tile">
+                    <i class="bi bi-people-fill"></i>
+                    <span>View Students</span>
+                </a>
+                <a href="teacher-data.html" class="action-tile">
+                    <i class="bi bi-person-vcard"></i>
+                    <span>Manage Teachers</span>
+                </a>
+                <a href="admin-halls.html" class="action-tile">
+                    <i class="bi bi-building-add"></i>
+                    <span>Manage Halls</span>
+                </a>
+                <a href="exam-center.html" class="action-tile">
+                    <i class="bi bi-calendar-plus"></i>
+                    <span>Add Exam</span>
+                </a>
+                <a href="admin-seating.html" class="action-tile">
+                    <i class="bi bi-magic"></i>
+                    <span>Generate Seating</span>
+                </a>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script src="api.js"></script>
+<script>
+const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+if (!user.success || user.role !== 'admin') {
+    window.location.href = 'index.html';
+}
+document.getElementById('userName').textContent = user.name || 'Admin';
+document.getElementById('welcomeName').textContent = (user.name || 'Admin').split(' ')[0];
+document.getElementById('userAvatar').textContent = (user.name || 'A').charAt(0).toUpperCase();
+
+async function updateDashboardMetrics() {
+    if (window.SeaApi) {
+        const stats = await SeaApi.getDashboardStats();
+        if (stats) {
+            if (stats.totalStudents !== undefined) document.getElementById('statStudents').textContent = stats.totalStudents;
+            if (stats.totalTeachers !== undefined) document.getElementById('statTeachers').textContent = stats.totalTeachers;
+            if (stats.totalHalls !== undefined) document.getElementById('statHalls').textContent = stats.totalHalls;
+            if (stats.totalExams !== undefined) document.getElementById('statExams').textContent = stats.totalExams;
+        }
+    }
+}
+updateDashboardMetrics();
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+}
+
+function logout() {
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+}
+</script>
+
+</body>
+</html>

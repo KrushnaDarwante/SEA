@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Seat Details — SEA | Matoshri College of Engineering & RC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+    :root {
+        --primary: #0b3d91;
+        --primary-dark: #082c6b;
+        --accent: #c9a227;
+        --accent-light: #e6c458;
+        --dark: #0f172a;
+        --gray-700: #334155;
+        --gray-500: #64748b;
+        --success: #059669;
+        --danger: #dc2626;
+        --warning: #d97706;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f6fa;
+        color: var(--dark);
+        min-height: 100vh;
+        line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    .navbar-pro {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+    .navbar-pro .container-pro {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1100px;
+        padding: 0 24px;
+        margin: 0 auto;
+        gap: 12px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand-icon {
+        width: 44px; height: 44px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 11px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-brand-icon svg { width: 100%; height: 100%; }
+    .nav-brand-text h5 { margin: 0; font-size: 1rem; font-family: 'Playfair Display', serif; }
+    .nav-brand-text small { color: var(--gray-500); font-size: 0.72rem; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px 6px 6px;
+        background: #f1f5f9;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--gray-700);
+    }
+    .user-avatar {
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .btn-logout {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 9px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-700);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .btn-logout:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+
+    .page-wrap {
+        padding: 32px 24px 40px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .back-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: white;
+        color: var(--gray-700);
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.25s;
+        font-family: 'Inter', sans-serif;
+    }
+    .btn-back:hover { border-color: var(--primary); color: var(--primary); }
+
+    .hall-ticket {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08);
+        border: 1px solid #e2e8f0;
+        margin-bottom: 24px;
+    }
+
+    .ht-header {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        padding: 28px 36px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+    .ht-header::before {
+        content: '';
+        position: absolute;
+        top: -80px; right: -80px;
+        width: 320px; height: 320px;
+        background: radial-gradient(circle, rgba(201, 162, 39, 0.2), transparent 70%);
+        border-radius: 50%;
+    }
+    .ht-header-text { position: relative; z-index: 2; }
+    .ht-institution {
+        font-size: 0.72rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--accent-light);
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+    .ht-header h1 { color: white; font-size: 1.6rem; line-height: 1.2; margin: 0; }
+    .ht-header h1 span { color: var(--accent-light); }
+    .ht-header-icon {
+        width: 70px; height: 70px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: var(--accent-light);
+        flex-shrink: 0;
+        backdrop-filter: blur(10px);
+        position: relative;
+        z-index: 2;
+    }
+
+    /* ⭐ STUDENT NAME HERO ⭐ */
+    .ht-name-hero {
+        background: linear-gradient(135deg, #fffbeb, #fef9e7);
+        padding: 28px 36px;
+        text-align: center;
+        border-bottom: 2px dashed #fbbf24;
+    }
+    .ht-name-label {
+        font-size: 0.68rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gray-500);
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .ht-name-value {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1.2;
+        word-break: break-word;
+    }
+    .ht-name-divider {
+        width: 70px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-light));
+        margin: 14px auto 0;
+        border-radius: 2px;
+    }
+
+    .ht-body { padding: 28px 36px 32px; }
+
+    .ht-section-title {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .ht-section-title::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, #e2e8f0, transparent);
+    }
+
+    .ht-info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        margin-bottom: 28px;
+    }
+    .ht-info-item {
+        padding: 14px 16px;
+        background: #f8fafc;
+        border-radius: 12px;
+        border-left: 3px solid var(--primary);
+    }
+    .ht-info-item .label {
+        font-size: 0.66rem;
+        color: var(--gray-500);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .ht-info-item .label i { color: var(--primary); font-size: 0.72rem; }
+    .ht-info-item .value {
+        font-size: 0.95rem;
+        color: var(--dark);
+        font-weight: 700;
+        word-break: break-word;
+    }
+
+    .ht-seat-hero {
+        background: linear-gradient(135deg, #fffbeb, #fef3c7);
+        border: 2px dashed #fbbf24;
+        border-radius: 16px;
+        padding: 28px 24px;
+        text-align: center;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+    }
+    .ht-seat-hero::before {
+        content: '';
+        position: absolute;
+        top: -50px; left: -50px;
+        width: 150px; height: 150px;
+        background: radial-gradient(circle, rgba(251, 191, 36, 0.18), transparent 70%);
+        border-radius: 50%;
+    }
+    .ht-seat-hero::after {
+        content: '';
+        position: absolute;
+        bottom: -50px; right: -50px;
+        width: 180px; height: 180px;
+        background: radial-gradient(circle, rgba(251, 191, 36, 0.12), transparent 70%);
+        border-radius: 50%;
+    }
+    .ht-seat-label {
+        font-size: 0.68rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gray-500);
+        font-weight: 700;
+        margin-bottom: 6px;
+        position: relative;
+        z-index: 2;
+    }
+    .ht-seat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #b91c1c;
+        letter-spacing: 6px;
+        font-family: 'Playfair Display', serif;
+        line-height: 1.1;
+        position: relative;
+        z-index: 2;
+    }
+    .ht-seat-room {
+        font-size: 1rem;
+        color: var(--gray-700);
+        margin-top: 10px;
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .ht-seat-room i { color: var(--accent); }
+    .ht-seat-room strong { color: var(--primary); font-weight: 800; }
+    .ht-supervisor {
+        font-size: 0.88rem;
+        color: var(--gray-700);
+        margin-top: 10px;
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+    .ht-supervisor i { color: var(--primary); }
+    .ht-supervisor strong { color: var(--dark); }
+
+    .ht-qr-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        padding: 24px;
+        background: #f8fafc;
+        border-radius: 16px;
+        border: 2px solid #e2e8f0;
+    }
+    .ht-qr-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--gray-500);
+        font-weight: 700;
+    }
+    .ht-qr-box {
+        width: 200px;
+        height: 200px;
+        background: white;
+        border: 3px solid var(--primary);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .ht-qr-box svg { width: 100%; height: 100%; }
+    .ht-qr-caption {
+        font-size: 0.78rem;
+        color: var(--gray-500);
+        text-align: center;
+        max-width: 300px;
+        line-height: 1.5;
+    }
+
+    .ht-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-top: 24px;
+    }
+    .ht-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 20px;
+        border-radius: 12px;
+        border: none;
+        font-size: 0.88rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-family: 'Inter', sans-serif;
+        text-decoration: none;
+        min-height: 56px;
+    }
+    .ht-btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        box-shadow: 0 6px 16px rgba(11, 61, 145, 0.25);
+    }
+    .ht-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11, 61, 145, 0.35); color: white; }
+    .ht-btn-secondary {
+        background: white;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+    }
+    .ht-btn-secondary:hover { background: #eff6ff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(11, 61, 145, 0.15); color: var(--primary); }
+    .ht-btn i { font-size: 1.1rem; }
+
+    .ht-verified-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 20px;
+        background: #fef3c7;
+        color: #78350f;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-top: 20px;
+        border: 1.5px solid #fde68a;
+    }
+
+    .ht-footer {
+        background: #f8fafc;
+        padding: 16px 36px;
+        text-align: center;
+        font-size: 0.72rem;
+        color: var(--gray-500);
+        border-top: 1px solid #e2e8f0;
+        letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 768px) {
+        .page-wrap { padding: 20px 16px 32px; }
+        .ht-header { flex-direction: column; text-align: center; padding: 24px 20px; gap: 14px; }
+        .ht-header h1 { font-size: 1.35rem; }
+        .ht-header-icon { width: 58px; height: 58px; font-size: 1.7rem; }
+        .ht-name-hero { padding: 22px 20px; }
+        .ht-name-value { font-size: 1.7rem; }
+        .ht-body { padding: 20px; }
+        .ht-info-grid { grid-template-columns: 1fr; gap: 10px; }
+        .ht-seat-hero { padding: 22px 16px; }
+        .ht-seat-number { font-size: 2.2rem; letter-spacing: 3px; }
+        .ht-actions { grid-template-columns: 1fr; gap: 10px; }
+        .ht-footer { padding: 14px 20px; }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-pro .container-pro { padding: 0 14px; }
+        .user-chip span { display: none; }
+        .user-chip { padding: 6px; }
+        .btn-logout span { display: none; }
+        .btn-logout { padding: 8px 12px; }
+        .ht-name-value { font-size: 1.5rem; }
+        .ht-seat-number { font-size: 1.9rem; }
+        .ht-qr-box { width: 170px; height: 170px; }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar-pro">
+    <div class="container-pro">
+        <div class="nav-brand">
+            <div class="nav-brand-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e5bc6"/><stop offset="100%" stop-color="#082c6b"/>
+                        </linearGradient>
+                        <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e6c458"/><stop offset="100%" stop-color="#a8841a"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z" fill="url(#gg)"/>
+                    <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z" fill="url(#ng)"/>
+                    <text x="50" y="55" text-anchor="middle" font-family="Playfair Display, serif" font-size="24" font-weight="800" fill="url(#gg)">SEA</text>
+                </svg>
+            </div>
+            <div class="nav-brand-text">
+                <h5>SEA</h5>
+                <small>Student Portal</small>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <div class="user-chip">
+                <div class="user-avatar" id="userAvatar">S</div>
+                <span id="userName">Student</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="page-wrap">
+
+    <div class="back-bar">
+        <a href="student-dashboard.html" class="btn-back">
+            <i class="bi bi-arrow-left"></i>
+            Back to Dashboard
+        </a>
+    </div>
+
+    <div class="hall-ticket">
+
+        <div class="ht-header">
+            <div class="ht-header-text">
+                <div class="ht-institution">Matoshri College of Engineering and Research Centre, Nashik</div>
+                <h1>Exam <span>Hall Ticket</span></h1>
+            </div>
+            <div class="ht-header-icon">
+                <i class="bi bi-file-earmark-text-fill"></i>
+            </div>
+        </div>
+
+        <!-- ⭐ STUDENT NAME HERO ⭐ -->
+        <div class="ht-name-hero">
+            <div class="ht-name-label">Student Name</div>
+            <div class="ht-name-value" id="studentName">Rahul Sharma</div>
+            <div class="ht-name-divider"></div>
+        </div>
+
+        <div class="ht-body">
+
+            <div class="ht-section-title">Student Information</div>
+            <div class="ht-info-grid">
+                <div class="ht-info-item">
+                    <div class="label"><i class="bi bi-person-badge"></i> Enrollment Number</div>
+                    <div class="value" id="enrollNo">2026CS001</div>
+                </div>
+                <div class="ht-info-item">
+                    <div class="label"><i class="bi bi-building"></i> Department</div>
+                    <div class="value" id="deptName">Computer Engineering</div>
+                </div>
+                <div class="ht-info-item">
+                    <div class="label"><i class="bi bi-calendar3"></i> Year</div>
+                    <div class="value" id="yearName">2nd Year</div>
+                </div>
+                <div class="ht-info-item">
+                    <div class="label"><i class="bi bi-journal-text"></i> Subject</div>
+                    <div class="value">Data Structures &amp; Algorithms</div>
+                </div>
+            </div>
+
+            <div class="ht-section-title">Exam Information</div>
+            <div class="ht-info-grid">
+                <div class="ht-info-item">
+                    <div class="label"><i class="bi bi-calendar-event"></i> Exam Date</div>
+                    <div class="value">15-Mar-2026</div>
+                </div>
+                <div class="ht-info-item">
+                    <div class="label"><i class="bi bi-clock"></i> Time Slot</div>
+                    <div class="value">10:00 AM – 1:00 PM</div>
+                </div>
+            </div>
+
+            <div class="ht-seat-hero">
+                <div class="ht-seat-label">Your Seat Number</div>
+                <div class="ht-seat-number">R1-C1</div>
+                <div class="ht-seat-room">
+                    <i class="bi bi-building-fill"></i>
+                    Room: <strong>Hall C</strong>
+                </div>
+                <div class="ht-supervisor">
+                    <i class="bi bi-person-check-fill"></i>
+                    Supervisor: <strong>Prof. A. Deshmukh</strong>
+                </div>
+            </div>
+
+            <div class="ht-qr-section">
+                <div class="ht-qr-label">Entry QR Code</div>
+                <div class="ht-qr-box" id="qrBox"></div>
+                <div class="ht-qr-caption">
+                    <i class="bi bi-info-circle"></i>
+                    Show this QR code at the exam hall entrance for verification
+                </div>
+            </div>
+
+            <div class="ht-verified-badge" id="verifyBadge">
+                <i class="bi bi-clock-fill"></i>
+                Not yet verified — Show your QR at the exam hall
+            </div>
+
+            <div class="ht-actions">
+                <button class="ht-btn ht-btn-primary" onclick="downloadSeatSlip()">
+                    <i class="bi bi-file-earmark-pdf-fill"></i>
+                    Download Seat Slip
+                </button>
+                <button class="ht-btn ht-btn-secondary" onclick="downloadQR()">
+                    <i class="bi bi-qr-code"></i>
+                    Download QR Code
+                </button>
+            </div>
+
+        </div>
+
+        <div class="ht-footer">
+            © 2026 SEA — Seat Exam Allotment | Matoshri College of Engineering & RC Examination Control &amp; Verification Cell
+        </div>
+
+    </div>
+
+</div>
+
+<script src="api.js"></script>
+<script>
+const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+if (!user.success || user.role !== 'student') {
+    window.location.href = 'index.html';
+}
+
+document.getElementById('userName').textContent = user.name || 'Student';
+document.getElementById('userAvatar').textContent = (user.name || 'S').charAt(0).toUpperCase();
+document.getElementById('studentName').textContent = user.name || 'Student';
+document.getElementById('enrollNo').textContent = user.enrollmentNo || '2026CS001';
+
+const deptMap = {
+    CS: 'Computer Science', IT: 'Information Technology', AI: 'Artificial Intelligence',
+    MECH: 'Mechanical', CIVIL: 'Civil', EE: 'Electrical', EJ: 'Electronics'
+};
+document.getElementById('deptName').textContent = deptMap[user.department] || 'Computer Science';
+
+const yearMap = { '1': '1st Year', '2': '2nd Year', '3': '3rd Year' };
+document.getElementById('yearName').textContent = yearMap[user.year] || '1st Year';
+
+/* Generate SVG QR Code */
+function generateQRPattern(customPayload) {
+    const qrBox = document.getElementById('qrBox');
+    const size = 25;
+    const cellSize = 200 / size;
+    let svg = `<svg id="qrSvg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">`;
+    svg += `<rect width="200" height="200" fill="white"/>`;
+
+    const roll = customPayload || user.enrollmentNo || '2026CS001';
+    const hash = roll.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+
+    const corners = [[0,0], [size-7,0], [0,size-7]];
+    corners.forEach(([cx, cy]) => {
+        svg += `<rect x="${cx*cellSize}" y="${cy*cellSize}" width="${7*cellSize}" height="${7*cellSize}" fill="#0f172a"/>`;
+        svg += `<rect x="${(cx+1)*cellSize}" y="${(cy+1)*cellSize}" width="${5*cellSize}" height="${5*cellSize}" fill="white"/>`;
+        svg += `<rect x="${(cx+2)*cellSize}" y="${(cy+2)*cellSize}" width="${3*cellSize}" height="${3*cellSize}" fill="#0f172a"/>`;
+    });
+
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            const isCorner = corners.some(([cx, cy]) => i >= cx && i < cx + 7 && j >= cy && j < cy + 7);
+            if (isCorner) continue;
+            if ((i * 7 + j * 13 + hash) % 3 === 0) {
+                svg += `<rect x="${i*cellSize}" y="${j*cellSize}" width="${cellSize}" height="${cellSize}" fill="#0f172a"/>`;
+            }
+        }
+    }
+    svg += '</svg>';
+    qrBox.innerHTML = svg;
+}
+
+generateQRPattern();
+
+// Try fetching real allotment data from backend API if available
+async function loadSeatSlipFromApi() {
+    if (window.SeaApi && user.enrollmentNo) {
+        const slip = await SeaApi.getStudentSlip(user.enrollmentNo);
+        if (slip) {
+            document.querySelector('.ht-seat-number').textContent = slip.seatNumber;
+            document.querySelector('.ht-seat-room strong').textContent = `${slip.block} – ${slip.hallNumber}`;
+            document.querySelector('.ht-supervisor strong').textContent = slip.supervisorName;
+            if (slip.qrCodeImage) {
+                document.getElementById('qrBox').innerHTML = `<img src="${slip.qrCodeImage}" alt="Seat QR" style="width:100%;height:100%;border-radius:12px;"/>`;
+            } else if (slip.qrCodeData) {
+                generateQRPattern(slip.qrCodeData);
+            }
+            if (slip.verified) {
+                const b = document.getElementById('verifyBadge');
+                b.className = 'ht-verified-badge verified';
+                b.innerHTML = '<i class="bi bi-check-circle-fill"></i> Verified for Entry — Attendance Recorded';
+            }
+        }
+    }
+}
+loadSeatSlipFromApi();
+
+/* Download Printable Seat Slip (PDF / Print layout) */
+function downloadSeatSlip() {
+    window.print();
+}
+
+/* Download QR Code as PNG Image */
+function downloadQR() {
+    const svgElement = document.getElementById('qrSvg');
+    if (!svgElement) {
+        const img = document.querySelector('#qrBox img');
+        if (img) {
+            const a = document.createElement('a');
+            a.href = img.src;
+            a.download = `SEA_QR_${user.enrollmentNo || 'student'}.png`;
+            a.click();
+            return;
+        }
+    }
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const canvas = document.createElement('canvas');
+    canvas.width = 400;
+    canvas.height = 400;
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    img.onload = () => {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, 400, 400);
+        const pngUrl = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = pngUrl;
+        a.download = `SEA_QR_${user.enrollmentNo || 'student'}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
+}
+
+function logout() {
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+}
+</script>
+
+<style>
+@media print {
+    body { background: white !important; padding: 0 !important; }
+    .navbar-pro, .back-bar, .ht-actions, .ht-footer, .page-footer { display: none !important; }
+    .page-wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+    .hall-ticket { box-shadow: none !important; border: 1px solid #cbd5e1 !important; }
+}
+</style>
+
+</body>
+</html>
+

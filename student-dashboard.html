@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard — SEA | Matoshri College of Engineering & RC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+    :root {
+        --primary: #0b3d91;
+        --primary-dark: #082c6b;
+        --accent: #c9a227;
+        --accent-light: #e6c458;
+        --dark: #0f172a;
+        --gray-700: #334155;
+        --gray-500: #64748b;
+        --success: #059669;
+        --danger: #dc2626;
+        --warning: #d97706;
+        --info: #0891b2;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f6fa;
+        color: var(--dark);
+        min-height: 100vh;
+        line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    /* NAVBAR */
+    .navbar-pro {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+    .navbar-pro .container-pro {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1100px;
+        padding: 0 24px;
+        margin: 0 auto;
+        gap: 12px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand-icon {
+        width: 44px; height: 44px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 11px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-brand-icon svg { width: 100%; height: 100%; }
+    .nav-brand-text h5 { margin: 0; font-size: 1rem; font-family: 'Playfair Display', serif; }
+    .nav-brand-text small { color: var(--gray-500); font-size: 0.72rem; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px 6px 6px;
+        background: #f1f5f9;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--gray-700);
+    }
+    .user-avatar {
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .btn-logout {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 9px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-700);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .btn-logout:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+
+    /* MAIN */
+    .page-wrap {
+        padding: 32px 24px 40px;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    /* ⭐ STUDENT NAME HERO ⭐ */
+    .student-name-hero {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border-radius: 20px;
+        padding: 32px 36px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+    .student-name-hero::before {
+        content: '';
+        position: absolute;
+        top: -100px; right: -100px;
+        width: 340px; height: 340px;
+        background: radial-gradient(circle, rgba(201, 162, 39, 0.2), transparent 70%);
+        border-radius: 50%;
+    }
+    .student-name-hero::after {
+        content: '';
+        position: absolute;
+        bottom: -80px; left: -80px;
+        width: 260px; height: 260px;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent 70%);
+        border-radius: 50%;
+    }
+
+    .student-name-hero .welcome-line {
+        font-size: 0.72rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--accent-light);
+        font-weight: 700;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 2;
+    }
+    .student-name-hero .student-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: white;
+        line-height: 1.2;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 2;
+        word-break: break-word;
+    }
+    .student-name-hero .name-divider {
+        width: 70px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-light));
+        margin: 14px auto 16px;
+        border-radius: 2px;
+        position: relative;
+        z-index: 2;
+    }
+    .student-name-hero .student-meta {
+        display: inline-flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px 24px;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+    }
+    .student-name-hero .student-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 500;
+    }
+    .student-name-hero .student-meta-item i {
+        color: var(--accent-light);
+        font-size: 0.9rem;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+        font-size: 1.1rem;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+    }
+    .section-title i { color: var(--primary); font-size: 1.2rem; }
+
+    /* QUICK CARDS */
+    .quick-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-bottom: 28px;
+    }
+    .quick-card {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        padding: 22px;
+        text-decoration: none;
+        color: var(--dark);
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        position: relative;
+        overflow: hidden;
+    }
+    .quick-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 4px; height: 100%;
+        background: var(--primary);
+        transition: all 0.3s;
+    }
+    .quick-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+        border-color: var(--primary);
+    }
+    .quick-card:hover::before { width: 6px; }
+
+    .quick-card-icon {
+        width: 54px; height: 54px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        flex-shrink: 0;
+    }
+    .quick-card-icon.blue { background: linear-gradient(135deg, #0b3d91, #1e5bc6); }
+    .quick-card-icon.green { background: linear-gradient(135deg, #059669, #10b981); }
+    .quick-card-icon.gold { background: linear-gradient(135deg, #d97706, #f59e0b); }
+    .quick-card-icon.cyan { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+
+    .quick-card-info { flex: 1; min-width: 0; }
+    .quick-card-info h4 {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: var(--dark);
+    }
+    .quick-card-info p {
+        font-size: 0.78rem;
+        color: var(--gray-500);
+        margin: 0;
+        line-height: 1.4;
+    }
+    .quick-card-arrow {
+        color: var(--gray-500);
+        font-size: 1rem;
+        flex-shrink: 0;
+        transition: all 0.3s;
+    }
+    .quick-card:hover .quick-card-arrow { color: var(--primary); transform: translateX(4px); }
+
+    /* SEAT PREVIEW */
+    .seat-preview-card {
+        background: white;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        padding: 24px;
+        margin-bottom: 24px;
+    }
+    .seat-preview-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e2e8f0;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .seat-preview-header h4 {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .seat-preview-header h4 i { color: var(--primary); }
+    .badge-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 12px;
+        background: #ecfdf5;
+        color: var(--success);
+        border-radius: 50px;
+        font-size: 0.68rem;
+        font-weight: 700;
+    }
+    .badge-live::before {
+        content: '';
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: var(--success);
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .seat-preview-body {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: center;
+    }
+    .seat-preview-info {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .seat-info-item {
+        padding: 12px 14px;
+        background: #f8fafc;
+        border-radius: 10px;
+        border-left: 3px solid var(--primary);
+    }
+    .seat-info-item .label {
+        font-size: 0.66rem;
+        color: var(--gray-500);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin-bottom: 3px;
+    }
+    .seat-info-item .value {
+        font-size: 0.9rem;
+        color: var(--dark);
+        font-weight: 700;
+    }
+    .seat-big-number {
+        text-align: center;
+        padding: 16px 24px;
+        background: linear-gradient(135deg, #fffbeb, #fef3c7);
+        border: 2px dashed #fbbf24;
+        border-radius: 14px;
+        min-width: 140px;
+    }
+    .seat-big-number .seat-label {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--gray-500);
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+    .seat-big-number .seat-value {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #b91c1c;
+        letter-spacing: 2px;
+        font-family: 'Playfair Display', serif;
+        line-height: 1.1;
+    }
+
+    .btn-view-full {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 12px rgba(11, 61, 145, 0.25);
+        font-family: 'Inter', sans-serif;
+        margin-top: 18px;
+    }
+    .btn-view-full:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(11, 61, 145, 0.35);
+        color: white;
+    }
+
+    /* NOTICES PREVIEW */
+    .notices-preview {
+        background: white;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        padding: 24px;
+    }
+    .notice-mini-item {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        padding: 14px 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+    .notice-mini-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .notice-mini-icon {
+        width: 38px; height: 38px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #b45309;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+    .notice-mini-content { flex: 1; min-width: 0; }
+    .notice-mini-content strong {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 2px;
+    }
+    .notice-mini-content small {
+        color: var(--gray-500);
+        font-size: 0.75rem;
+        line-height: 1.5;
+    }
+    .notice-mini-time {
+        font-size: 0.68rem;
+        color: var(--gray-500);
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .btn-view-notices {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        background: white;
+        color: var(--primary);
+        border: 1.5px solid #e2e8f0;
+        border-radius: 9px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.25s;
+        font-family: 'Inter', sans-serif;
+        margin-top: 16px;
+    }
+    .btn-view-notices:hover { border-color: var(--primary); background: #eff6ff; color: var(--primary); }
+
+    /* FOOTER */
+    .page-footer {
+        text-align: center;
+        padding: 24px 24px 8px;
+        font-size: 0.74rem;
+        color: var(--gray-500);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+        .page-wrap { padding: 20px 16px 32px; }
+        .student-name-hero { padding: 26px 20px; }
+        .student-name-hero .student-name { font-size: 1.7rem; }
+        .student-name-hero .student-meta { flex-direction: column; gap: 6px; padding: 12px 20px; }
+        .quick-grid { grid-template-columns: 1fr; }
+        .seat-preview-body { grid-template-columns: 1fr; }
+        .seat-big-number { width: 100%; }
+        .seat-preview-info { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-pro .container-pro { padding: 0 14px; }
+        .user-chip span { display: none; }
+        .user-chip { padding: 6px; }
+        .btn-logout span { display: none; }
+        .btn-logout { padding: 8px 12px; }
+        .student-name-hero .student-name { font-size: 1.4rem; }
+        .student-name-hero .welcome-line { font-size: 0.62rem; letter-spacing: 2px; }
+        .section-title { font-size: 1rem; }
+        .quick-card { padding: 16px; }
+        .quick-card-icon { width: 46px; height: 46px; font-size: 1.2rem; }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar-pro">
+    <div class="container-pro">
+        <div class="nav-brand">
+            <div class="nav-brand-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e5bc6"/><stop offset="100%" stop-color="#082c6b"/>
+                        </linearGradient>
+                        <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e6c458"/><stop offset="100%" stop-color="#a8841a"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z" fill="url(#gg)"/>
+                    <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z" fill="url(#ng)"/>
+                    <text x="50" y="55" text-anchor="middle" font-family="Playfair Display, serif" font-size="24" font-weight="800" fill="url(#gg)">SEA</text>
+                </svg>
+            </div>
+            <div class="nav-brand-text">
+                <h5>SEA</h5>
+                <small>Student Portal</small>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <div class="user-chip">
+                <div class="user-avatar" id="userAvatar">S</div>
+                <span id="userName">Student</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="page-wrap">
+
+    <!-- ⭐ STUDENT NAME HERO ⭐ -->
+    <div class="student-name-hero">
+        <div class="welcome-line">Welcome Back</div>
+        <div class="student-name" id="studentName">Rahul Sharma</div>
+        <div class="name-divider"></div>
+        <div class="student-meta">
+            <div class="student-meta-item">
+                <i class="bi bi-person-badge-fill"></i>
+                <span id="enrollNoMeta">2026CS001</span>
+            </div>
+            <div class="student-meta-item">
+                <i class="bi bi-building"></i>
+                <span id="deptNameMeta">Computer Science</span>
+            </div>
+            <div class="student-meta-item">
+                <i class="bi bi-calendar3"></i>
+                <span id="yearNameMeta">1st Year</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <h3 class="section-title">
+        <i class="bi bi-lightning-charge-fill"></i>
+        Quick Actions
+    </h3>
+    <div class="quick-grid">
+
+        <a href="student-seat-details.html" class="quick-card">
+            <div class="quick-card-icon blue"><i class="bi bi-geo-alt-fill"></i></div>
+            <div class="quick-card-info">
+                <h4>My Seat Details</h4>
+                <p>View your exam hall and seat number</p>
+            </div>
+            <i class="bi bi-chevron-right quick-card-arrow"></i>
+        </a>
+
+        <a href="#" class="quick-card" onclick="alert('QR Code download hoga')">
+            <div class="quick-card-icon green"><i class="bi bi-qr-code"></i></div>
+            <div class="quick-card-info">
+                <h4>Download QR Code</h4>
+                <p>Save your entry QR for exam day</p>
+            </div>
+            <i class="bi bi-chevron-right quick-card-arrow"></i>
+        </a>
+
+        <a href="#" class="quick-card" onclick="alert('Seat Slip PDF download hoga')">
+            <div class="quick-card-icon gold"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="quick-card-info">
+                <h4>Download Seat Slip</h4>
+                <p>Printable PDF of your seating</p>
+            </div>
+            <i class="bi bi-chevron-right quick-card-arrow"></i>
+        </a>
+
+        <a href="student-notices.html" class="quick-card">
+            <div class="quick-card-icon cyan"><i class="bi bi-megaphone-fill"></i></div>
+            <div class="quick-card-info">
+                <h4>Notices</h4>
+                <p>Check latest announcements</p>
+            </div>
+            <i class="bi bi-chevron-right quick-card-arrow"></i>
+        </a>
+
+    </div>
+
+    <!-- Seat Preview -->
+    <h3 class="section-title">
+        <i class="bi bi-person-badge-fill"></i>
+        Your Exam Seat
+    </h3>
+    <div class="seat-preview-card">
+        <div class="seat-preview-header">
+            <h4><i class="bi bi-journal-text"></i> Data Structures — Upcoming Exam</h4>
+            <span class="badge-live">Live</span>
+        </div>
+        <div class="seat-preview-body">
+            <div class="seat-preview-info">
+                <div class="seat-info-item">
+                    <div class="label">Enrollment</div>
+                    <div class="value" id="enrollNo">2026CS001</div>
+                </div>
+                <div class="seat-info-item">
+                    <div class="label">Department</div>
+                    <div class="value" id="deptName">Computer Engineering</div>
+                </div>
+                <div class="seat-info-item">
+                    <div class="label">Exam Date</div>
+                    <div class="value">15-Mar-2026</div>
+                </div>
+                <div class="seat-info-item">
+                    <div class="label">Time Slot</div>
+                    <div class="value">10:00 AM – 1:00 PM</div>
+                </div>
+                <div class="seat-info-item">
+                    <div class="label">Room</div>
+                    <div class="value">Hall C</div>
+                </div>
+                <div class="seat-info-item">
+                    <div class="label">Supervisor</div>
+                    <div class="value">Prof. A. Deshmukh</div>
+                </div>
+            </div>
+
+            <div class="seat-big-number">
+                <div class="seat-label">Your Seat</div>
+                <div class="seat-value">R1-C1</div>
+            </div>
+        </div>
+
+        <a href="student-seat-details.html" class="btn-view-full">
+            <i class="bi bi-arrow-right-circle-fill"></i>
+            View Full Details
+        </a>
+    </div>
+
+    <!-- Notices Preview -->
+    <h3 class="section-title">
+        <i class="bi bi-megaphone-fill"></i>
+        Recent Notices
+    </h3>
+    <div class="notices-preview">
+        <div class="notice-mini-item">
+            <div class="notice-mini-icon"><i class="bi bi-calendar-x-fill"></i></div>
+            <div class="notice-mini-content">
+                <strong>Exam Rescheduled</strong>
+                <small>Data Structures exam is now on 16-Mar-2026 at 10:00 AM.</small>
+            </div>
+            <span class="notice-mini-time">2d ago</span>
+        </div>
+
+        <div class="notice-mini-item">
+            <div class="notice-mini-icon"><i class="bi bi-person-vcard-fill"></i></div>
+            <div class="notice-mini-content">
+                <strong>Carry Your ID Card</strong>
+                <small>Bring your college ID along with the QR code at exam hall entry.</small>
+            </div>
+            <span class="notice-mini-time">5d ago</span>
+        </div>
+
+        <div class="notice-mini-item">
+            <div class="notice-mini-icon"><i class="bi bi-clock-history"></i></div>
+            <div class="notice-mini-content">
+                <strong>Report 30 Minutes Early</strong>
+                <small>Reach the exam hall 30 minutes before the scheduled time.</small>
+            </div>
+            <span class="notice-mini-time">1w ago</span>
+        </div>
+
+        <a href="student-notices.html" class="btn-view-notices">
+            <i class="bi bi-arrow-right"></i>
+            View All Notices
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="page-footer">
+        © 2026 SEA — Seat Exam Allotment | Matoshri College of Engineering & RC
+    </div>
+
+</div>
+
+<script>
+const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+if (!user.success || user.role !== 'student') {
+    window.location.href = 'index.html';
+}
+
+const deptMap = {
+    CS: 'Computer Science', IT: 'Information Technology', AI: 'Artificial Intelligence',
+    MECH: 'Mechanical', CIVIL: 'Civil', EE: 'Electrical', EJ: 'Electronics'
+};
+const yearMap = { '1': '1st Year', '2': '2nd Year', '3': '3rd Year' };
+
+document.getElementById('userName').textContent = user.name || 'Student';
+document.getElementById('userAvatar').textContent = (user.name || 'S').charAt(0).toUpperCase();
+document.getElementById('studentName').textContent = user.name || 'Student';
+document.getElementById('enrollNoMeta').textContent = user.enrollmentNo || '2026CS001';
+document.getElementById('deptNameMeta').textContent = deptMap[user.department] || 'Computer Science';
+document.getElementById('yearNameMeta').textContent = yearMap[user.year] || '1st Year';
+document.getElementById('enrollNo').textContent = user.enrollmentNo || '2026CS001';
+document.getElementById('deptName').textContent = deptMap[user.department] || 'Computer Science';
+
+function logout() {
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+}
+</script>
+
+</body>
+</html>
+

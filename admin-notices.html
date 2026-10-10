@@ -1,0 +1,714 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notices — SEA | Matoshri College of Engineering & RC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+    :root {
+        --primary: #0b3d91;
+        --primary-dark: #082c6b;
+        --accent: #c9a227;
+        --accent-light: #e6c458;
+        --dark: #0f172a;
+        --gray-700: #334155;
+        --gray-500: #64748b;
+        --success: #059669;
+        --danger: #dc2626;
+        --warning: #d97706;
+        --info: #0891b2;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f6fa;
+        color: var(--dark);
+        min-height: 100vh;
+        line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    .navbar-pro {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+    .navbar-pro .container-pro {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1300px;
+        padding: 0 24px;
+        margin: 0 auto;
+        gap: 12px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand-icon {
+        width: 44px; height: 44px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 11px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-brand-icon svg { width: 100%; height: 100%; }
+    .nav-brand-text h5 { margin: 0; font-size: 1rem; font-family: 'Playfair Display', serif; }
+    .nav-brand-text small { color: var(--gray-500); font-size: 0.72rem; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px 6px 6px;
+        background: #f1f5f9;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--gray-700);
+    }
+    .user-avatar {
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), #a8841a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .btn-logout {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 9px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-700);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .btn-logout:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+
+    .admin-layout { display: flex; min-height: calc(100vh - 70px); }
+    .sidebar {
+        width: 260px;
+        background: white;
+        border-right: 1px solid #e2e8f0;
+        padding: 24px 0;
+        position: sticky;
+        top: 70px;
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+        flex-shrink: 0;
+    }
+    .sidebar-section { padding: 0 16px; margin-bottom: 24px; }
+    .sidebar-section-title {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--gray-500);
+        font-weight: 700;
+        padding: 0 12px;
+        margin-bottom: 8px;
+    }
+    .sidebar-menu { list-style: none; }
+    .sidebar-menu li { margin-bottom: 2px; }
+    .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 9px;
+        color: var(--gray-700);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.25s;
+    }
+    .sidebar-menu a i { font-size: 1rem; color: var(--gray-500); width: 20px; }
+    .sidebar-menu a:hover { background: #f1f5f9; color: var(--primary); }
+    .sidebar-menu a:hover i { color: var(--primary); }
+    .sidebar-menu a.active {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        box-shadow: 0 4px 12px rgba(11, 61, 145, 0.25);
+    }
+    .sidebar-menu a.active i { color: white; }
+
+    .admin-main { flex: 1; padding: 28px 32px 40px; overflow-x: hidden; }
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .page-header-text h1 { font-size: 1.6rem; margin-bottom: 4px; }
+    .page-header-text p { color: var(--gray-500); font-size: 0.88rem; margin: 0; }
+
+    .notice-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        padding: 24px;
+        position: sticky;
+        top: 90px;
+        height: fit-content;
+    }
+    .form-card-title {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e2e8f0;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+    }
+    .form-card-title i { color: var(--primary); font-size: 1.1rem; }
+
+    .form-group {
+        margin-bottom: 16px;
+        position: relative;
+    }
+    .form-group label {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--gray-700);
+        margin-bottom: 6px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+    .form-group label .required { color: var(--danger); margin-left: 2px; }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 0.88rem;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        color: var(--dark);
+        background: #ffffff;
+        outline: none;
+        transition: all 0.25s;
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+    .form-group select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 40px;
+        cursor: pointer;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(11, 61, 145, 0.08);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #94a3b8; font-size: 0.82rem; }
+
+    .btn-submit {
+        width: 100%;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        padding: 13px 24px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 6px 16px rgba(11, 61, 145, 0.25);
+        font-family: 'Inter', sans-serif;
+        margin-top: 6px;
+    }
+    .btn-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11, 61, 145, 0.35); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .alert-pro {
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 0.82rem;
+        margin-bottom: 16px;
+        display: none;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+    }
+    .alert-pro.success { display: flex; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+    .alert-pro.danger { display: flex; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+
+    .notices-card {
+        background: white;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        padding: 24px;
+    }
+    .notices-card-title {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e2e8f0;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+    }
+    .notices-card-title-left { display: flex; align-items: center; gap: 10px; }
+    .notices-card-title i { color: var(--primary); font-size: 1.1rem; }
+    .notices-count {
+        font-size: 0.72rem;
+        color: var(--gray-500);
+        background: #f1f5f9;
+        padding: 4px 10px;
+        border-radius: 50px;
+        font-weight: 600;
+    }
+
+    .notice-list-item {
+        border: 1.5px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 18px;
+        margin-bottom: 12px;
+        transition: all 0.3s;
+        background: white;
+    }
+    .notice-list-item:hover { border-color: var(--primary); box-shadow: 0 8px 20px rgba(11, 61, 145, 0.08); }
+    .notice-list-item:last-child { margin-bottom: 0; }
+
+    .notice-list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 8px;
+    }
+    .notice-list-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--dark);
+        font-family: 'Inter', sans-serif;
+        line-height: 1.4;
+        flex: 1;
+        min-width: 0;
+    }
+    .notice-list-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .notice-icon-btn {
+        width: 28px; height: 28px;
+        border-radius: 7px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-500);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.25s;
+        font-size: 0.78rem;
+    }
+    .notice-icon-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .notice-icon-btn.delete:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+
+    .notice-list-message {
+        font-size: 0.85rem;
+        color: var(--gray-700);
+        line-height: 1.6;
+        margin-bottom: 12px;
+    }
+
+    .notice-list-meta {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 0.72rem;
+        color: var(--gray-500);
+        flex-wrap: wrap;
+    }
+    .notice-list-meta span { display: inline-flex; align-items: center; gap: 5px; }
+    .notice-list-meta i { font-size: 0.8rem; }
+
+    .notice-target-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 50px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        background: #dbeafe;
+        color: var(--primary);
+    }
+
+    .empty-notices { text-align: center; padding: 50px 20px; color: var(--gray-500); }
+    .empty-notices i { font-size: 3rem; color: #cbd5e1; margin-bottom: 12px; display: block; }
+
+    .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--gray-700);
+        font-size: 1.4rem;
+        cursor: pointer;
+        padding: 8px;
+    }
+
+    @media (max-width: 992px) {
+        .sidebar { position: fixed; left: -280px; top: 70px; z-index: 999; transition: left 0.3s; }
+        .sidebar.open { left: 0; }
+        .mobile-menu-btn { display: block; }
+        .admin-main { padding: 20px 16px 32px; }
+        .notice-layout { grid-template-columns: 1fr; }
+        .form-card { position: static; }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-pro .container-pro { padding: 0 14px; }
+        .user-chip span { display: none; }
+        .user-chip { padding: 6px; }
+        .btn-logout span { display: none; }
+        .btn-logout { padding: 8px 12px; }
+        .page-header-text h1 { font-size: 1.3rem; }
+        .form-card, .notices-card { padding: 18px 16px; }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar-pro">
+    <div class="container-pro">
+        <div class="nav-brand">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+            <div class="nav-brand-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e5bc6"/><stop offset="100%" stop-color="#082c6b"/>
+                        </linearGradient>
+                        <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e6c458"/><stop offset="100%" stop-color="#a8841a"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z" fill="url(#gg)"/>
+                    <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z" fill="url(#ng)"/>
+                    <text x="50" y="55" text-anchor="middle" font-family="Playfair Display, serif" font-size="24" font-weight="800" fill="url(#gg)">SEA</text>
+                </svg>
+            </div>
+            <div class="nav-brand-text">
+                <h5>SEA</h5>
+                <small>Admin Panel</small>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <div class="user-chip">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <span id="userName">Administrator</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="admin-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Main</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Management</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-students.html"><i class="bi bi-people-fill"></i> Students</a></li>
+                <li><a href="teacher-data.html"><i class="bi bi-person-badge-fill"></i> Teacher Data</a></li>
+                <li><a href="admin-halls.html"><i class="bi bi-building"></i> Halls</a></li>
+                <li><a href="exam-center.html"><i class="bi bi-journal-text"></i> Exam Center</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Seating</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-seating.html"><i class="bi bi-grid-3x3-gap-fill"></i> Generate Seating</a></li>
+                <li><a href="admin-notices.html" class="active"><i class="bi bi-megaphone-fill"></i> Notices</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="admin-main">
+
+        <div class="page-header">
+            <div class="page-header-text">
+                <h1>Notices &amp; Announcements</h1>
+                <p>Post and manage announcements for students</p>
+            </div>
+        </div>
+
+        <div class="notice-layout">
+
+            <!-- FORM -->
+            <div class="form-card">
+                <div class="form-card-title">
+                    <i class="bi bi-pencil-square"></i>
+                    Post New Notice
+                </div>
+
+                <div id="formAlert" class="alert-pro">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span id="formAlertText">Success</span>
+                </div>
+
+                <form id="noticeForm" autocomplete="off">
+                    <div class="form-group">
+                        <label for="title">Notice Title <span class="required">*</span></label>
+                        <input type="text" id="title" placeholder="e.g. Exam Rescheduled" required maxlength="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message <span class="required">*</span></label>
+                        <textarea id="message" placeholder="Write the full notice message here..." required maxlength="500"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="target">Target Audience</label>
+                        <select id="target">
+                            <option value="all">All Students</option>
+                            <option value="CS">Computer Science</option>
+                            <option value="IT">Information Technology</option>
+                            <option value="AI">Artificial Intelligence</option>
+                            <option value="MECH">Mechanical</option>
+                            <option value="CIVIL">Civil</option>
+                            <option value="EE">Electrical</option>
+                            <option value="EJ">Electronics</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <i class="bi bi-send-fill"></i>
+                        <span id="submitBtnText">Post Notice</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- NOTICES LIST -->
+            <div class="notices-card">
+                <div class="notices-card-title">
+                    <div class="notices-card-title-left">
+                        <i class="bi bi-megaphone-fill"></i>
+                        Published Notices
+                    </div>
+                    <span class="notices-count" id="noticesCount">0 notices</span>
+                </div>
+
+                <div id="noticesList"></div>
+
+                <div id="emptyNotices" class="empty-notices" style="display: none;">
+                    <i class="bi bi-inbox"></i>
+                    <p>No notices published yet</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+
+<script>
+const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+if (!user.success || user.role !== 'admin') {
+    window.location.href = 'index.html';
+}
+document.getElementById('userName').textContent = user.name || 'Admin';
+document.getElementById('userAvatar').textContent = (user.name || 'A').charAt(0).toUpperCase();
+
+let notices = [
+    {
+        id: 1,
+        title: 'Exam Rescheduled',
+        message: 'Data Structures exam is now on 16-Mar-2026 at 10:00 AM. Students are advised to check their seat slips.',
+        target: 'all',
+        postedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    {
+        id: 2,
+        title: 'Carry Your ID Card',
+        message: 'Bring your college ID card along with the QR code at exam hall entry. No entry without valid ID.',
+        target: 'all',
+        postedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    {
+        id: 3,
+        title: 'Lab Session Cancelled',
+        message: 'The DBMS lab session scheduled for tomorrow has been cancelled due to maintenance.',
+        target: 'CS',
+        postedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+    }
+];
+
+const deptMap = {
+    all: 'All Students', CS: 'Computer Science', IT: 'Information Technology',
+    AI: 'Artificial Intelligence', MECH: 'Mechanical', CIVIL: 'Civil',
+    EE: 'Electrical', EJ: 'Electronics'
+};
+
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffMins = Math.floor(diffMs / (1000 * 60));
+
+    if (diffMins < 1) return 'Just now';
+    if (diffMins < 60) return `${diffMins} min ago`;
+    if (diffHours < 24) return `${diffHours} hr ago`;
+    if (diffDays === 1) return 'Yesterday';
+    if (diffDays < 7) return `${diffDays} days ago`;
+    return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function renderNotices() {
+    const list = document.getElementById('noticesList');
+    const empty = document.getElementById('emptyNotices');
+    const count = document.getElementById('noticesCount');
+
+    count.textContent = `${notices.length} notice${notices.length !== 1 ? 's' : ''}`;
+
+    if (notices.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+
+    const sorted = [...notices].sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
+
+    list.innerHTML = sorted.map(n => `
+        <div class="notice-list-item">
+            <div class="notice-list-header">
+                <div class="notice-list-title">${n.title}</div>
+                <div class="notice-list-actions">
+                    <button class="notice-icon-btn" onclick="editNotice(${n.id})" title="Edit"><i class="bi bi-pencil-fill"></i></button>
+                    <button class="notice-icon-btn delete" onclick="deleteNotice(${n.id})" title="Delete"><i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+            <div class="notice-list-message">${n.message}</div>
+            <div class="notice-list-meta">
+                <span><i class="bi bi-clock"></i> ${formatDate(n.postedAt)}</span>
+                <span class="notice-target-badge">${deptMap[n.target] || n.target}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+document.getElementById('noticeForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    hideAlert();
+
+    const title = document.getElementById('title').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const target = document.getElementById('target').value;
+
+    if (!title || !message) { showAlert('Please fill in all required fields', 'danger'); return; }
+    if (title.length < 3) { showAlert('Title must be at least 3 characters', 'danger'); return; }
+
+    const btn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('submitBtnText');
+    const originalText = btnText.textContent;
+    btn.disabled = true;
+    btnText.innerHTML = 'Posting...';
+
+    setTimeout(() => {
+        notices.push({
+            id: Date.now(), title, message, target,
+            postedAt: new Date().toISOString()
+        });
+        renderNotices();
+        document.getElementById('noticeForm').reset();
+        showAlert('✅ Notice posted successfully!', 'success');
+        btn.disabled = false;
+        btnText.textContent = originalText;
+        setTimeout(() => hideAlert(), 3000);
+    }, 600);
+});
+
+function editNotice(id) {
+    const n = notices.find(x => x.id === id);
+    if (!n) return;
+    const newTitle = prompt('Edit title:', n.title);
+    if (newTitle && newTitle.trim()) n.title = newTitle.trim();
+    const newMessage = prompt('Edit message:', n.message);
+    if (newMessage && newMessage.trim()) n.message = newMessage.trim();
+    renderNotices();
+    showAlert('✅ Notice updated successfully!', 'success');
+    setTimeout(() => hideAlert(), 2500);
+}
+
+function deleteNotice(id) {
+    const n = notices.find(x => x.id === id);
+    if (!n) return;
+    if (confirm(`Delete notice "${n.title}"?\n\nThis action cannot be undone.`)) {
+        notices = notices.filter(x => x.id !== id);
+        renderNotices();
+        showAlert('✅ Notice deleted successfully!', 'success');
+        setTimeout(() => hideAlert(), 2500);
+    }
+}
+
+function showAlert(msg, type) {
+    const box = document.getElementById('formAlert');
+    const text = document.getElementById('formAlertText');
+    const icon = box.querySelector('i');
+    text.textContent = msg;
+    box.className = 'alert-pro ' + type;
+    icon.className = type === 'success' ? 'bi bi-check-circle-fill' : 'bi bi-exclamation-triangle-fill';
+}
+function hideAlert() { document.getElementById('formAlert').className = 'alert-pro'; }
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+function logout() { sessionStorage.clear(); window.location.href = 'index.html'; }
+
+renderNotices();
+</script>
+
+</body>
+</html>

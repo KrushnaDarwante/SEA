@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Data — SEA | Matoshri College of Engineering & RC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+    :root {
+        --primary: #0b3d91;
+        --primary-dark: #082c6b;
+        --accent: #c9a227;
+        --accent-light: #e6c458;
+        --dark: #0f172a;
+        --gray-700: #334155;
+        --gray-500: #64748b;
+        --success: #059669;
+        --danger: #dc2626;
+        --warning: #d97706;
+        --info: #0891b2;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f6fa;
+        color: var(--dark);
+        min-height: 100vh;
+        line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    .navbar-pro {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+    .navbar-pro .container-pro {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1300px;
+        padding: 0 24px;
+        margin: 0 auto;
+        gap: 12px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand-icon {
+        width: 44px; height: 44px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 11px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-brand-icon svg { width: 100%; height: 100%; }
+    .nav-brand-text h5 { margin: 0; font-size: 1rem; font-family: 'Playfair Display', serif; }
+    .nav-brand-text small { color: var(--gray-500); font-size: 0.72rem; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px 6px 6px;
+        background: #f1f5f9;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--gray-700);
+    }
+    .user-avatar {
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), #a8841a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .btn-logout {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 9px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-700);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .btn-logout:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+
+    .admin-layout { display: flex; min-height: calc(100vh - 70px); }
+    .sidebar {
+        width: 260px;
+        background: white;
+        border-right: 1px solid #e2e8f0;
+        padding: 24px 0;
+        position: sticky;
+        top: 70px;
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+        flex-shrink: 0;
+    }
+    .sidebar-section { padding: 0 16px; margin-bottom: 24px; }
+    .sidebar-section-title {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--gray-500);
+        font-weight: 700;
+        padding: 0 12px;
+        margin-bottom: 8px;
+    }
+    .sidebar-menu { list-style: none; }
+    .sidebar-menu li { margin-bottom: 2px; }
+    .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 9px;
+        color: var(--gray-700);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.25s;
+    }
+    .sidebar-menu a i { font-size: 1rem; color: var(--gray-500); width: 20px; }
+    .sidebar-menu a:hover { background: #f1f5f9; color: var(--primary); }
+    .sidebar-menu a:hover i { color: var(--primary); }
+    .sidebar-menu a.active {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        box-shadow: 0 4px 12px rgba(11, 61, 145, 0.25);
+    }
+    .sidebar-menu a.active i { color: white; }
+
+    .admin-main { flex: 1; padding: 28px 32px 40px; overflow-x: hidden; }
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .page-header-text h1 { font-size: 1.6rem; margin-bottom: 4px; }
+    .page-header-text p { color: var(--gray-500); font-size: 0.88rem; margin: 0; }
+    .btn-primary-pro {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        padding: 11px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: all 0.3s;
+        box-shadow: 0 6px 16px rgba(11, 61, 145, 0.25);
+    }
+    .btn-primary-pro:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11, 61, 145, 0.35); color: white; }
+
+    .mini-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin-bottom: 20px;
+    }
+    .mini-stat {
+        background: white;
+        border-radius: 14px;
+        padding: 18px 20px;
+        border: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        transition: all 0.3s;
+    }
+    .mini-stat:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06); }
+    .mini-stat-icon {
+        width: 44px; height: 44px;
+        border-radius: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: white;
+        flex-shrink: 0;
+    }
+    .mini-stat-icon.blue { background: linear-gradient(135deg, #0b3d91, #1e5bc6); }
+    .mini-stat-icon.green { background: linear-gradient(135deg, #059669, #10b981); }
+    .mini-stat-icon.gold { background: linear-gradient(135deg, #d97706, #f59e0b); }
+    .mini-stat-icon.cyan { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+    .mini-stat-info h3 { font-size: 1.5rem; margin: 0; font-family: 'Inter', sans-serif; font-weight: 700; }
+    .mini-stat-info small {
+        color: var(--gray-500);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        font-weight: 600;
+    }
+
+    .filters-card {
+        background: white;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        padding: 18px;
+        margin-bottom: 20px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+    }
+    .search-input { position: relative; }
+    .search-input i {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-500);
+        font-size: 0.9rem;
+    }
+    .search-input input {
+        width: 100%;
+        padding: 11px 14px 11px 40px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        outline: none;
+        transition: all 0.25s;
+        font-family: 'Inter', sans-serif;
+    }
+    .search-input input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(11, 61, 145, 0.08); }
+    .filter-select {
+        padding: 11px 36px 11px 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        outline: none;
+        background: white;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        color: var(--gray-700);
+        min-width: 160px;
+    }
+    .filter-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(11, 61, 145, 0.08); }
+
+    .table-card {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+    }
+    .table-header {
+        padding: 18px 24px;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .table-header h4 { font-size: 1rem; margin: 0; font-family: 'Inter', sans-serif; font-weight: 700; }
+    .table-header small { color: var(--gray-500); font-size: 0.78rem; }
+
+    .table-pro { width: 100%; border-collapse: collapse; }
+    .table-pro thead { background: #f8fafc; }
+    .table-pro th {
+        text-align: left;
+        padding: 14px 20px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--gray-500);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    .table-pro td {
+        padding: 14px 20px;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 0.85rem;
+        color: var(--gray-700);
+    }
+    .table-pro tbody tr:hover { background: #f8fafc; }
+    .table-pro tbody tr:last-child td { border-bottom: none; }
+
+    .teacher-cell { display: flex; align-items: center; gap: 12px; }
+    .teacher-avatar {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #059669, #10b981);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+    .teacher-info strong { display: block; color: var(--dark); font-size: 0.88rem; font-weight: 700; }
+    .teacher-info small { color: var(--gray-500); font-size: 0.72rem; }
+    .teacher-info .duty-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        background: #eff6ff;
+        color: var(--primary);
+        padding: 1px 7px;
+        border-radius: 50px;
+        font-size: 0.62rem;
+        font-weight: 700;
+        margin-top: 3px;
+        margin-left: 4px;
+    }
+    .teacher-info .duty-badge.has-duties {
+        background: #ecfdf5;
+        color: var(--success);
+    }
+    .teacher-info .duty-badge i { font-size: 0.62rem; }
+
+    .badge-dept {
+        display: inline-block;
+        padding: 4px 10px;
+        background: #eff6ff;
+        color: var(--primary);
+        border-radius: 50px;
+        font-size: 0.7rem;
+        font-weight: 700;
+    }
+    .badge-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        border-radius: 50px;
+        font-size: 0.68rem;
+        font-weight: 700;
+    }
+    .badge-status.active { background: #ecfdf5; color: var(--success); }
+    .badge-status.inactive { background: #fef3c7; color: var(--warning); }
+
+    .action-btns { display: flex; gap: 6px; justify-content: flex-end; }
+    .icon-btn {
+        width: 32px; height: 32px;
+        border-radius: 8px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-500);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.25s;
+        font-size: 0.85rem;
+    }
+    .icon-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .icon-btn.delete:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+    .icon-btn.assign:hover { border-color: var(--success); color: var(--success); background: #f0fdf4; }
+    .icon-btn.slip:hover { border-color: var(--info); color: var(--info); background: #ecfeff; }
+
+    .empty-state { text-align: center; padding: 60px 20px; color: var(--gray-500); }
+    .empty-state i { font-size: 3rem; color: #cbd5e1; margin-bottom: 12px; display: block; }
+
+    /* TOAST */
+    .toast-pro {
+        position: fixed;
+        top: 90px;
+        right: 24px;
+        background: var(--success);
+        color: white;
+        padding: 14px 22px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        box-shadow: 0 8px 24px rgba(5, 150, 105, 0.3);
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 340px;
+    }
+    .toast-pro.show { opacity: 1; transform: translateY(0); }
+    .toast-pro.error { background: var(--danger); box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3); }
+    .toast-pro.info { background: var(--info); box-shadow: 0 8px 24px rgba(8, 145, 178, 0.3); }
+
+    .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--gray-700);
+        font-size: 1.4rem;
+        cursor: pointer;
+        padding: 8px;
+    }
+
+    @media (max-width: 992px) {
+        .sidebar { position: fixed; left: -280px; top: 70px; z-index: 999; transition: left 0.3s; }
+        .sidebar.open { left: 0; }
+        .mobile-menu-btn { display: block; }
+        .admin-main { padding: 20px 16px 32px; }
+        .filters-card { grid-template-columns: 1fr; }
+        .table-pro th, .table-pro td { padding: 10px 12px; font-size: 0.78rem; }
+        .mini-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .mini-stat { padding: 14px; gap: 12px; }
+        .mini-stat-icon { width: 40px; height: 40px; font-size: 1.1rem; }
+        .mini-stat-info h3 { font-size: 1.2rem; }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-pro .container-pro { padding: 0 14px; }
+        .user-chip span { display: none; }
+        .user-chip { padding: 6px; }
+        .btn-logout span { display: none; }
+        .btn-logout { padding: 8px 12px; }
+        .page-header-text h1 { font-size: 1.3rem; }
+        .table-pro th:nth-child(3), .table-pro td:nth-child(3) { display: none; }
+        .mini-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar-pro">
+    <div class="container-pro">
+        <div class="nav-brand">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+            <div class="nav-brand-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e5bc6"/><stop offset="100%" stop-color="#082c6b"/>
+                        </linearGradient>
+                        <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e6c458"/><stop offset="100%" stop-color="#a8841a"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z" fill="url(#gg)"/>
+                    <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z" fill="url(#ng)"/>
+                    <text x="50" y="55" text-anchor="middle" font-family="Playfair Display, serif" font-size="24" font-weight="800" fill="url(#gg)">SEA</text>
+                </svg>
+            </div>
+            <div class="nav-brand-text">
+                <h5>SEA</h5>
+                <small>Admin Panel</small>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <div class="user-chip">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <span id="userName">Administrator</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="admin-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Main</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Management</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-students.html"><i class="bi bi-people-fill"></i> Students</a></li>
+                <li><a href="teacher-data.html" class="active"><i class="bi bi-person-badge-fill"></i> Teacher Data</a></li>
+                <li><a href="admin-halls.html"><i class="bi bi-building"></i> Halls</a></li>
+                <li><a href="exam-center.html"><i class="bi bi-journal-text"></i> Exam Center</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Seating</div>
+            <ul class="sidebar-menu">
+                <li><a href="admin-seating.html"><i class="bi bi-grid-3x3-gap-fill"></i> Generate Seating</a></li>
+                <li><a href="admin-notices.html"><i class="bi bi-megaphone-fill"></i> Notices</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="admin-main">
+
+        <div class="page-header">
+            <div class="page-header-text">
+                <h1>Teacher Data</h1>
+                <p>Manage faculty and invigilator records</p>
+            </div>
+            <button class="btn-primary-pro" onclick="addTeacher()">
+                <i class="bi bi-person-plus-fill"></i>
+                Add New Teacher
+            </button>
+        </div>
+
+        <div class="mini-stats">
+            <div class="mini-stat">
+                <div class="mini-stat-icon blue"><i class="bi bi-people-fill"></i></div>
+                <div class="mini-stat-info">
+                    <h3 id="statTotal">0</h3>
+                    <small>Total Teachers</small>
+                </div>
+            </div>
+            <div class="mini-stat">
+                <div class="mini-stat-icon green"><i class="bi bi-person-check-fill"></i></div>
+                <div class="mini-stat-info">
+                    <h3 id="statActive">0</h3>
+                    <small>Active Duty</small>
+                </div>
+            </div>
+            <div class="mini-stat">
+                <div class="mini-stat-icon gold"><i class="bi bi-book"></i></div>
+                <div class="mini-stat-info">
+                    <h3 id="statDepts">0</h3>
+                    <small>Departments</small>
+                </div>
+            </div>
+            <!-- NEW: total assignments stat -->
+            <div class="mini-stat">
+                <div class="mini-stat-icon cyan"><i class="bi bi-building-check"></i></div>
+                <div class="mini-stat-info">
+                    <h3 id="statAssignments">0</h3>
+                    <small>Hall Assignments</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters-card">
+            <div class="search-input">
+                <i class="bi bi-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by name or employee ID..." oninput="filterTable()">
+            </div>
+            <select class="filter-select" id="deptFilter" onchange="filterTable()">
+                <option value="">All Departments</option>
+                <option value="CS">Computer Science</option>
+                <option value="IT">Information Technology</option>
+                <option value="AI">Artificial Intelligence</option>
+                <option value="MECH">Mechanical</option>
+                <option value="CIVIL">Civil</option>
+                <option value="EE">Electrical</option>
+                <option value="EJ">Electronics</option>
+            </select>
+        </div>
+
+        <div class="table-card">
+            <div class="table-header">
+                <h4>All Teachers</h4>
+                <small id="countText">Showing 0 teachers</small>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="table-pro">
+                    <thead>
+                        <tr>
+                            <th>Teacher</th>
+                            <th>Department</th>
+                            <th>Contact</th>
+                            <th>Status</th>
+                            <th style="text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <i class="bi bi-person-badge"></i>
+                <p>No teachers found</p>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<div class="toast-pro" id="toast">
+    <i class="bi bi-check-circle-fill"></i>
+    <span id="toastMsg">Saved</span>
+</div>
+
+<script>
+/* ============ AUTH ============ */
+const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+if (!user.success || user.role !== 'admin') {
+    window.location.href = 'index.html';
+}
+document.getElementById('userName').textContent = user.name || 'Admin';
+document.getElementById('userAvatar').textContent = (user.name || 'A').charAt(0).toUpperCase();
+
+/* ============ TEACHERS DATA ============ */
+let teachers = [
+    { id: 1, employeeId: 'EMP101', name: 'Prof. A. Deshmukh', dept: 'CS', email: 'deshmukh@matoshriengg.edu.in', phone: '+91 9876500001', status: 'active' },
+    { id: 2, employeeId: 'EMP102', name: 'Prof. S. Patil', dept: 'CS', email: 'patil@matoshriengg.edu.in', phone: '+91 9876500002', status: 'active' },
+    { id: 3, employeeId: 'EMP103', name: 'Prof. R. Joshi', dept: 'IT', email: 'joshi@matoshriengg.edu.in', phone: '+91 9876500003', status: 'active' },
+    { id: 4, employeeId: 'EMP104', name: 'Prof. M. Kulkarni', dept: 'AI', email: 'kulkarni@matoshriengg.edu.in', phone: '+91 9876500004', status: 'active' },
+    { id: 5, employeeId: 'EMP105', name: 'Prof. V. Shinde', dept: 'MECH', email: 'shinde@matoshriengg.edu.in', phone: '+91 9876500005', status: 'inactive' },
+    { id: 6, employeeId: 'EMP106', name: 'Prof. P. More', dept: 'CIVIL', email: 'more@matoshriengg.edu.in', phone: '+91 9876500006', status: 'active' },
+    { id: 7, employeeId: 'EMP107', name: 'Prof. N. Pawar', dept: 'EE', email: 'pawar@matoshriengg.edu.in', phone: '+91 9876500007', status: 'active' },
+    { id: 8, employeeId: 'EMP108', name: 'Prof. S. Gaikwad', dept: 'EJ', email: 'gaikwad@matoshriengg.edu.in', phone: '+91 9876500008', status: 'active' }
+];
+
+const deptMap = {
+    CS: 'Computer Engineering', IT: 'IT', AI: 'Artificial Intelligence & Data Science',
+    MECH: 'Mechanical', CIVIL: 'Civil', EE: 'Electrical', EJ: 'Electronics & Telecommunication'
+};
+
+/* ============ SYNC TO MASTER-SUPERVISORS (for admin-halls) ============ */
+function syncMasterSupervisors() {
+    const masterList = teachers
+        .filter(t => t.status === 'active')
+        .map(t => ({
+            id: t.employeeId,          /* EMP101 */
+            name: t.name,              /* Prof. A. Deshmukh */
+            dept: t.dept,
+            email: t.email
+        }));
+    localStorage.setItem('master-supervisors', JSON.stringify(masterList));
+}
+
+/* ============ GET DUTY COUNT (from assignments) ============ */
+function getDutyCount(teacherName) {
+    const assignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+    return assignments.filter(a => a.supervisorName === teacherName).length;
+}
+
+/* ============ RENDER TABLE ============ */
+function renderTable(data) {
+    const tbody = document.getElementById('tableBody');
+    const empty = document.getElementById('emptyState');
+
+    if (data.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        document.getElementById('countText').textContent = 'Showing 0 teachers';
+        return;
+    }
+    empty.style.display = 'none';
+
+    tbody.innerHTML = data.map(t => {
+        const dutyCount = getDutyCount(t.name);
+        const dutyBadge = dutyCount > 0
+            ? `<span class="duty-badge has-duties"><i class="bi bi-building-check"></i>${dutyCount} ${dutyCount === 1 ? 'duty' : 'duties'}</span>`
+            : `<span class="duty-badge"><i class="bi bi-dash-circle"></i>no duty</span>`;
+
+        return `
+        <tr>
+            <td>
+                <div class="teacher-cell">
+                    <div class="teacher-avatar">${t.name.replace('Prof. ', '').charAt(0)}</div>
+                    <div class="teacher-info">
+                        <strong>${t.name}</strong>
+                        <small>${t.employeeId}</small>
+                        ${dutyBadge}
+                    </div>
+                </div>
+            </td>
+            <td><span class="badge-dept">${deptMap[t.dept] || t.dept}</span></td>
+            <td>
+                <div style="font-size:0.82rem;">${t.email}</div>
+                <div style="font-size:0.72rem;color:var(--gray-500);">${t.phone}</div>
+            </td>
+            <td>
+                <span class="badge-status ${t.status}">
+                    <i class="bi bi-${t.status === 'active' ? 'check-circle-fill' : 'clock-fill'}"></i>
+                    ${t.status === 'active' ? 'Active' : 'Inactive'}
+                </span>
+            </td>
+            <td style="text-align: right;">
+                <div class="action-btns">
+                    <button class="icon-btn assign" onclick="quickAssign('${t.employeeId}', '${t.name.replace(/'/g, "\\'")}')" title="Assign Hall">
+                        <i class="bi bi-plus-circle-fill"></i>
+                    </button>
+                    <button class="icon-btn slip" onclick="downloadSlip('${t.employeeId}', '${t.name.replace(/'/g, "\\'")}')" title="Download Duty Slip">
+                        <i class="bi bi-file-earmark-pdf-fill"></i>
+                    </button>
+                    <button class="icon-btn" onclick="editTeacher(${t.id})" title="Edit">
+                        <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <button class="icon-btn delete" onclick="deleteTeacher(${t.id})" title="Delete">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `}).join('');
+
+    document.getElementById('countText').textContent =
+        `Showing ${data.length} teacher${data.length !== 1 ? 's' : ''}`;
+}
+
+function updateStats() {
+    document.getElementById('statTotal').textContent = teachers.length;
+    document.getElementById('statActive').textContent = teachers.filter(t => t.status === 'active').length;
+    document.getElementById('statDepts').textContent = [...new Set(teachers.map(t => t.dept))].length;
+
+    /* Total assignments across all teachers */
+    const assignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+    document.getElementById('statAssignments').textContent = assignments.length;
+}
+
+function filterTable() {
+    const search = document.getElementById('searchInput').value.toLowerCase().trim();
+    const dept = document.getElementById('deptFilter').value;
+    let filtered = teachers.filter(t => {
+        const matchSearch = !search || t.name.toLowerCase().includes(search) || t.employeeId.toLowerCase().includes(search);
+        const matchDept = !dept || t.dept === dept;
+        return matchSearch && matchDept;
+    });
+    renderTable(filtered);
+}
+
+/* ============ ADD / EDIT / DELETE ============ */
+function addTeacher() {
+    const name = prompt('Enter teacher name (e.g. Prof. R. Sharma):');
+    if (!name) return;
+    const empId = prompt('Enter Employee ID (e.g. EMP009):');
+    if (!empId) return;
+    const dept = prompt('Enter Department (CS/IT/AI/MECH/CIVIL/EE/EJ):');
+    if (!dept || !deptMap[dept.toUpperCase()]) { alert('Invalid department'); return; }
+    const email = prompt('Enter email:') || `${empId.toLowerCase()}@matoshriengg.edu.in`;
+
+    teachers.push({
+        id: Date.now(),
+        employeeId: empId.toUpperCase(),
+        name: name,
+        dept: dept.toUpperCase(),
+        email: email,
+        phone: '+91 0000000000',
+        status: 'active'
+    });
+    syncMasterSupervisors();
+    updateStats();
+    renderTable(teachers);
+    showToast('Teacher added successfully');
+}
+
+function editTeacher(id) {
+    const t = teachers.find(x => x.id === id);
+    if (!t) return;
+    const newName = prompt('Edit teacher name:', t.name);
+    if (newName && newName.trim()) t.name = newName.trim();
+    const newEmail = prompt('Edit email:', t.email);
+    if (newEmail && newEmail.trim()) t.email = newEmail.trim();
+    const newPhone = prompt('Edit phone:', t.phone);
+    if (newPhone !== null && newPhone.trim()) t.phone = newPhone.trim();
+    syncMasterSupervisors();
+    updateStats();
+    renderTable(teachers);
+    showToast('Teacher updated successfully');
+}
+
+function deleteTeacher(id) {
+    const t = teachers.find(x => x.id === id);
+    if (!t) return;
+    if (confirm(`Delete "${t.name}" (${t.employeeId})?\n\nThis action cannot be undone.`)) {
+        teachers = teachers.filter(x => x.id !== id);
+        syncMasterSupervisors();
+        updateStats();
+        filterTable();
+        showToast('Teacher deleted successfully');
+    }
+}
+
+/* ============ QUICK ASSIGN (NEW) ============ */
+function quickAssign(empId, teacherName) {
+    /* Store preselect in sessionStorage → admin-halls.html will read it */
+    sessionStorage.setItem('preselectSupervisor', JSON.stringify({
+        id: empId,
+        name: teacherName
+    }));
+
+    showToast(`Opening assign form for ${teacherName}...`, false, 'info');
+
+    /* Small delay so toast shows */
+    setTimeout(() => {
+        window.location.href = 'admin-halls.html#assign';
+    }, 600);
+}
+
+/* ============ DOWNLOAD DUTY SLIP (NEW) ============ */
+function downloadSlip(empId, teacherName) {
+    const allAssignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+    const myAssignments = allAssignments.filter(a => a.supervisorName === teacherName);
+
+    if (myAssignments.length === 0) {
+        alert(`${teacherName} has no hall assignments yet.\n\nPlease assign a hall first.`);
+        return;
+    }
+
+    const teacher = teachers.find(t => t.employeeId === empId);
+    const deptName = teacher ? (deptMap[teacher.dept] || teacher.dept) : '—';
+    const today = new Date().toLocaleDateString('en-IN', {
+        day: '2-digit', month: 'long', year: 'numeric'
+    });
+
+    const rows = myAssignments.map((a, i) => `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${a.hallName || '—'}</td>
+            <td>${a.examName || '—'}</td>
+            <td>${formatDate(a.date)}</td>
+        </tr>
+    `).join('');
+
+    const win = window.open('', '_blank', 'width=800,height=900');
+    win.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Duty Slip — ${teacherName}</title>
+            <style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body { font-family: 'Segoe UI', Tahoma, sans-serif; padding: 40px; color: #0f172a; }
+                .slip {
+                    max-width: 750px;
+                    margin: 0 auto;
+                    border: 2px solid #0b3d91;
+                    border-radius: 12px;
+                    padding: 32px;
+                }
+                .header {
+                    text-align: center;
+                    padding-bottom: 20px;
+                    border-bottom: 2px solid #c9a227;
+                    margin-bottom: 24px;
+                }
+                .header h1 { font-size: 24px; color: #0b3d91; margin-bottom: 4px; }
+                .header h2 { font-size: 15px; color: #64748b; font-weight: 500; }
+                .header .tag {
+                    display: inline-block;
+                    background: #0b3d91;
+                    color: white;
+                    padding: 4px 14px;
+                    border-radius: 50px;
+                    font-size: 11px;
+                    font-weight: 700;
+                    letter-spacing: 1px;
+                    margin-top: 10px;
+                }
+                .info-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 14px 24px;
+                    margin-bottom: 24px;
+                }
+                .info-item label {
+                    display: block;
+                    font-size: 11px;
+                    color: #64748b;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    font-weight: 700;
+                    margin-bottom: 3px;
+                }
+                .info-item span { font-size: 15px; font-weight: 600; color: #0f172a; }
+                table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+                th {
+                    background: #0b3d91;
+                    color: white;
+                    padding: 10px;
+                    text-align: left;
+                    font-size: 12px;
+                    letter-spacing: 0.5px;
+                }
+                td {
+                    padding: 10px;
+                    border-bottom: 1px solid #e2e8f0;
+                    font-size: 13px;
+                }
+                tr:nth-child(even) td { background: #f8fafc; }
+                .signature {
+                    margin-top: 40px;
+                    display: flex;
+                    justify-content: space-between;
+                    padding-top: 20px;
+                }
+                .sig-box { text-align: center; width: 200px; }
+                .sig-line {
+                    border-top: 1.5px solid #0f172a;
+                    margin-bottom: 4px;
+                    height: 40px;
+                }
+                .sig-box small {
+                    font-size: 11px;
+                    color: #64748b;
+                    text-transform: uppercase;
+                    font-weight: 700;
+                }
+                .footer {
+                    text-align: center;
+                    margin-top: 30px;
+                    font-size: 11px;
+                    color: #94a3b8;
+                    border-top: 1px dashed #cbd5e1;
+                    padding-top: 16px;
+                }
+                .no-print { text-align: center; margin-top: 20px; }
+                .no-print button {
+                    background: #0b3d91;
+                    color: white;
+                    border: none;
+                    padding: 10px 24px;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    margin: 0 6px;
+                }
+                @media print {
+                    body { padding: 0; }
+                    .slip { border: none; }
+                    .no-print { display: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="slip">
+                <div class="header">
+                    <h1>SEA — Exam Duty Slip</h1>
+                    <h2>Matoshri College of Engineering & RC | Seat Exam Allotment System</h2>
+                    <div class="tag">INVIGILATOR COPY</div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Invigilator Name</label>
+                        <span>${teacherName}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Employee ID</label>
+                        <span>${empId}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Department</label>
+                        <span>${deptName}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Generated On</label>
+                        <span>${today}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Total Assignments</label>
+                        <span>${myAssignments.length}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Role</label>
+                        <span>Invigilator</span>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:50px;">#</th>
+                            <th>Hall</th>
+                            <th>Exam</th>
+                            <th style="width:130px;">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+
+                <div class="signature">
+                    <div class="sig-box">
+                        <div class="sig-line"></div>
+                        <small>Invigilator Signature</small>
+                    </div>
+                    <div class="sig-box">
+                        <div class="sig-line"></div>
+                        <small>Exam Controller</small>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    This is a computer-generated slip. © 2026 SEA — Matoshri College of Engineering & RC
+                </div>
+            </div>
+
+            <div class="no-print">
+                <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+                <button onclick="window.close()" style="background:#64748b;">Close</button>
+            </div>
+        </body>
+        </html>
+    `);
+    win.document.close();
+
+    showToast(`Duty slip opened for ${teacherName}`, false, 'info');
+}
+
+/* ============ HELPERS ============ */
+function formatDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+let toastTimer;
+function showToast(msg, isError = false, type = 'success') {
+    const t = document.getElementById('toast');
+    const icon = t.querySelector('i');
+    document.getElementById('toastMsg').textContent = msg;
+    t.className = 'toast-pro';
+    if (isError) t.classList.add('error');
+    else if (type === 'info') t.classList.add('info');
+
+    icon.className = isError ? 'bi bi-exclamation-circle-fill'
+                  : type === 'info' ? 'bi bi-info-circle-fill'
+                  : 'bi bi-check-circle-fill';
+
+    requestAnimationFrame(() => t.classList.add('show'));
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+function logout() { sessionStorage.clear(); window.location.href = 'index.html'; }
+
+/* ============ INIT ============ */
+syncMasterSupervisors();
+updateStats();
+renderTable(teachers);
+</script>
+
+</body>
+</html>
+

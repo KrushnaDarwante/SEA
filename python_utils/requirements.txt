@@ -1,0 +1,8 @@
+# SEA — Python Utilities Dependencies
+# Used for bulk test data generation (500+ seats) and algorithmic stress testing
+requests>=2.31.0
+faker>=24.0.0
+pandas>=2.2.0
+tabulate>=0.9.0
+qrcode>=7.4.2
+Pillow>=10.2.0

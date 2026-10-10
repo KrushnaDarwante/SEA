@@ -1,0 +1,1179 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invigilator Dashboard — SEA | Matoshri College of Engineering & RC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+    :root {
+        --primary: #0b3d91;
+        --primary-dark: #082c6b;
+        --accent: #c9a227;
+        --accent-light: #e6c458;
+        --dark: #0f172a;
+        --gray-700: #334155;
+        --gray-500: #64748b;
+        --success: #059669;
+        --danger: #dc2626;
+        --warning: #d97706;
+        --info: #0891b2;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f6fa;
+        color: var(--dark);
+        min-height: 100vh;
+        line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    /* NAVBAR */
+    .navbar-pro {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+    .navbar-pro .container-pro {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1000px;
+        padding: 0 24px;
+        margin: 0 auto;
+        gap: 12px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand-icon {
+        width: 44px; height: 44px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 11px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-brand-icon svg { width: 100%; height: 100%; }
+    .nav-brand-text h5 { margin: 0; font-size: 1rem; font-family: 'Playfair Display', serif; }
+    .nav-brand-text small { color: var(--gray-500); font-size: 0.72rem; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px 6px 6px;
+        background: #f1f5f9;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--gray-700);
+    }
+    .user-avatar {
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .btn-logout {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 9px;
+        border: 1.5px solid #e2e8f0;
+        background: white;
+        color: var(--gray-700);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .btn-logout:hover { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
+
+    /* MAIN */
+    .page-wrap {
+        padding: 32px 24px 40px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    /* ⭐ INVIGILATOR NAME HERO ⭐ */
+    .invigilator-hero {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border-radius: 20px;
+        padding: 32px 36px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+    .invigilator-hero::before {
+        content: '';
+        position: absolute;
+        top: -100px; right: -100px;
+        width: 340px; height: 340px;
+        background: radial-gradient(circle, rgba(201, 162, 39, 0.2), transparent 70%);
+        border-radius: 50%;
+    }
+    .invigilator-hero::after {
+        content: '';
+        position: absolute;
+        bottom: -80px; left: -80px;
+        width: 260px; height: 260px;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent 70%);
+        border-radius: 50%;
+    }
+
+    .invigilator-hero .welcome-line {
+        font-size: 0.72rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--accent-light);
+        font-weight: 700;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 2;
+    }
+    .invigilator-hero .invigilator-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: white;
+        line-height: 1.2;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 2;
+        word-break: break-word;
+    }
+    .invigilator-hero .name-divider {
+        width: 70px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-light));
+        margin: 14px auto 16px;
+        border-radius: 2px;
+        position: relative;
+        z-index: 2;
+    }
+    .invigilator-hero .invigilator-meta {
+        display: inline-flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px 24px;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+    }
+    .invigilator-hero .invigilator-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 500;
+    }
+    .invigilator-hero .invigilator-meta-item i {
+        color: var(--accent-light);
+        font-size: 0.9rem;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+        font-size: 1.1rem;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+    }
+    .section-title i { color: var(--primary); font-size: 1.2rem; }
+
+    /* DUTY CARD */
+    .duty-card {
+        background: white;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        padding: 24px;
+        margin-bottom: 24px;
+    }
+    .duty-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e2e8f0;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .duty-header h4 {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .duty-header h4 i { color: var(--primary); }
+    .badge-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 12px;
+        background: #ecfdf5;
+        color: var(--success);
+        border-radius: 50px;
+        font-size: 0.68rem;
+        font-weight: 700;
+    }
+    .badge-live::before {
+        content: '';
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: var(--success);
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .duty-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+    }
+    .duty-item {
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 14px 16px;
+        border-left: 3px solid var(--primary);
+    }
+    .duty-item .label {
+        font-size: 0.66rem;
+        color: var(--gray-500);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .duty-item .label i { color: var(--primary); font-size: 0.72rem; }
+    .duty-item .value {
+        font-size: 0.95rem;
+        color: var(--dark);
+        font-weight: 700;
+        word-break: break-word;
+    }
+
+    /* QUICK ACTIONS */
+    .quick-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+    .quick-card {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        padding: 24px 22px;
+        text-decoration: none;
+        color: var(--dark);
+        transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid #e2e8f0;
+        font-family: 'Inter', sans-serif;
+    }
+    .quick-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--primary);
+        transition: all 0.3s;
+    }
+    .quick-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+        border-color: var(--primary);
+    }
+    .quick-card:hover::before { height: 6px; }
+
+    .quick-card-icon {
+        width: 64px; height: 64px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: white;
+        flex-shrink: 0;
+        transition: all 0.3s;
+    }
+    .quick-card:hover .quick-card-icon { transform: rotate(-5deg) scale(1.05); }
+    .quick-card-icon.blue { background: linear-gradient(135deg, #0b3d91, #1e5bc6); }
+    .quick-card-icon.green { background: linear-gradient(135deg, #059669, #10b981); }
+    .quick-card-icon.gold { background: linear-gradient(135deg, #d97706, #f59e0b); }
+    .quick-card-icon.red { background: linear-gradient(135deg, #dc2626, #ef4444); }
+    .quick-card-icon.cyan { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+    .quick-card-icon.purple { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+
+    .quick-card-info h4 {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+        color: var(--dark);
+    }
+    .quick-card-info p {
+        font-size: 0.8rem;
+        color: var(--gray-500);
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    /* STATS MINI */
+    .stats-mini {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 24px;
+    }
+    .stat-mini {
+        background: white;
+        border-radius: 14px;
+        padding: 18px 20px;
+        border: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.3s;
+    }
+    .stat-mini:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06); }
+    .stat-mini-icon {
+        width: 46px; height: 46px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        color: white;
+        flex-shrink: 0;
+    }
+    .stat-mini-icon.blue { background: linear-gradient(135deg, #0b3d91, #1e5bc6); }
+    .stat-mini-icon.green { background: linear-gradient(135deg, #059669, #10b981); }
+    .stat-mini-icon.gold { background: linear-gradient(135deg, #d97706, #f59e0b); }
+    .stat-mini-info h3 { font-size: 1.5rem; margin: 0; font-family: 'Inter', sans-serif; font-weight: 700; }
+    .stat-mini-info small {
+        color: var(--gray-500);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        font-weight: 600;
+    }
+
+    /* ⭐ ASSIGNED HALLS LIST (NEW) ⭐ */
+    .hall-list-card {
+        background: white;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        padding: 24px;
+        margin-bottom: 24px;
+    }
+    .hall-list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e2e8f0;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .hall-list-header h4 {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .hall-list-header h4 i { color: var(--primary); }
+    .hall-count-badge {
+        background: #f1f5f9;
+        color: var(--gray-700);
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
+    .hall-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 18px;
+        background: #f8fafc;
+        border-radius: 14px;
+        margin-bottom: 10px;
+        border-left: 3px solid var(--primary);
+        flex-wrap: wrap;
+        transition: all 0.25s;
+    }
+    .hall-row:last-child { margin-bottom: 0; }
+    .hall-row:hover {
+        background: #f1f5f9;
+        transform: translateX(3px);
+    }
+    .hall-row-info { flex: 1; min-width: 180px; }
+    .hall-row-info h4 {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin: 0 0 4px;
+        color: var(--dark);
+    }
+    .hall-row-info p {
+        margin: 0;
+        font-size: 0.78rem;
+        color: var(--gray-500);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+    }
+    .hall-row-info p .meta-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: white;
+        padding: 2px 10px;
+        border-radius: 50px;
+        font-weight: 600;
+        color: var(--gray-700);
+        font-size: 0.72rem;
+        border: 1px solid #e2e8f0;
+    }
+    .hall-row-info p .meta-chip i { color: var(--primary); }
+    .hall-row-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .btn-hall {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: 9px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.25s;
+        cursor: pointer;
+        border: none;
+        font-family: 'Inter', sans-serif;
+        white-space: nowrap;
+    }
+    .btn-hall-primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+    }
+    .btn-hall-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(11, 61, 145, 0.3);
+        color: white;
+    }
+    .btn-hall-outline {
+        background: white;
+        border: 1.5px solid #e2e8f0;
+        color: var(--gray-700);
+    }
+    .btn-hall-outline:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+    .empty-hall {
+        text-align: center;
+        padding: 36px 20px;
+        color: var(--gray-500);
+        font-size: 0.88rem;
+    }
+    .empty-hall i {
+        font-size: 2.4rem;
+        color: #cbd5e1;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    /* TOAST */
+    .toast-pro {
+        position: fixed;
+        top: 90px;
+        right: 24px;
+        background: var(--success);
+        color: white;
+        padding: 14px 22px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        box-shadow: 0 8px 24px rgba(5, 150, 105, 0.3);
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .toast-pro.show { opacity: 1; transform: translateY(0); }
+    .toast-pro.error { background: var(--danger); box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3); }
+    .toast-pro.info { background: var(--info); box-shadow: 0 8px 24px rgba(8, 145, 178, 0.3); }
+
+    .page-footer {
+        text-align: center;
+        padding: 24px 24px 8px;
+        font-size: 0.74rem;
+        color: var(--gray-500);
+    }
+
+    @media (max-width: 768px) {
+        .page-wrap { padding: 20px 16px 32px; }
+        .invigilator-hero { padding: 26px 20px; }
+        .invigilator-hero .invigilator-name { font-size: 1.7rem; }
+        .invigilator-hero .invigilator-meta { flex-direction: column; gap: 6px; padding: 12px 20px; }
+        .quick-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+        .quick-card { padding: 18px 14px; }
+        .quick-card-icon { width: 52px; height: 52px; font-size: 1.4rem; }
+        .quick-card-info h4 { font-size: 0.88rem; }
+        .quick-card-info p { font-size: 0.72rem; }
+        .stats-mini { grid-template-columns: 1fr; gap: 10px; }
+        .hall-row { flex-direction: column; align-items: stretch; }
+        .hall-row-actions { width: 100%; }
+        .btn-hall { flex: 1; justify-content: center; }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-pro .container-pro { padding: 0 14px; }
+        .user-chip span { display: none; }
+        .user-chip { padding: 6px; }
+        .btn-logout span { display: none; }
+        .btn-logout { padding: 8px 12px; }
+        .invigilator-hero .invigilator-name { font-size: 1.4rem; }
+        .invigilator-hero .welcome-line { font-size: 0.62rem; letter-spacing: 2px; }
+        .section-title { font-size: 1rem; }
+        .duty-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+        .duty-item { padding: 12px 14px; }
+        .quick-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar-pro">
+    <div class="container-pro">
+        <div class="nav-brand">
+            <div class="nav-brand-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e5bc6"/><stop offset="100%" stop-color="#082c6b"/>
+                        </linearGradient>
+                        <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e6c458"/><stop offset="100%" stop-color="#a8841a"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 3 L92 18 L92 50 C92 74 74 89 50 97 C26 89 8 74 8 50 L8 18 Z" fill="url(#gg)"/>
+                    <path d="M50 8 L87 21 L87 50 C87 71 71 85 50 92 C29 85 13 71 13 50 L13 21 Z" fill="url(#ng)"/>
+                    <text x="50" y="55" text-anchor="middle" font-family="Playfair Display, serif" font-size="24" font-weight="800" fill="url(#gg)">SEA</text>
+                </svg>
+            </div>
+            <div class="nav-brand-text">
+                <h5>SEA</h5>
+                <small>Invigilator Portal</small>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <div class="user-chip">
+                <div class="user-avatar" id="userAvatar">I</div>
+                <span id="userName">Invigilator</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="page-wrap">
+
+    <!-- ⭐ INVIGILATOR NAME HERO ⭐ -->
+    <div class="invigilator-hero">
+        <div class="welcome-line">Welcome Back</div>
+        <div class="invigilator-name" id="invigilatorName">Prof. A. Deshmukh</div>
+        <div class="name-divider"></div>
+        <div class="invigilator-meta">
+            <div class="invigilator-meta-item">
+                <i class="bi bi-person-vcard-fill"></i>
+                <span id="empIdMeta">EMP101</span>
+            </div>
+            <div class="invigilator-meta-item">
+                <i class="bi bi-shield-check"></i>
+                <span>Invigilator</span>
+            </div>
+            <div class="invigilator-meta-item">
+                <i class="bi bi-calendar3"></i>
+                <span id="dutyDate">Today's Duty</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Today's Duty (dynamic — first assignment) -->
+    <h3 class="section-title">
+        <i class="bi bi-clipboard-check-fill"></i>
+        Today's Duty
+    </h3>
+    <div class="duty-card" id="dutyCard">
+        <div class="duty-header">
+            <h4><i class="bi bi-journal-text"></i> <span id="dutyExamName">Data Structures — Exam Duty</span></h4>
+            <span class="badge-live">Active</span>
+        </div>
+        <div class="duty-grid">
+            <div class="duty-item">
+                <div class="label"><i class="bi bi-building"></i> Hall</div>
+                <div class="value" id="dutyHall">Hall C</div>
+            </div>
+            <div class="duty-item">
+                <div class="label"><i class="bi bi-calendar-event"></i> Date</div>
+                <div class="value" id="dutyDateValue">15-Mar-2026</div>
+            </div>
+            <div class="duty-item">
+                <div class="label"><i class="bi bi-clock"></i> Time Slot</div>
+                <div class="value" id="dutyTime">10:00 AM – 1:00 PM</div>
+            </div>
+            <div class="duty-item">
+                <div class="label"><i class="bi bi-people-fill"></i> Students</div>
+                <div class="value" id="dutyStudents">40 Students</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ⭐ MY ASSIGNED HALLS (NEW — shows all halls from admin) ⭐ -->
+    <h3 class="section-title">
+        <i class="bi bi-building-check"></i>
+        My Assigned Halls
+    </h3>
+    <div class="hall-list-card">
+        <div class="hall-list-header">
+            <h4><i class="bi bi-list-check"></i> All Halls & Duties</h4>
+            <span class="hall-count-badge" id="hallCountBadge">0 assignments</span>
+        </div>
+        <div id="hallsList">
+            <!-- filled by JS -->
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <h3 class="section-title">
+        <i class="bi bi-lightning-charge-fill"></i>
+        Quick Actions
+    </h3>
+    <div class="quick-grid">
+
+        <a href="invigilator-scanner.html" class="quick-card">
+            <div class="quick-card-icon blue"><i class="bi bi-qr-code-scan"></i></div>
+            <div class="quick-card-info">
+                <h4>Scan QR Code</h4>
+                <p>Verify student entry & mark attendance</p>
+            </div>
+        </a>
+
+        <a href="invigilator-attendance.html" class="quick-card">
+            <div class="quick-card-icon green"><i class="bi bi-person-check-fill"></i></div>
+            <div class="quick-card-info">
+                <h4>Mark Attendance</h4>
+                <p>Tick students present in exam hall</p>
+            </div>
+        </a>
+
+        <!-- ⭐ REQ #4 — Student Records download -->
+        <a href="invigilator-student-records.html" class="quick-card">
+            <div class="quick-card-icon cyan"><i class="bi bi-file-earmark-arrow-down-fill"></i></div>
+            <div class="quick-card-info">
+                <h4>Student Records</h4>
+                <p>Download full attendance record (CSV)</p>
+            </div>
+        </a>
+
+        <!-- ⭐ REQ #6 — Overall Hall Report -->
+        <a href="invigilator-overall-report.html" class="quick-card">
+            <div class="quick-card-icon purple"><i class="bi bi-bar-chart-fill"></i></div>
+            <div class="quick-card-info">
+                <h4>Overall Hall Report</h4>
+                <p>Combined report of all halls & students</p>
+            </div>
+        </a>
+
+        <button class="quick-card" onclick="downloadMySlip()">
+            <div class="quick-card-icon gold"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="quick-card-info">
+                <h4>My Duty Slip</h4>
+                <p>Download printable PDF duty slip</p>
+            </div>
+        </button>
+
+        <button class="quick-card" onclick="alert('Incident report form khulega')">
+            <div class="quick-card-icon red"><i class="bi bi-exclamation-triangle-fill"></i></div>
+            <div class="quick-card-info">
+                <h4>Report Incident</h4>
+                <p>Log malpractice or emergency</p>
+            </div>
+        </button>
+
+    </div>
+
+    <!-- Quick Stats (dynamic) -->
+    <h3 class="section-title">
+        <i class="bi bi-bar-chart-fill"></i>
+        Quick Stats
+    </h3>
+    <div class="stats-mini">
+        <div class="stat-mini">
+            <div class="stat-mini-icon blue"><i class="bi bi-people-fill"></i></div>
+            <div class="stat-mini-info">
+                <h3 id="statTotal">40</h3>
+                <small>Total Students</small>
+            </div>
+        </div>
+        <div class="stat-mini">
+            <div class="stat-mini-icon green"><i class="bi bi-check-circle-fill"></i></div>
+            <div class="stat-mini-info">
+                <h3 id="statVerified">0</h3>
+                <small>Present</small>
+            </div>
+        </div>
+        <div class="stat-mini">
+            <div class="stat-mini-icon gold"><i class="bi bi-clock-fill"></i></div>
+            <div class="stat-mini-info">
+                <h3 id="statPending">40</h3>
+                <small>Absent</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-footer">
+        © 2026 SEA — Seat Exam Allotment | Matoshri College of Engineering & RC
+    </div>
+
+</div>
+
+<div class="toast-pro" id="toast">
+    <i class="bi bi-check-circle-fill"></i>
+    <span id="toastMsg">Saved</span>
+</div>
+
+<script>
+/* ============ AUTH GUARD ============ */
+const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+if (!user.success || user.role !== 'invigilator') {
+    window.location.href = 'index.html';
+}
+
+document.getElementById('userName').textContent = user.name || 'Invigilator';
+document.getElementById('userAvatar').textContent = (user.name || 'I').charAt(0).toUpperCase();
+document.getElementById('invigilatorName').textContent = user.name || 'Prof. A. Deshmukh';
+document.getElementById('empIdMeta').textContent = user.employeeId || 'EMP101';
+
+const today = new Date();
+document.getElementById('dutyDate').textContent = today.toLocaleDateString('en-IN', {
+    day: 'numeric', month: 'short', year: 'numeric'
+});
+
+/* ============ LOAD ASSIGNMENTS (from admin) ============ */
+const allAssignments = JSON.parse(localStorage.getItem('assignments') || '[]');
+const myAssignments = allAssignments.filter(a => a.supervisorName === user.name);
+
+/* ============ FALLBACK DEMO (agar admin ne kuch assign nahi kiya) ============ */
+const demoAssignment = {
+    hallId: 'H1',
+    hallName: 'Hall C',
+    examName: 'Data Structures',
+    date: today.toISOString().slice(0, 10),
+    time: '10:00 AM – 1:00 PM',
+};
+
+const displayAssignments = myAssignments.length > 0 ? myAssignments : [demoAssignment];
+
+/* ============ UPDATE TODAY'S DUTY CARD ============ */
+(function updateDutyCard() {
+    const first = displayAssignments[0];
+    if (!first) return;
+
+    document.getElementById('dutyExamName').textContent = (first.examName || 'Exam') + ' — Exam Duty';
+    document.getElementById('dutyHall').textContent = first.hallName || '—';
+    document.getElementById('dutyDateValue').textContent = formatDate(first.date);
+    document.getElementById('dutyTime').textContent = first.time || '10:00 AM – 1:00 PM';
+
+    /* Load student count for this hall */
+    const students = JSON.parse(localStorage.getItem('students-' + first.hallId) || '[]');
+    document.getElementById('dutyStudents').textContent =
+        (students.length || 40) + ' Students';
+})();
+
+/* ============ RENDER ASSIGNED HALLS LIST (Req #5 + #1 entry) ============ */
+function renderHalls() {
+    const list = document.getElementById('hallsList');
+    const badge = document.getElementById('hallCountBadge');
+
+    badge.textContent = displayAssignments.length + ' assignment' + (displayAssignments.length !== 1 ? 's' : '');
+
+    if (displayAssignments.length === 0) {
+        list.innerHTML = `
+            <div class="empty-hall">
+                <i class="bi bi-inbox"></i>
+                No halls assigned yet. Please contact the administrator.
+            </div>`;
+        return;
+    }
+
+    list.innerHTML = displayAssignments.map(a => {
+        const students = JSON.parse(localStorage.getItem('students-' + a.hallId) || '[]');
+        const studentCount = students.length || 40;
+
+        return `
+        <div class="hall-row">
+            <div class="hall-row-info">
+                <h4>${a.hallName || '—'}</h4>
+                <p>
+                    <span class="meta-chip"><i class="bi bi-journal-text"></i> ${a.examName || '—'}</span>
+                    <span class="meta-chip"><i class="bi bi-calendar-event"></i> ${formatDate(a.date)}</span>
+                    <span class="meta-chip"><i class="bi bi-people-fill"></i> ${studentCount}</span>
+                </p>
+            </div>
+            <div class="hall-row-actions">
+                <a href="invigilator-attendance.html?hallId=${a.hallId}" class="btn-hall btn-hall-primary">
+                    <i class="bi bi-check2-square"></i> Mark Attendance
+                </a>
+                <a href="invigilator-overall-report.html?hallId=${a.hallId}" class="btn-hall btn-hall-outline">
+                    <i class="bi bi-file-earmark-text"></i> Report
+                </a>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+/* ============ UPDATE QUICK STATS ============ */
+function updateQuickStats() {
+    let total = 0;
+    let present = 0;
+
+    displayAssignments.forEach(a => {
+        const students = JSON.parse(localStorage.getItem('students-' + a.hallId) || '[]');
+        const attendance = JSON.parse(localStorage.getItem('attendance-' + a.hallId) || '{}');
+
+        if (students.length === 0) {
+            /* Fallback: assume 40 students */
+            total += 40;
+        } else {
+            total += students.length;
+            students.forEach(s => { if (attendance[s.id]) present++; });
+        }
+    });
+
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statVerified').textContent = present;
+    document.getElementById('statPending').textContent = Math.max(0, total - present);
+}
+
+/* ============ MY SLIP DOWNLOAD (Req #3) ============ */
+function downloadMySlip() {
+    if (displayAssignments.length === 0) {
+        showToast('No assignments to print. Please contact admin.', true);
+        return;
+    }
+
+    const win = window.open('', '_blank', 'width=800,height=900');
+    const todayStr = new Date().toLocaleDateString('en-IN', {
+        day: '2-digit', month: 'long', year: 'numeric'
+    });
+
+    const rows = displayAssignments.map((a, i) => `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${a.hallName || '—'}</td>
+            <td>${a.examName || '—'}</td>
+            <td>${formatDate(a.date)}</td>
+        </tr>
+    `).join('');
+
+    win.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Invigilator Duty Slip — ${user.name}</title>
+            <style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body {
+                    font-family: 'Segoe UI', Tahoma, sans-serif;
+                    padding: 40px;
+                    color: #0f172a;
+                }
+                .slip {
+                    max-width: 750px;
+                    margin: 0 auto;
+                    border: 2px solid #0b3d91;
+                    border-radius: 12px;
+                    padding: 32px;
+                }
+                .header {
+                    text-align: center;
+                    padding-bottom: 20px;
+                    border-bottom: 2px solid #c9a227;
+                    margin-bottom: 24px;
+                }
+                .header h1 {
+                    font-size: 24px;
+                    color: #0b3d91;
+                    margin-bottom: 4px;
+                }
+                .header h2 {
+                    font-size: 15px;
+                    color: #64748b;
+                    font-weight: 500;
+                }
+                .header .tag {
+                    display: inline-block;
+                    background: #0b3d91;
+                    color: white;
+                    padding: 4px 14px;
+                    border-radius: 50px;
+                    font-size: 11px;
+                    font-weight: 700;
+                    letter-spacing: 1px;
+                    margin-top: 10px;
+                }
+                .info-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 14px 24px;
+                    margin-bottom: 24px;
+                }
+                .info-item label {
+                    display: block;
+                    font-size: 11px;
+                    color: #64748b;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    font-weight: 700;
+                    margin-bottom: 3px;
+                }
+                .info-item span {
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0f172a;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 24px;
+                }
+                th {
+                    background: #0b3d91;
+                    color: white;
+                    padding: 10px;
+                    text-align: left;
+                    font-size: 12px;
+                    letter-spacing: 0.5px;
+                }
+                td {
+                    padding: 10px;
+                    border-bottom: 1px solid #e2e8f0;
+                    font-size: 13px;
+                }
+                tr:nth-child(even) td { background: #f8fafc; }
+                .signature {
+                    margin-top: 40px;
+                    display: flex;
+                    justify-content: space-between;
+                    padding-top: 20px;
+                }
+                .sig-box { text-align: center; width: 200px; }
+                .sig-line {
+                    border-top: 1.5px solid #0f172a;
+                    margin-bottom: 4px;
+                    height: 40px;
+                }
+                .sig-box small {
+                    font-size: 11px;
+                    color: #64748b;
+                    text-transform: uppercase;
+                    font-weight: 700;
+                }
+                .footer {
+                    text-align: center;
+                    margin-top: 30px;
+                    font-size: 11px;
+                    color: #94a3b8;
+                    border-top: 1px dashed #cbd5e1;
+                    padding-top: 16px;
+                }
+                .no-print { text-align: center; margin-top: 20px; }
+                .no-print button {
+                    background: #0b3d91;
+                    color: white;
+                    border: none;
+                    padding: 10px 24px;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    margin: 0 6px;
+                }
+                @media print {
+                    body { padding: 0; }
+                    .slip { border: none; }
+                    .no-print { display: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="slip">
+                <div class="header">
+                    <h1>SEA — Exam Duty Slip</h1>
+                    <h2>Matoshri College of Engineering & RC | Seat Exam Allotment System</h2>
+                    <div class="tag">INVIGILATOR COPY</div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Invigilator Name</label>
+                        <span>${user.name || '—'}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Employee ID</label>
+                        <span>${user.employeeId || 'EMP101'}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Generated On</label>
+                        <span>${todayStr}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Total Assignments</label>
+                        <span>${displayAssignments.length}</span>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:50px;">#</th>
+                            <th>Hall</th>
+                            <th>Exam</th>
+                            <th style="width:130px;">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+
+                <div class="signature">
+                    <div class="sig-box">
+                        <div class="sig-line"></div>
+                        <small>Invigilator Signature</small>
+                    </div>
+                    <div class="sig-box">
+                        <div class="sig-line"></div>
+                        <small>Exam Controller</small>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    This is a computer-generated slip. © 2026 SEA — Matoshri College of Engineering & RC
+                </div>
+            </div>
+
+            <div class="no-print">
+                <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+                <button onclick="window.close()" style="background:#64748b;">Close</button>
+            </div>
+        </body>
+        </html>
+    `);
+    win.document.close();
+
+    showToast('Duty slip opened — ready to print', false, 'info');
+}
+
+/* ============ HELPERS ============ */
+function formatDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+let toastTimer;
+function showToast(msg, isError = false, type = 'success') {
+    const t = document.getElementById('toast');
+    const icon = t.querySelector('i');
+    document.getElementById('toastMsg').textContent = msg;
+    t.className = 'toast-pro';
+    if (isError) t.classList.add('error');
+    else if (type === 'info') t.classList.add('info');
+
+    icon.className = isError ? 'bi bi-exclamation-circle-fill'
+                  : type === 'info' ? 'bi bi-info-circle-fill'
+                  : 'bi bi-check-circle-fill';
+
+    requestAnimationFrame(() => t.classList.add('show'));
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function logout() {
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+}
+
+/* ============ INIT ============ */
+renderHalls();
+updateQuickStats();
+</script>
+
+</body>
+</html>
+
+
